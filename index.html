@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=900" />
+<link href="css/scroller.css" rel="stylesheet" type="text/css" />
+<!--<script type="text/javascript" src="js/jq1.11.0.js"></script>-->
+<script type="text/javascript" src="js/core.js"></script>
+<script type="text/javascript" src="js/mousewheel.js"></script>
+<script type="text/javascript" src="js/jtweener.js"></script>
+<script type="text/javascript" src="js/scroller3_full.js"></script>
+<!--<script type="text/javascript" src="product/product.js"></script>
+<!--<script type="text/javascript" src="js/scroller3.js"></script>-->
+<title>Прокрутчик, версия 3</title>
+</head>
+
+<body style="position:relative;font-family:Verdana; ">
+
+<style type="text/css">
+	
+@media (max-width:700px)	{
+	.sick img {width:30px;}
+}
+	
+</style>
+
+<p style="font-family:Verdana;">Самоинициализирован:</p>
+<div class="read-more">
+<div class="scroller" data-leftIfWide="true">
+	<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><span><img src="img/i2.jpg" alt="i1" width="200" height="200" /></span></a></div>
+	<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick" data-anchor="текст">А так же не только картинки, но и простой текст</a></div>
+	<div class="sick"><a href="#1978" data-anchor="1978"><img src="img/i5.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1979" data-anchor="1979"><img src="img/i6.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><table cellpadding="0" cellspacing="0" border="1" style="width:100%; height:100%;" data-anchor="таблица"><tr><td>И даже</td><td>(хотя почему даже?)</td><td>таблицы</td></tr></table></a></div>
+	<div class="sick"><a href="#1981" data-anchor="81-й"><img src="img/i8.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1983" data-anchor="1983"><img src="img/i9.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1985" data-anchor="1985"><img src="img/i10.jpg" alt="i1" width="200" height="200" /></a></div>
+	<img src="img/i11.jpg" alt="i1" data-anchor="1988" width="200" height="240" />
+	<div class="sick "><a href="#1990" data-anchor="Что угодно">Да вообще, всё, что душе угодно :-)</a></div>
+	<div class="sick "><a href="#1995" data-anchor="1995"><img src="img/i13.jpg" alt="i1" width="200" height="240" /></a></div>
+	<div class="sick "><a href="#2000" data-anchor="2000"><img src="img/i14.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#2008" data-anchor="2008"><img src="img/i15.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1975" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1975" data-anchor="1975"><img src="img/i2.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1977" data-anchor="1977"><img src="img/i4.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1978" data-anchor="1978"><img src="img/i5.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1979" data-anchor="1979"><img src="img/i6.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1980" data-anchor="1980"><img src="img/i7.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1981" data-anchor="1981"><img src="img/i8.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1983" data-anchor="1983"><img src="img/i9.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1985" data-anchor="1985"><img src="img/i10.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1988" data-anchor="1988"><img src="img/i11.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1990" data-anchor="1990"><img src="img/i12.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#1995" data-anchor="1995"><img src="img/i13.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick "><a href="#2000" data-anchor="2000"><img src="img/i14.jpg" alt="i1" width="200" height="200" /></a></div>
+</div>
+</div>
+
+<p style="font-family:Verdana;">Мануально, без надстроек:</p>
+<div class="foobar">
+	<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i2.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick" data-anchor="текст">А так же не только картинки, но и простой текст</a></div>
+</div>
+
+<p style="font-family:Verdana;">Мануально, надстройки скриптом:</p>
+<div class="foobar foobar-2">
+	<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i2.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick" data-anchor="текст">А так же не только картинки, но и простой текст</a></div>
+	<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i2.jpg" alt="i1" width="200" height="200" /></a></div>
+</div>
+
+<p style="font-family:Verdana;">Мануально, надстройки атрибутами:</p>
+<div class="foobar" data-leftIfWide="true">
+	<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i2.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick" data-anchor="текст">А так же не только картинки, но и простой текст</a></div>
+	<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick" data-anchor="текст">А так же не только картинки, но и простой текст</a></div>
+</div>	
+
+<script type="text/javascript">
+
+$(function(){
+	$('.foobar').scroller().css('margin-bottom','110px');
+	$('.foobar-2').scroller({
+		'noanchors':true,
+		'noscrollbar':true,
+		'onclick': function($element){alert($element.find('a').attr('data-anchor'))}
+	});
+});
+	
+</script>
+
+
+<p style="font-family:Verdana; margin-top:130px;">Скрыт (появляется через 2 секунды):</p>
+<div style="display:none;" id="hiddenScr">
+<div class="scroller" data-autorotate="true" data-loop="true">
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i2.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i2.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1975" data-anchor="1975"><img src="img/i2.jpg" alt="i1" width="200" height="200" /></a></div>
+</div>
+</div>
+
+<!--<style type="text/css"> .scroller3 div.c {display:inline-block;}</style>
+<p style="font-family:Verdana; margin-top:130px;">Без рамеров у картинок:</p>
+<div class="scroller scroller3">
+	<div class="c" data-anchor="1234"><img src="img/i2.jpg" alt="i1" /></div>
+	<div class="c" data-anchor="1234"><img src="img/i2.jpg" alt="i1" /></div>
+	<div class="c" data-anchor="1234"><img src="img/i2.jpg" alt="i1" /></div>
+	<div class="c" data-anchor="1234"><img src="img/i2.jpg" alt="i1" /></div>
+	<img  data-anchor="1975" src="img/i2.jpg" alt="i1" />
+	<div class="c" data-anchor="1234"><img src="img/i2.jpg" alt="i1" /></div>
+	<div class="c" data-anchor="1234"><img src="img/i2.jpg" alt="i1" /></div>
+	<div class="c" data-anchor="1234"><img src="img/i2.jpg" alt="i1" /></div>
+	<div class="c" data-anchor="1234"><img src="img/i2.jpg" alt="i1" /></div>
+</div>-->
+
+
+<style type="text/css">.scroller2 div.b {height:60px; width:150px; display:inline-block; padding: 15px; border:1px solid #666;} .scroller2 a:hover {color:#000;}
+.scroller2 a, .scroller2 div.b {margin:0;} .scroller2 a {-webkit-font-smoothing: subpixel-antialiased !important;}</style>
+<p style="margin-top: 130px;">Без анкоров:</p>
+<div class="scroller scroller2">
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		
+		setTimeout(function(){
+			$('#hiddenScr').fadeIn(200);
+		}, 2000);
+		
+	});
+</script>
+
+
+
+<p style="margin-top: 130px;">Без скроллбара:</p>
+<div class="scroller scroller2" data-noscrollbar="true" data-leftIfWide="true">
+	<div class="b" data-anchor="1">1 sfsd sdfs d sdf sd <a href="#12" target="_blank">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b" data-anchor="2">2 sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b" data-anchor="3">3 sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b" data-anchor="4">4 sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b" data-anchor="5">5 sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b" data-anchor="6">6 sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b" data-anchor="7">7 sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b" data-anchor="8">8 sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+</div>
+
+
+
+<p style="margin-top: 130px;">Без сколлбара, забыли поставить якоря для пунктов? Прокрутчик знает, что делать:</p>
+<div class="scroller scroller2" data-noscrollbar="true">
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd <a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+	<div class="b">sfsd sdfs d sdf sd<a href="#">kjsdhf jkhsdkjf hkjhsdkf jhsdfkj</a></div>
+</div>
+
+<div class="example" style="margin-top: 230px; margin-bottom:230px;">
+	<a href="#" class="poligon">Ащрефполигон, испытай новые ощущения</a>
+	<a href="#" class="poligon">Ещё ссылочка</a>
+	<a href="#" class="poligon">Ещё ссылочка</a>
+</div>
+
+<!--<script type="text/javascript">
+	$(function(){
+		$('.poligon').on('click', function(e){
+			e.preventDefault();
+			$(this).css('color','red');
+		});
+	});
+</script>-->
+
+
+
+</body></html>
