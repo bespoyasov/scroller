@@ -1,2 +1,2 @@
 # scroller
-The best content scroller ever
+The best content scroller
