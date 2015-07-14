@@ -32,7 +32,9 @@ You can init script by:
 Scroller knows data-attributes:
 
 `data-noscrollbar="true"` — disable scrollbar;
+
 `data-noanchors="true"` — disable anchors;
+
 `data-leftIfWide="true"` — left content alignment when width of page is bigger than width of content.
 
 You can set this options by manually init:
