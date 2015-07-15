@@ -1,6 +1,6 @@
 # Scroller.js
 
-Orders blocks in line and adds anchors and scrollbar.
+Puts blocks in line and adds anchors and a scrollbar.
 
 ## Start
 
@@ -13,10 +13,10 @@ Add to `<head>` links to script and styles:
 
 ## Initialization
 
-You can init script by:
+You can initialize script by:
 
-* Wrapping block in container with class `scroller`, and initialization will start autmatically;
-* Start like jQuery plugin:
+* Wrapping blocks in a container with class `scroller`, and initialization will start automatically;
+* Initializing it like a jQuery plugin:
 
 ```html
 <div class="foo"> <!-- content --> </div>
@@ -29,15 +29,15 @@ You can init script by:
 
 ## Settings
 
-Scroller knows data-attributes:
+Scroller understands data-attributes:
 
 `data-noscrollbar="true"` — disable scrollbar;
 
 `data-noanchors="true"` — disable anchors;
 
-`data-leftIfWide="true"` — left content alignment when width of page is bigger than width of content.
+`data-leftIfWide="true"` — left content alignment when the width of the page is bigger than width of the content.
 
-You can set this options by manually init:
+To set these options manually initialize them:
 
 ```html
 <script type="text/javascript">
@@ -53,9 +53,9 @@ You can set this options by manually init:
 
 ## Click on element and callback
 
-With manually init you can use callback on click on element. Function gets one argument — child node of scroller, inside of which click happened.
+With manually init you can use a callback on click on an element. The argument of function is a child node, where click happened.
 
-E.g. for print index of element:
+E.g. for print index of an element:
 
 ```html
 <script type="text/javascript">
