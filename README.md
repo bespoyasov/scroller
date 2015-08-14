@@ -29,13 +29,15 @@ You can initialize script by:
 
 ## Settings
 
-Scroller understands data-attributes:
+Scroller data-attributes:
 
 `data-noscrollbar="true"` — disable scrollbar;
 
 `data-noanchors="true"` — disable anchors;
 
-`data-leftIfWide="true"` — left content alignment when the width of the page is bigger than width of the content.
+`data-leftIfWide="true"` — left content alignment when the width of the page is bigger than width of the content;
+
+`data-anchor="text"` — anchor text of item, acquires to children of scroller.
 
 To set these options manually initialize them:
 
@@ -78,7 +80,10 @@ Scroller with disabled anchors and left alignment:
 </head>
 <body>
 	<div class="scroller" data-noscrollbar="true" data-leftIfWide="true">
-		<!-- Images, tables, text, blocks --> 
+		<img src="example.png" data-anchor="anchor1" />
+		<div data-anchor="anchor2"></div>
+		<table data-anchor="3"></table>
+		<whatever />
 	</div>
 </body>
 ```
