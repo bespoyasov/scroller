@@ -82,7 +82,7 @@ Scroller with disabled anchors and left alignment:
 	<div class="scroller" data-noscrollbar="true" data-leftIfWide="true">
 		<img src="example.png" data-anchor="anchor1" />
 		<div data-anchor="anchor2"></div>
-		<table data-anchor="3"></table>
+		<table data-anchor="anchor3"></table>
 		<whatever />
 	</div>
 </body>
