@@ -620,7 +620,7 @@
 					if (devUp != 'touchend' && devUp !== 'pointerup') {
 					$el.removeClass('grabbing');
 					
-						if (event.metaKey && $(event.target).closest('a').size() != 0) {
+						if (event.metaKey && $(event.target).closest('a').length && $(event.target).closest('.'+scrNm).length) {
 							event.preventDefault();
 							var $target = $(event.target);
 							var href = $target.closest('a').attr('href');
