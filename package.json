@@ -1,0 +1,25 @@
+{
+  "name": "scroller",
+  "version": "2.0.0",
+  "description": "Lines content in a row and allows to scroll and drag it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bespoyasov/scroller.git"
+  },
+  "keywords": [
+    "scroller",
+    "scroll",
+    "drag",
+    "drag-n-drop"
+  ],
+  "author": "Alex Bespoyasov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bespoyasov/scroller/issues"
+  },
+  "homepage": "https://github.com/bespoyasov/scroller#readme"
+}
