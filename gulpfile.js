@@ -62,7 +62,7 @@ gulp.task('styles-minify', function() {
 gulp.task('scripts-minify', function() {
 	return gulp.src('build/scroller.js')
 		.pipe(minify())
-    .pipe(gulp.dest('build/js/'))
+    .pipe(gulp.dest('build/'))
 		.pipe(notify('Scripts-minify task completed'));
 });
 
