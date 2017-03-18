@@ -24,8 +24,12 @@
         align: align || 'center',
         noAnchors: noAnchors || false,
         noScrollbar: noScrollbar || false,
+
         prefix: 'ab_scroller',
-        draggingClsnm: 'is-dragging'
+        draggingClsnm: 'is-dragging',
+
+        easing: pos => pos === 1 ? 1 : -Math.pow(2, -10 * pos) + 1,
+        viscosityFactor: 0.5,
       }
 
       this.state = {
@@ -43,11 +47,18 @@
       }
 
       this.init(el)
+
+      window.raf = (function(){
+        return  window.requestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          function(callback) {setTimeout(callback, 1000 / 60)}
+      })()
     }
 
 
     get(prop) {
-      return this.state[prop] || null
+      return typeof(this.state[prop]) !== 'undefined' ? this.state[prop] : null
     }
 
     set(prop, value) {
@@ -201,13 +212,53 @@
       const limitRight = this.get('limitRight')
       const scrolled = this.get('scrolled')
 
-      if (scrolled < limitLeft) {}
-      else if (scrolled > limitRight) {}
+      if (scrolled < limitLeft) this.animate(scrolled, limitLeft)
+      else if (scrolled > limitRight) this.animate(scrolled, limitRight)
+      else {
+        const lastDownEventX = this.get('downEventX')
+        const currentEventX = e.originalEvent && e.originalEvent.pageX || e.pageX
+        const delta = currentEventX - lastDownEventX
+        const moveEventTS = this.get('moveEventTS')
+        const nowTS = (new Date()).getTime()
+        const timeDelta = nowTS - moveEventTS
+        // const ednpoint =
+        // const timeToEndpoint =
+        // this.animate(scrolled, limitRight)
+      }
     }
 
     onClickLink(e) {
       e.preventDefault()
       return false
+    }
+
+
+    animate(start, stop=0, speed=10) {
+      const delta = stop - start
+      const time = Math.max(.05, Math.min(Math.abs(delta) / speed, 1))
+
+      let currentTime = 0,
+          result = this.get('scrolled')
+
+      const tick = () => {
+        const pointerDown = this.get('pointerDown')
+        if (pointerDown) return
+
+        currentTime += (1 / 60)
+        result = start + delta * this.config.easing(currentTime / time)
+
+        if (currentTime >= 1) {
+          this.setPos(-1 * stop)
+          this.set('scrolled', stop)
+        }
+        else {
+          raf(tick)
+          this.setPos(-1 * result)
+          this.set('scrolled', result)
+        }
+      }
+
+      tick()
     }
   }
 
