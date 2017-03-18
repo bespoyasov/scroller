@@ -18,18 +18,22 @@
 
   class Scroller {
     constructor(config) {
-      const {align, noAnchors, noScrollbar, el} = config
+      const {
+        align='center',
+        noAnchors=false,
+        noScrollbar=false,
+        el
+      } = config
 
       this.config = {
-        align: align || 'center',
-        noAnchors: noAnchors || false,
-        noScrollbar: noScrollbar || false,
+        align: align,
+        noAnchors: noAnchors,
+        noScrollbar: noScrollbar,
 
         prefix: 'ab_scroller',
         draggingClsnm: 'is-dragging',
 
         easing: pos => pos === 1 ? 1 : -Math.pow(2, -10 * pos) + 1,
-        viscosityFactor: 0.5,
       }
 
       this.state = {
@@ -50,8 +54,8 @@
 
       this.init(el)
 
-      window.raf = (function(){
-        return  window.requestAnimationFrame ||
+      window.raf = (() => {
+        return window.requestAnimationFrame ||
           window.webkitRequestAnimationFrame ||
           window.mozRequestAnimationFrame ||
           function(callback) {setTimeout(callback, 1000 / 60)}
@@ -60,7 +64,9 @@
 
 
     get(prop) {
-      return typeof(this.state[prop]) !== 'undefined' ? this.state[prop] : null
+      return typeof(this.state[prop]) !== 'undefined'
+        ? this.state[prop]
+        : null
     }
 
     set(prop, value) {
@@ -68,14 +74,18 @@
     }
 
     push(prop, value) {
-      this.state[prop].push(value)
+      this.state[prop] && this.state[prop].push(value)
+    }
+
+    clear(prop) {
+      const field = this.state[prop]
+      if (field && field.length) field.length = 0
     }
 
     getLastMeaningfull(prop) {
-      const toIgnore = this.state[prop] && this.state[prop].length && this.state[prop].length > 3
-        ? 3 : 1
-
-      return this.state[prop][this.state[prop].length - toIgnore]
+      const field = this.state[prop]
+      const toIgnore = field && field.length && field.length > 3 ? 3 : 1
+      return field[field.length - toIgnore]
     }
 
 
@@ -176,12 +186,11 @@
       if (!e) return
       e.preventDefault()
 
-      const ts = (new Date()).getTime()
       this.set('pointerDown', true)
-      this.set('downEventTS', ts)
+      this.set('downEventTS', (new Date()).getTime())
 
-      const newScrolledDiff = this.get('scrolled') + (e.originalEvent && e.originalEvent.pageX || e.pageX)
-      this.set('scrolledDiff', newScrolledDiff)
+      const diff = this.get('scrolled') + (e.originalEvent && e.originalEvent.pageX || e.pageX)
+      this.set('scrolledDiff', diff)
 
       const prefix = this.config.prefix
       const rootNode = this.state.el
@@ -190,16 +199,16 @@
     }
 
     onPointerMove(e) {
-      e.preventDefault()
       const pointerDown = this.get('pointerDown')
-      if (!pointerDown) return
+      if (!e || !pointerDown) return
+      e.preventDefault()
 
       const scrolledDiff = this.get('scrolledDiff')
       const scrolled = this.get('scrolled')
 
+      // drag to left is positive number
       const currentPageX = e.originalEvent && e.originalEvent.pageX || e.pageX
-      const delta = scrolledDiff - currentPageX // drag to left is positive number
-      let result = delta
+      let result = scrolledDiff - currentPageX
 
       const limitLeft = this.get('limitLeft')
       const limitRight = this.get('limitRight')
@@ -214,7 +223,9 @@
     }
 
     onPointerUp(e) {
+      if (!e) return
       e.preventDefault()
+
       this.set('pointerDown', false)
 
       const prefix = this.config.prefix
@@ -238,6 +249,8 @@
         const timeToEndpoint = Math.abs(distanceDelta) / timeDelta
         this.animate(scrolled, ednpoint, timeToEndpoint)
       }
+
+      this.clear('pageX')
     }
 
     onClickLink(e) {
@@ -251,24 +264,19 @@
       const time = Math.max(.05, Math.min(Math.abs(delta) / speed, 1))
 
       let currentTime = 0,
-          result = this.get('scrolled')
+          endpoint = this.get('scrolled')
 
       const tick = () => {
-        const pointerDown = this.get('pointerDown')
-        if (pointerDown) return
+        if (this.get('pointerDown')) return
 
         currentTime += (1 / 60)
-        result = start + delta * this.config.easing(currentTime / time)
+        endpoint = currentTime < 1
+          ? start + delta * this.config.easing(currentTime / time)
+          : stop
 
-        if (currentTime >= 1) {
-          this.setPos(-1 * stop)
-          this.set('scrolled', stop)
-        }
-        else {
-          raf(tick)
-          this.setPos(-1 * result)
-          this.set('scrolled', result)
-        }
+        if (currentTime < 1) raf(tick)
+        this.setPos(-1 * endpoint)
+        this.set('scrolled', endpoint)
       }
 
       tick()
