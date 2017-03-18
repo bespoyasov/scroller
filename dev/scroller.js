@@ -35,7 +35,9 @@
       this.state = {
         scrolled: 0,
         pointerDown: false,
-        downEventX: 0,
+
+        pageX: [],
+        scrolledDiff: 0,
         downEventTS: 0,
         moveEventTS: 0,
 
@@ -63,6 +65,17 @@
 
     set(prop, value) {
       this.state[prop] = value
+    }
+
+    push(prop, value) {
+      this.state[prop].push(value)
+    }
+
+    getLastMeaningfull(prop) {
+      const toIgnore = this.state[prop] && this.state[prop].length && this.state[prop].length > 3
+        ? 3 : 1
+
+      return this.state[prop][this.state[prop].length - toIgnore]
     }
 
 
@@ -167,8 +180,8 @@
       this.set('pointerDown', true)
       this.set('downEventTS', ts)
 
-      const newDownEventX = this.get('scrolled') + (e.originalEvent && e.originalEvent.pageX || e.pageX)
-      this.set('downEventX', newDownEventX)
+      const newScrolledDiff = this.get('scrolled') + (e.originalEvent && e.originalEvent.pageX || e.pageX)
+      this.set('scrolledDiff', newScrolledDiff)
 
       const prefix = this.config.prefix
       const rootNode = this.state.el
@@ -181,11 +194,11 @@
       const pointerDown = this.get('pointerDown')
       if (!pointerDown) return
 
-      const downEventX = this.get('downEventX')
+      const scrolledDiff = this.get('scrolledDiff')
       const scrolled = this.get('scrolled')
 
       const currentPageX = e.originalEvent && e.originalEvent.pageX || e.pageX
-      const delta = downEventX - currentPageX // drag to left is positive number
+      const delta = scrolledDiff - currentPageX // drag to left is positive number
       let result = delta
 
       const limitLeft = this.get('limitLeft')
@@ -197,6 +210,7 @@
       this.setPos(-1 * result)
       this.set('scrolled', result)
       this.set('moveEventTS', (new Date()).getTime())
+      this.push('pageX', currentPageX)
     }
 
     onPointerUp(e) {
@@ -212,18 +226,17 @@
       const limitRight = this.get('limitRight')
       const scrolled = this.get('scrolled')
 
-      if (scrolled < limitLeft) this.animate(scrolled, limitLeft)
-      else if (scrolled > limitRight) this.animate(scrolled, limitRight)
-      else {
-        const lastDownEventX = this.get('downEventX')
-        const currentEventX = e.originalEvent && e.originalEvent.pageX || e.pageX
-        const delta = currentEventX - lastDownEventX
-        const moveEventTS = this.get('moveEventTS')
-        const nowTS = (new Date()).getTime()
-        const timeDelta = nowTS - moveEventTS
-        // const ednpoint =
-        // const timeToEndpoint =
-        // this.animate(scrolled, limitRight)
+      const lastPageX = this.getLastMeaningfull('pageX')
+      const currentEventX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      const distanceDelta = currentEventX - lastPageX
+      const timeDelta = (new Date()).getTime() - this.get('moveEventTS')
+      const ednpoint = scrolled - (distanceDelta * 5)
+
+      if (scrolled < limitLeft || ednpoint < limitLeft) this.animate(scrolled, limitLeft)
+      else if (scrolled > limitRight || ednpoint > limitRight) this.animate(scrolled, limitRight)
+      else if (timeDelta < 150 && Math.abs(distanceDelta) > 2) {
+        const timeToEndpoint = Math.abs(distanceDelta) / timeDelta
+        this.animate(scrolled, ednpoint, timeToEndpoint)
       }
     }
 
