@@ -1,4 +1,57 @@
 .ab_scroller {
   position: relative;
   overflow: hidden;
+  user-select: none;
+}
+
+.ab_scroller * {
+  user-select: none;
+  user-drag: none;
+}
+
+.ab_scroller-wrapper {
+  position: relative;
+  width:100%;
+  height:auto;
+}
+
+.ab_scroller-strip {
+  position: absolute;
+  left:0;
+  top:0;
+  width:100000px;
+}
+
+.ab_scroller-strip,
+.ab_scroller-strip * {
+  cursor:move;
+  cursor:-webkit-grab;
+  cursor:-moz-grab;
+  cursor:-o-grab;
+  cursor:-ms-grab;
+  cursor:grab;
+  *cursor:move!important;
+}
+
+.ab_scroller-strip.is-dragging,
+.ab_scroller-strip.is-dragging * {
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  cursor: -o-grabbing;
+  cursor: -ms-grabbing;
+  cursor: grabbing
+}
+
+/*.ab_scroller-strip a {
+  cursor: pointer;
+}*/
+
+.ab_scroller-strip:after {
+  clear:both;
+  content:' ';
+  display:block;
+}
+
+.ab_scroller-item {
+  float:left;
 }
