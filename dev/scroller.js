@@ -51,6 +51,7 @@
         prefix: 'ab_scroller',
         draggingClsnm: 'is-dragging',
         leftAlignClsnm: 'is-left-align',
+        borderVsblClsnm: 'is-visible',
 
         easing: pos => pos === 1 ? 1 : -Math.pow(2, -10 * pos) + 1,
       }
@@ -167,6 +168,8 @@
 
       const prevHtml = rootNode.innerHTML
       const wrapperHtml = `<div class="${prefix}-wrapper">
+        <div class="${prefix}-border ${prefix}-border--left"></div>
+        <div class="${prefix}-border ${prefix}-border--right"></div>
         <div class="${prefix}-strip">${prevHtml}</div>
       </div>`
 
@@ -191,7 +194,8 @@
     setSize() {
       const prefix = this.config.prefix
       const rootNode = this.state.el
-      const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
+      const stripNode = getElement(`.${prefix}-strip`, rootNode)
+      const wrapperNode = getElement(`.${prefix}-wrapper`, rootNode)
       const itemNodes = getElements(`.${prefix}-item`, rootNode)
       let maxHeight = 0, sumWidth = 0
 
@@ -203,8 +207,9 @@
       })
 
       rootNode.style.height = maxHeight + 'px'
+      stripNode.style.height = maxHeight + 'px'
+      stripNode.style.width = (sumWidth + 1) + 'px'
       wrapperNode.style.height = maxHeight + 'px'
-      wrapperNode.style.width = (sumWidth + 1) + 'px'
 
       this.set('limitRight', sumWidth + 1 - rootNode.offsetWidth)
     }
@@ -224,7 +229,7 @@
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
-      this.addClass(wrapperNode, this.config.draggingClsnm)
+      this.addClass(getElement('html'), this.config.draggingClsnm)
     }
 
     onPointerMove(e) {
@@ -249,6 +254,7 @@
       this.set('scrolled', result)
       this.set('moveEventTS', (new Date()).getTime())
       this.push('pageX', currentPageX)
+      this.checkBorderVisibility()
     }
 
     onPointerUp(e) {
@@ -260,7 +266,7 @@
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
-      this.removeClass(wrapperNode, this.config.draggingClsnm)
+      this.removeClass(getElement('html'), this.config.draggingClsnm)
 
       const limitLeft = this.get('limitLeft')
       const limitRight = this.get('limitRight')
@@ -315,6 +321,7 @@
       this.setPos(-1 * result)
       this.set('scrolled', result)
 
+      this.checkBorderVisibility()
       return false
     }
 
@@ -334,22 +341,56 @@
           ? start + delta * this.config.easing(currentTime / time)
           : stop
 
-        if (currentTime < 1) raf(tick)
         this.setPos(-1 * endpoint)
         this.set('scrolled', endpoint)
+
+        if (currentTime < 1) raf(tick)
+        else this.checkBorderVisibility()
       }
 
       tick()
+    }
+
+    checkBorderVisibility() {
+      const scrolled = this.get('scrolled')
+      const limitLeft = this.get('limitLeft')
+      const limitRight = this.get('limitRight')
+
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+
+      if (scrolled > limitLeft) {
+        const leftBorder = getElement(`.${prefix}-border--left`, rootNode)
+        this.addClass(leftBorder, this.config.borderVsblClsnm)
+      }
+      else {
+        const leftBorder = getElement(`.${prefix}-border--left`, rootNode)
+        this.removeClass(leftBorder, this.config.borderVsblClsnm)
+      }
+
+      if (scrolled < limitRight) {
+        const rightBorder = getElement(`.${prefix}-border--right`, rootNode)
+        this.addClass(rightBorder, this.config.borderVsblClsnm)
+      }
+      else {
+        const rightBorder = getElement(`.${prefix}-border--right`, rootNode)
+        this.removeClass(rightBorder, this.config.borderVsblClsnm)
+      }
+
     }
 
 
     // public API
 
     scrollTo(point, time=1000) {
-      let endpoint = parseInt(point)
-      if (point == 'end') endpoint = this.get('limitRight')
-      else if (point == 'start') endpoint = this.get('limitLeft')
-      else if (point == 'center') endpoint = this.get('limitRight') / 2
+      const limitRight = this.get('limitRight')
+      const limitLeft = this.get('limitLeft')
+      let endpoint = !isNaN(point) ? parseInt(point) : 0
+      endpoint = Math.min(Math.max(endpoint, limitLeft), limitRight)
+
+      if (point == 'end') endpoint = limitRight
+      else if (point == 'start') endpoint = limitLeft
+      else if (point == 'center') endpoint = limitRight / 2
 
       this.animate(this.get('scrolled'), endpoint, time)
     }

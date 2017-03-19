@@ -40,8 +40,10 @@
   *cursor:move!important;
 }
 
-.ab_scroller-strip.is-dragging,
-.ab_scroller-strip.is-dragging * {
+.is-dragging,
+.is-dragging *,
+.is-dragging .ab_scroller-strip,
+.is-dragging .ab_scroller-strip * {
   cursor: -webkit-grabbing;
   cursor: -moz-grabbing;
   cursor: -o-grabbing;
@@ -49,9 +51,10 @@
   cursor: grabbing
 }
 
-/*.ab_scroller-strip a {
+.ab_scroller-strip a,
+.ab_scroller-strip a * {
   cursor: pointer;
-}*/
+}
 
 .ab_scroller-strip:after {
   clear:both;
@@ -59,6 +62,30 @@
   display:block;
 }
 
-.ab_scroller-item {
-  /*float:left;*/
+
+.ab_scroller-border {
+  position: absolute;
+  top:0;
+  bottom:0;
+  background: rgba(0,0,0,.6);
+  width:1px;
+  height:auto;
+  z-index:5;
+  opacity: 0;
+  transition: opacity 0.2s;
 }
+
+.ab_scroller-border--left {
+  left:0;
+}
+
+.ab_scroller-border--right {
+  right:0;
+}
+
+.ab_scroller-border.is-visible {
+  opacity: 1;
+}
+
+.ab_scroller.is-no-anchors {}
+.ab_scroller.is-no-scrollbar {}
