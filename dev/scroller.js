@@ -171,6 +171,7 @@
     init(el) {
       this.createWrapper()
       this.wrapItems()
+      this.createAnchors()
       this.setSize()
 
       const prefix = this.config.prefix
@@ -227,6 +228,21 @@
         itemNode.parentNode.insertBefore(itemWrapper, itemNode)
         itemNode.remove()
       })
+    }
+
+    createAnchors() {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
+      const ancWrapperNode = getElement(`.${prefix}-anchors`, rootNode)
+      let anchorsHtml = ''
+
+      getElements(':scope > *', wrapperNode).forEach(itemNode => {
+        const anchorText = getElement('[data-anchor]', itemNode).getAttribute('data-anchor')
+        anchorsHtml += `<span class="${prefix}-anchor"><span>${anchorText}</span></span>`
+      })
+
+      ancWrapperNode.innerHTML = anchorsHtml
     }
 
     setSize() {

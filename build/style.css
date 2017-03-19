@@ -5,7 +5,7 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  padding-bottom:15px;
+  padding-bottom:40px;
 }
 
 .ab_scroller * {
@@ -124,6 +124,35 @@
   -webkit-transform: none !important;
           transform: none !important;
   right:0 !important
+}
+
+.ab_scroller-anchors {
+  position: absolute;
+  bottom: -40px;
+  font-size: 12px;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.ab_scroller-anchor {
+  padding-right:5px;
+  box-sizing: border-box;
+}
+
+.ab_scroller-anchor span {
+  white-space: nowrap !important;
+  overflow: hidden;
+  display:block;
+  color:rgba(0,0,0,.5);
+  border-bottom:1px dashed rgba(0,0,0,.2);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.ab_scroller-anchor span:hover {
+  color:black;
+  border-bottom:1px dashed rgba(0,0,0,.7)
 }
 
 .ab_scroller.is-no-anchors {}
