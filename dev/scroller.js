@@ -1,5 +1,21 @@
 (function() {
 
+  // closes polyfill
+
+  if (!Element.prototype.closest) {
+    Element.prototype.closest = function(css) {
+      var node = this
+
+      while (node) {
+        if (node.matches(css)) return node
+        else node = node.parentElement
+      }
+
+      return null
+    }
+  }
+
+
   // helpers
 
   const getElement = (selector, ctx=document) => {
@@ -22,16 +38,19 @@
         align='center',
         noAnchors=false,
         noScrollbar=false,
-        el
+        el,
+        onClick
       } = config
 
       this.config = {
         align: align,
         noAnchors: noAnchors,
         noScrollbar: noScrollbar,
+        onClick: onClick,
 
         prefix: 'ab_scroller',
         draggingClsnm: 'is-dragging',
+        leftAlignClsnm: 'is-left-align',
 
         easing: pos => pos === 1 ? 1 : -Math.pow(2, -10 * pos) + 1,
       }
@@ -86,7 +105,7 @@
     getLastMeaningfull(prop) {
       const field = this.state[prop]
       const toIgnore = field && field.length && field.length > 3 ? 3 : 1
-      return field[field.length - toIgnore]
+      return field[field.length - toIgnore] || 0
     }
 
 
@@ -123,6 +142,9 @@
       const stripNode = getElement(`.${prefix}-strip`, rootNode)
       const linkNodes = getElements('a', stripNode)
 
+      // alignment
+      if (this.config.align !== 'center') this.addClass(rootNode, this.config.leftAlignClsnm)
+
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
       window.addEventListener('mousemove', this.onPointerMove.bind(this))
       window.addEventListener('mouseup', this.onPointerUp.bind(this))
@@ -131,6 +153,10 @@
       // prevent clickng
       Array.from(linkNodes).forEach(node => {
         node.addEventListener('click', this.onClickLink.bind(this), false)
+      })
+
+      window.addEventListener('resize', e => {
+        this.setSize()
       })
     }
 
@@ -244,13 +270,27 @@
       const currentEventX = e.originalEvent && e.originalEvent.pageX || e.pageX
       const distanceDelta = currentEventX - lastPageX
       const timeDelta = (new Date()).getTime() - this.get('moveEventTS')
-      const ednpoint = scrolled - (distanceDelta * 5)
+      const endpoint = scrolled - (distanceDelta * 5)
 
-      if (scrolled < limitLeft || ednpoint < limitLeft) this.animate(scrolled, limitLeft)
-      else if (scrolled > limitRight || ednpoint > limitRight) this.animate(scrolled, limitRight)
+      // clicked
+      if (lastPageX === 0) {
+        if (this.config.onClick) return this.config.onClick(e)
+
+        const linkNode = e.target.closest('a')
+        if (!linkNode) return
+
+        const target = linkNode.getAttribute('target')
+        const href = linkNode.getAttribute('href')
+        if (!target && href) return window.location.href = href
+        if (target.indexOf('blank') > -1 && href) return window.open(href)
+      }
+
+      // dragged
+      if (scrolled < limitLeft || endpoint < limitLeft) this.animate(scrolled, limitLeft)
+      else if (scrolled > limitRight || endpoint > limitRight) this.animate(scrolled, limitRight)
       else if (timeDelta < 150 && Math.abs(distanceDelta) > 2) {
         const timeToEndpoint = Math.abs(distanceDelta) / timeDelta
-        this.animate(scrolled, ednpoint, timeToEndpoint)
+        this.animate(scrolled, endpoint, timeToEndpoint)
       }
 
       this.clear('pageX')
@@ -300,6 +340,18 @@
       }
 
       tick()
+    }
+
+
+    // public API
+
+    scrollTo(point, time=1000) {
+      let endpoint = parseInt(point)
+      if (point == 'end') endpoint = this.get('limitRight')
+      else if (point == 'start') endpoint = this.get('limitLeft')
+      else if (point == 'center') endpoint = this.get('limitRight') / 2
+
+      this.animate(this.get('scrolled'), endpoint, time)
     }
   }
 

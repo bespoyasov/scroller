@@ -20,6 +20,13 @@
   left:0;
   top:0;
   width:100000px;
+  display:flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.ab_scroller.is-left-align .ab_scroller-strip {
+  justify-content: flex-start;
 }
 
 .ab_scroller-strip,
@@ -53,5 +60,5 @@
 }
 
 .ab_scroller-item {
-  float:left;
+  /*float:left;*/
 }

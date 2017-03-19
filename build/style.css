@@ -26,6 +26,21 @@
   left:0;
   top:0;
   width:100000px;
+  display:-webkit-flex;
+  display:-ms-flexbox;
+  display:flex;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
+  -webkit-justify-content: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.ab_scroller.is-left-align .ab_scroller-strip {
+  -webkit-justify-content: flex-start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
 }
 
 .ab_scroller-strip,
@@ -57,5 +72,5 @@
 }
 
 .ab_scroller-item {
-  float:left;
+  /*float:left;*/
 }
