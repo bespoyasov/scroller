@@ -5,6 +5,7 @@
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
+  padding-bottom:15px;
 }
 
 .ab_scroller * {
@@ -97,6 +98,32 @@
 
 .ab_scroller-border.is-visible {
   opacity: 1;
+}
+
+.ab_scroller-scrollwrap {
+  position: absolute;
+  bottom:-15px;
+  left:0;
+  right:0;
+  height:7px;
+}
+
+.ab_scroller-scrollbar {
+  position: absolute;
+  left:0;
+  top:0;
+  height:100%;
+  border-radius: 5px;
+  background: rgba(0,0,0,0.6);
+  cursor: move !important;
+  min-width:20px;
+}
+
+.ab_scroller-scrollbar.is-right {
+  left:auto;
+  -webkit-transform: none !important;
+          transform: none !important;
+  right:0 !important
 }
 
 .ab_scroller.is-no-anchors {}

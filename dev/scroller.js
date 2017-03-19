@@ -61,6 +61,9 @@
         pointerDown: false,
         mouseScroll: false,
 
+        scrollbarWidth: 0,
+        scrollbarFactor: 0,
+
         pageX: [],
         scrolledDiff: 0,
         downEventTS: 0,
@@ -120,16 +123,48 @@
         .replace(/^\s+|\s+$/g, '')
     }
 
+    alignScbToRight() {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const el = getElement(`.${prefix}-scrollbar`, rootNode)
+      this.addClass(el, 'is-right')
+    }
+
+    releaseScb() {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const el = getElement(`.${prefix}-scrollbar`, rootNode)
+      this.removeClass(el, 'is-right')
+    }
+
+
     setPos(pos) {
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const el = getElement(`.${prefix}-strip`, rootNode)
+      this.setPosition(el, pos)
+    }
 
+    setScbPos(pos) {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const el = getElement(`.${prefix}-scrollbar`, rootNode)
+      this.setPosition(el, pos)
+    }
+
+    setPosition(el, pos) {
       el.style.webkitTransform = 'translate(' + pos + 'px, 0) translateZ(0)'
       el.style.MozTransform =
       el.style.msTransform =
       el.style.OTransform =
       el.style.transform = 'translateX(' + pos + 'px)'
+    }
+
+    setWidth(width) {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const el = getElement(`.${prefix}-scrollbar`, rootNode)
+      el.style.width = width + 'px'
     }
 
 
@@ -171,6 +206,9 @@
         <div class="${prefix}-border ${prefix}-border--left"></div>
         <div class="${prefix}-border ${prefix}-border--right"></div>
         <div class="${prefix}-strip">${prevHtml}</div>
+
+        <div class="${prefix}-scrollwrap"><div class="${prefix}-scrollbar"></div></div>
+        <div class="${prefix}-anchors"></div>
       </div>`
 
       rootNode.innerHTML = wrapperHtml
@@ -194,8 +232,10 @@
     setSize() {
       const prefix = this.config.prefix
       const rootNode = this.state.el
+
       const stripNode = getElement(`.${prefix}-strip`, rootNode)
       const wrapperNode = getElement(`.${prefix}-wrapper`, rootNode)
+      const scrollbarNode = getElement(`.${prefix}-scrollbar`, rootNode)
       const itemNodes = getElements(`.${prefix}-item`, rootNode)
       let maxHeight = 0, sumWidth = 0
 
@@ -206,12 +246,18 @@
         sumWidth += itemNode.offsetWidth
       })
 
+      const wrapperWidth = wrapperNode.offsetWidth
+      const scrollbarFactor = wrapperWidth / sumWidth
+
       rootNode.style.height = maxHeight + 'px'
       stripNode.style.height = maxHeight + 'px'
       stripNode.style.width = (sumWidth + 1) + 'px'
       wrapperNode.style.height = maxHeight + 'px'
+      scrollbarNode.style.width = (wrapperWidth * scrollbarFactor) + 'px'
 
       this.set('limitRight', sumWidth + 1 - rootNode.offsetWidth)
+      this.set('scrollbarFactor', scrollbarFactor)
+      this.set('scrollbarWidth', wrapperWidth * scrollbarFactor)
     }
 
 
@@ -246,14 +292,33 @@
 
       const limitLeft = this.get('limitLeft')
       const limitRight = this.get('limitRight')
+      const scrollbarFactor = this.get('scrollbarFactor')
+      let scrollbarResult = result * scrollbarFactor
+      let scrollbarWidth = this.get('scrollbarWidth')
 
-      if (result < limitLeft) result = Math.round(0.2 * result)
-      else if (result > limitRight) result = Math.round(0.2 * result + 0.8 * limitRight)
+      if (result < limitLeft) {
+        result = Math.round(0.2 * result)
+        scrollbarWidth += Math.round(0.2 * scrollbarResult)
+        scrollbarResult = 0
+        this.setWidth(scrollbarWidth)
+      }
+      else if (result > limitRight) {
+        result = Math.round(0.2 * result + 0.8 * limitRight)
+        scrollbarWidth -= Math.round(0.8 * (result - limitRight) * scrollbarFactor)
+        this.alignScbToRight()
+        this.setWidth(scrollbarWidth)
+      }
+      else {
+        this.releaseScb()
+      }
 
       this.setPos(-1 * result)
+      this.setScbPos(scrollbarResult)
+
       this.set('scrolled', result)
       this.set('moveEventTS', (new Date()).getTime())
       this.push('pageX', currentPageX)
+
       this.checkBorderVisibility()
     }
 
@@ -292,8 +357,12 @@
       }
 
       // dragged
-      if (scrolled < limitLeft || endpoint < limitLeft) this.animate(scrolled, limitLeft)
-      else if (scrolled > limitRight || endpoint > limitRight) this.animate(scrolled, limitRight)
+      if (scrolled < limitLeft || endpoint < limitLeft) {
+        this.animate(scrolled, limitLeft, 10, true)
+      }
+      else if (scrolled > limitRight || endpoint > limitRight) {
+        this.animate(scrolled, limitRight, 10, true)
+      }
       else if (timeDelta < 150 && Math.abs(distanceDelta) > 2) {
         const timeToEndpoint = Math.abs(distanceDelta) / timeDelta
         this.animate(scrolled, endpoint, timeToEndpoint)
@@ -318,7 +387,14 @@
       const limitRight = this.get('limitRight')
       const result = Math.min(Math.max(this.get('scrolled') + deltaX, limitLeft), limitRight)
 
+      const scrollbarWidth = this.get('scrollbarWidth')
+      const scrollbarFactor = this.get('scrollbarFactor')
+      const scrollbarResult = result * scrollbarFactor
+
       this.setPos(-1 * result)
+      this.releaseScb()
+      this.setScbPos(scrollbarResult)
+      this.setWidth(scrollbarWidth)
       this.set('scrolled', result)
 
       this.checkBorderVisibility()
@@ -326,12 +402,14 @@
     }
 
 
-    animate(start, stop=0, speed=10) {
+    animate(start, stop=0, speed=10, animateWidth=false) {
       const delta = stop - start
       const time = Math.max(.05, Math.min(Math.abs(delta) / speed, 1))
+      const scbFactor = this.get('scrollbarFactor')
 
       let currentTime = 0,
-          endpoint = this.get('scrolled')
+          endpoint = this.get('scrolled'),
+          scbEndpoint = endpoint * scbFactor
 
       const tick = () => {
         if (this.get('pointerDown') || this.get('mouseScroll')) return
@@ -340,6 +418,19 @@
         endpoint = currentTime < 1
           ? start + delta * this.config.easing(currentTime / time)
           : stop
+
+        scbEndpoint = currentTime < 1
+          ? start * scbFactor + delta * this.config.easing(currentTime / time) * scbFactor
+          : stop * scbFactor
+
+
+        if (!animateWidth) this.setScbPos(scbEndpoint)
+        else {
+          let scbw = this.get('scrollbarWidth')
+          if (start < stop) scbw -= delta * scbFactor * (1 - this.config.easing(currentTime / time))
+          else scbw += delta * scbFactor * (1 - this.config.easing(currentTime / time))
+          this.setWidth(scbw)
+        }
 
         this.setPos(-1 * endpoint)
         this.set('scrolled', endpoint)
@@ -392,7 +483,7 @@
       else if (point == 'start') endpoint = limitLeft
       else if (point == 'center') endpoint = limitRight / 2
 
-      this.animate(this.get('scrolled'), endpoint, time)
+      this.animate(this.get('scrolled'), endpoint, time, true)
     }
   }
 
