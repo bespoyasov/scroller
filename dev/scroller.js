@@ -39,6 +39,7 @@
       this.state = {
         scrolled: 0,
         pointerDown: false,
+        mouseScroll: false,
 
         pageX: [],
         scrolledDiff: 0,
@@ -125,6 +126,7 @@
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
       window.addEventListener('mousemove', this.onPointerMove.bind(this))
       window.addEventListener('mouseup', this.onPointerUp.bind(this))
+      stripNode.addEventListener('mousewheel', this.onScroll.bind(this))
 
       // prevent clickng
       Array.from(linkNodes).forEach(node => {
@@ -187,6 +189,7 @@
       e.preventDefault()
 
       this.set('pointerDown', true)
+      this.set('mouseScroll', false)
       this.set('downEventTS', (new Date()).getTime())
 
       const diff = this.get('scrolled') + (e.originalEvent && e.originalEvent.pageX || e.pageX)
@@ -258,6 +261,23 @@
       return false
     }
 
+    onScroll(e) {
+      if (!e || !e.deltaX) return
+      e.preventDefault()
+
+      this.set('mouseScroll', true)
+
+      const {deltaX} = e
+      const limitLeft = this.get('limitLeft')
+      const limitRight = this.get('limitRight')
+      const result = Math.min(Math.max(this.get('scrolled') + deltaX, limitLeft), limitRight)
+
+      this.setPos(-1 * result)
+      this.set('scrolled', result)
+
+      return false
+    }
+
 
     animate(start, stop=0, speed=10) {
       const delta = stop - start
@@ -267,7 +287,7 @@
           endpoint = this.get('scrolled')
 
       const tick = () => {
-        if (this.get('pointerDown')) return
+        if (this.get('pointerDown') || this.get('mouseScroll')) return
 
         currentTime += (1 / 60)
         endpoint = currentTime < 1
