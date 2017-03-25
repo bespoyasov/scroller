@@ -1,14 +1,16 @@
 # Scroller.js
 
-Puts blocks in line and adds anchors and a scrollbar.
+Puts blocks in line and adds anchors and a scrollbar. Has no dependencies. Works in IE10+.
 
 ## Start
 
 Add to `<head>` links to script and styles:
 
 ```html
-<script src="scroller.js" type="text/javascript"></script>
-<link href="scroller.css" rel="stylesheet" /> 
+<script src="scroller-min.js" type="text/javascript"></script>
+<!-- 14 KB -->
+<link href="scroller-min.css" rel="stylesheet" />
+<!-- 3 KB -->
 ```
 
 ## Initialization
