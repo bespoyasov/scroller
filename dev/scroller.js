@@ -241,6 +241,19 @@
         this.setSize()
         this.checkscrollable()
       })
+
+      // check for display none
+      const isHidden = el => el.offsetParent === null
+
+      if (isHidden(rootNode)) {
+        let intervalId = setInterval(() => {
+          if (!isHidden(rootNode)) {
+            clearInterval(intervalId)
+            this.setSize()
+            this.checkscrollable()
+          }
+        }, 50)
+      }
     }
 
 
@@ -302,6 +315,11 @@
       const scrollbarNode = getElement(`.${prefix}-scrollbar`, rootNode)
       const itemNodes = getElements(`.${prefix}-item`, rootNode)
       let maxHeight = 0, sumWidth = 0
+
+      rootNode.setAttribute('style', '')
+      stripNode.setAttribute('style', '')
+      wrapperNode.setAttribute('style', '')
+      scrollbarNode.setAttribute('style', '')
 
       itemNodes.forEach(itemNode => {
         const currentHeight = itemNode.offsetHeight
