@@ -52,12 +52,16 @@
         draggingClsnm: 'is-dragging',
         leftAlignClsnm: 'is-left-align',
         borderVsblClsnm: 'is-visible',
+        noAnchorsClsnm: 'is-no-anchors',
+        noScrollbarClsnm: 'is-no-scrollbar',
 
         easing: pos => pos === 1 ? 1 : -Math.pow(2, -10 * pos) + 1,
       }
 
       this.state = {
         scrolled: 0,
+        scrollable: true,
+
         pointerDown: false,
         scrollbarPointerDown: false,
         mouseScroll: false,
@@ -75,6 +79,7 @@
 
         limitLeft: 0,
         limitRight: 0,
+        stripWidth: 0,
 
         len: el.hasChildNodes() && getElements(':scope > *', el).length || 0,
         el: el || null,
@@ -177,6 +182,7 @@
       this.wrapItems()
       this.createAnchors()
       this.setSize()
+      this.checkscrollable()
 
       const prefix = this.config.prefix
       const rootNode = this.state.el
@@ -186,8 +192,25 @@
       const scrollNode = getElement(`.${prefix}-scrollwrap`, rootNode)
       const scrollbarNode = getElement(`.${prefix}-scrollbar`, rootNode)
 
-      // alignment
-      if (this.config.align !== 'center') this.addClass(rootNode, this.config.leftAlignClsnm)
+      const anchorsNodes = getElements(`.${prefix}-anchor`, rootNode)
+
+      // config
+      if (
+        rootNode.getAttribute('data-leftalign') || 
+        rootNode.getAttribute('data-leftIfWide') ||
+        this.config.align !== 'center'
+      ) {
+        this.addClass(rootNode, this.config.leftAlignClsnm)
+      }
+
+      if (this.config.noAnchors || rootNode.getAttribute('data-noanchors')) {
+        this.addClass(rootNode, this.config.noAnchorsClsnm)
+      }
+
+      if (this.config.noScrollbar || rootNode.getAttribute('data-noscrollbar')) {
+        this.addClass(rootNode, this.config.noScrollbarClsnm)
+      }
+
 
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
       window.addEventListener('mousemove', this.onPointerMove.bind(this))
@@ -200,6 +223,10 @@
 
       scrollNode.addEventListener('click', this.onScrollClick.bind(this))
 
+      Array.from(anchorsNodes).forEach(anchorNode => {
+        anchorNode.addEventListener('click', this.onAnchorClick.bind(this))
+      })
+
       // prevent clickng
       Array.from(linkNodes).forEach(node => {
         node.addEventListener('click', this.onClickLink.bind(this), false)
@@ -207,6 +234,7 @@
 
       window.addEventListener('resize', e => {
         this.setSize()
+        this.checkscrollable()
       })
     }
 
@@ -248,11 +276,13 @@
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
       const ancWrapperNode = getElement(`.${prefix}-anchors`, rootNode)
-      let anchorsHtml = ''
+      let anchorsHtml = '', counter = 0
 
       getElements(':scope > *', wrapperNode).forEach(itemNode => {
         const anchorText = getElement('[data-anchor]', itemNode).getAttribute('data-anchor')
-        anchorsHtml += `<span class="${prefix}-anchor"><span>${anchorText}</span></span>`
+        anchorsHtml += `<span data-anchorid="${counter}" class="${prefix}-anchor"><span>${anchorText}</span></span>`
+        itemNode.setAttribute('data-anchororiginid', counter)
+        counter++
       })
 
       ancWrapperNode.innerHTML = anchorsHtml
@@ -289,9 +319,37 @@
       this.set('scrollbarWidth', wrapperWidth * scrollbarFactor)
     }
 
+    checkscrollable() {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+
+      const stripNode = getElement(`.${prefix}-strip`, rootNode)
+      const wrapperNode = getElement(`.${prefix}-wrapper`, rootNode)
+      const itemNodes = getElements(`.${prefix}-item`, rootNode)
+      const ancWrapperNode = getElement(`.${prefix}-anchors`, rootNode)
+      let sumWidth = 0, wrapperWidth = wrapperNode.offsetWidth
+
+      itemNodes.forEach(itemNode => {
+        sumWidth += itemNode.offsetWidth
+      })
+
+      if (wrapperWidth >= sumWidth) {
+        this.set('scrollable', false)
+        this.addClass(rootNode, 'is-not-scrollable')
+        ancWrapperNode.setAttribute('style', `width: ${sumWidth}px`)
+      }
+      else {
+        this.set('scrollable', true)
+        this.removeClass(rootNode, 'is-not-scrollable')
+        ancWrapperNode.setAttribute('style', `width:auto`)
+      }
+    }
+
 
     onPointerDown(e) {
-      if (!e) return
+      const scrollable = this.get('scrollable')
+      
+      if (!e || !scrollable) return
       e.preventDefault()
 
       this.set('pointerDown', true)
@@ -310,8 +368,10 @@
     }
 
     onPointerMove(e) {
+      const scrollable = this.get('scrollable')
       const pointerDown = this.get('pointerDown')
-      if (!e || !pointerDown) return
+
+      if (!e || !pointerDown || !scrollable) return
       e.preventDefault()
 
       const scrolledDiff = this.get('scrolledDiff')
@@ -355,8 +415,10 @@
     }
 
     onPointerUp(e) {
+      const scrollable = this.get('scrollable')
       const pointerDown = this.get('pointerDown')
-      if (!e || !pointerDown) return
+
+      if (!e || !pointerDown || !scrollable) return
       e.preventDefault()
 
       this.set('pointerDown', false)
@@ -410,14 +472,20 @@
 
 
     onClickLink(e) {
+      const scrollable = this.get('scrollable')
+      if (!scrollable) return e
+
       e.preventDefault()
       return false
     }
 
 
     onScroll(e) {
-      if (!e || !e.deltaX) return
+      const scrollable = this.get('scrollable')
+
+      if (!e || !e.deltaX || Math.abs(e.deltaY) > Math.abs(e.deltaX) || !scrollable) return
       e.preventDefault()
+      e.stopPropagation()
 
       this.set('mouseScroll', true)
 
@@ -442,13 +510,15 @@
 
 
     onScrollClick(e) {
+      const scrollable = this.get('scrollable')
       const scrollClickDisabled = this.get('scrollClickDisabled')
+
       if (scrollClickDisabled) {
         this.set('scrollClickDisabled', false)
         return
       }
       
-      if (!e || !e.preventDefault) return
+      if (!e || !e.preventDefault || !scrollable) return
       e.preventDefault()
 
       const scbWidth = this.get('scrollbarWidth')
@@ -467,9 +537,32 @@
       if (leftEdge < limitLeft) endpoint = limitLeft
       else if (rightEdge > rightScbLimit) endpoint = limitRight
 
-      this.animate(scrolled, endpoint, 10)
+      this.animate(scrolled, endpoint)
       return false
     }
+
+    
+    onAnchorClick(e) {
+      const scrollable = this.get('scrollable')
+      if (!e || !e.target || !scrollable) return 
+      
+      const anchorid = e.target.closest('[data-anchorid]').getAttribute('data-anchorid')
+      if (!anchorid) return
+
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const targetNode = getElement('[data-anchororiginid="' + anchorid + '"]', rootNode)
+      
+      const limitLeft = this.get('limitLeft')
+      const limitRight = this.get('limitRight')
+      const scrolled = this.get('scrolled')
+      const endpoint = Math.min(Math.max(targetNode.offsetLeft, limitLeft), limitRight)
+
+      this.set('mouseScroll', false)
+      this.animate(scrolled, endpoint)
+      return false
+    }
+
 
     onScrollbarPointerDown(e) {
       if (!e) return
@@ -616,7 +709,9 @@
 
   // init
 
-  const el = getElement('.scroller')
-  const scroller = new Scroller({ el })
+  const els = getElements('.scroller')
+  els.forEach(el => {
+    const scroller = new Scroller({ el })
+  })
 
 }())

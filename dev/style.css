@@ -21,6 +21,7 @@
   left:0;
   top:0;
   width:100000px;
+  min-width:100%;
   display:flex;
   flex-wrap: nowrap;
   justify-content: center;
@@ -121,6 +122,10 @@
   width:100%;
   justify-content: space-between;
   flex-wrap: nowrap;
+
+  margin: auto;
+  left:0;
+  right:0;
 }
 
 .ab_scroller-anchor {
@@ -161,6 +166,32 @@
   display:none;
 }
 
+.ab_scroller.is-no-scrollbar .ab_scroller-anchors {
+  bottom:-25px;
+}
+
 .ab_scroller.is-no-scrollbar.is-no-anchors {
   padding-bottom:0;
+}
+
+
+.ab_scroller.is-not-scrollable {
+  padding-bottom:25px;
+}
+
+.ab_scroller.is-not-scrollable .ab_scroller-strip,
+.ab_scroller.is-not-scrollable .ab_scroller-strip * {
+  cursor: initial !important;
+}
+
+.ab_scroller.is-not-scrollable .ab_scroller-border {
+  display:none !important;
+}
+
+.ab_scroller.is-not-scrollable .ab_scroller-scrollwrap {
+  display:none;
+}
+
+.ab_scroller.is-not-scrollable .ab_scroller-anchors {
+  bottom: -25px;
 }
