@@ -236,6 +236,11 @@
         this.setSize()
         this.checkscrollable()
       })
+
+      window.addEventListener('load', e => {
+        this.setSize()
+        this.checkscrollable()
+      })
     }
 
 
@@ -708,11 +713,19 @@
 
 
 
-  // init
+  // autoinit
 
-  const els = getElements('.scroller')
-  els.forEach(el => {
-    const scroller = new Scroller({ el })
-  })
+  const autoinit = () => {
+    const els = getElements('.scroller')
+    els.forEach(el => {
+      const scroller = new Scroller({ el })
+    })
+  }
+
+  document.addEventListener('DOMContentLoaded', () => autoinit)
+
+  document.onreadystatechange = () => {
+    if (document.readyState == "interactive") autoinit()
+  }
 
 }())

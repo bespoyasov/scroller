@@ -15,15 +15,18 @@ Add to `<head>` links to script and styles:
 
 You can initialize script by:
 
-* Wrapping blocks in a container with class `scroller`, and initialization will start automatically;
-* Initializing it like a jQuery plugin:
+* Wrapping blocks in a container with class `scroller`, scroller will initialize automatically;
+* Creating an instance of a class:
 
 ```html
-<div class="foo"> <!-- content --> </div>
+<div class="foo">
+	<!-- scroller content -->
+</div>
+
 <script type="text/javascript"> 
-	$(function(){
-		$('.foo').scroller(); 
-	});
+	const scroller = new Scroller({ 
+		el: document.querySelector('.foo') 
+	})
 </script>
 ```
 
@@ -31,11 +34,11 @@ You can initialize script by:
 
 Scroller data-attributes:
 
-`data-noscrollbar="true"` — disable scrollbar;
+`data-noscrollbar="true"` — disables scrollbar;
 
-`data-noanchors="true"` — disable anchors;
+`data-noanchors="true"` — disables anchors;
 
-`data-leftIfWide="true"` — left content alignment when the width of the page is bigger than width of the content;
+`data-leftalign="true"` — aligns content to left if width of scroller is bigger than width of content in it;
 
 `data-anchor="text"` — anchor text of item, acquires to children of scroller.
 
@@ -43,29 +46,29 @@ To set these options manually initialize them:
 
 ```html
 <script type="text/javascript">
-	$(function(){ 
-		$('.foo').scroller({
-			'noscrollbar': true, 
-			'noanchors': true, 
-			'leftIfWide': true
-		}); 
-	});
+	const scroller = new Scroller({ 
+		el: document.querySelector('.foo'),
+		noscrollbar: true, 
+		noanchors: true, 
+		align: 'left'
+	})
 </script>
 ```
 
 ## Click on element and callback
 
-With manually init you can use a callback on click on an element. The argument of function is a child node, where click happened.
-
-E.g. for print index of an element:
+Scroller provides click callback on children elements:
 
 ```html
 <script type="text/javascript">
-	$(function(){ 
-		$('.foobar').scroller({
-			'onclick' : function($element) { console.log($element.index()) } 
-		});
-	}); 
+	const scroller = new Scroller({ 
+		el: document.querySelector('.foo'),
+		noscrollbar: true, 
+		noanchors: true, 
+		align: 'left',
+
+		onClick: e => { /* e — click event */ }
+	}) 
 </script>
 ```
 
