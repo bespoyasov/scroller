@@ -1,5 +1,10 @@
 (function() {
 
+  // TODO: firefox mousewheel
+  // TODO: check in IE10+
+  // TODO: check on windows
+  // TODO: check on mobile browsers
+
   // closest polyfill
 
   if (!Element.prototype.closest) {
