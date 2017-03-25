@@ -215,7 +215,7 @@
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
       window.addEventListener('mousemove', this.onPointerMove.bind(this))
       window.addEventListener('mouseup', this.onPointerUp.bind(this))
-      stripNode.addEventListener('mousewheel', this.onScroll.bind(this))
+      stripNode.addEventListener('mousewheel', this.onScroll.bind(this, stripNode))
       
       scrollbarNode.addEventListener('mousedown', this.onScrollbarPointerDown.bind(this))
       window.addEventListener('mousemove', this.onScrollbarPointerMove.bind(this))
@@ -480,14 +480,14 @@
     }
 
 
-    onScroll(e) {
+    onScroll(originalNode, e) {
       const scrollable = this.get('scrollable')
 
-      if (!e || !e.deltaX || Math.abs(e.deltaY) > Math.abs(e.deltaX) || !scrollable) return
-      e.preventDefault()
-      e.stopPropagation()
+      if (!e || !e.deltaX || Math.abs(e.deltaY) > Math.abs(e.deltaX) ||  !scrollable) {
+        return
+      }
 
-      this.set('mouseScroll', true)
+      e.preventDefault()
 
       const {deltaX} = e
       const limitLeft = this.get('limitLeft')
@@ -503,6 +503,7 @@
       this.setScbPos(scrollbarResult)
       this.setWidth(scrollbarWidth)
       this.set('scrolled', result)
+      this.set('mouseScroll', true)
 
       this.checkBorderVisibility()
       return false
