@@ -1,6 +1,6 @@
 (function() {
 
-  // closes polyfill
+  // closest polyfill
 
   if (!Element.prototype.closest) {
     Element.prototype.closest = function(css) {
@@ -356,8 +356,8 @@
       const lastPageX = this.getLastMeaningfull('pageX')
       const currentEventX = e.originalEvent && e.originalEvent.pageX || e.pageX
       const distanceDelta = currentEventX - lastPageX
-      const timeDelta = (new Date()).getTime() - this.get('moveEventTS')
-      const endpoint = scrolled - (distanceDelta * 5)
+      const timeDelta = ((new Date()).getTime() - this.get('moveEventTS')) / 1.5
+      const endpoint = scrolled - (distanceDelta * 8)
 
       // clicked
       if (lastPageX === 0) {
@@ -373,12 +373,15 @@
       }
 
       // dragged
-      if (scrolled < limitLeft || endpoint < limitLeft) {
-        this.animate(scrolled, limitLeft, 10, true)
-      }
-      else if (scrolled > limitRight || endpoint > limitRight) {
-        this.animate(scrolled, limitRight, 10, true)
-      }
+      // sticky left
+      if (scrolled < limitLeft) this.animate(scrolled, limitLeft, 10, true)
+      // too much to left
+      else if (endpoint < limitLeft) this.animate(scrolled, limitLeft, 10)
+      // sticky right
+      else if (scrolled > limitRight) this.animate(scrolled, limitRight, 10, true)
+      // too much to right
+      else if (endpoint > limitRight) this.animate(scrolled, limitRight, 10)
+      // otherwise
       else if (timeDelta < 150 && Math.abs(distanceDelta) > 2) {
         const timeToEndpoint = Math.abs(distanceDelta) / timeDelta
         this.animate(scrolled, endpoint, timeToEndpoint)
@@ -422,6 +425,7 @@
       const delta = stop - start
       const time = Math.max(.05, Math.min(Math.abs(delta) / speed, 1))
       const scbFactor = this.get('scrollbarFactor')
+      const rightScbLimit = this.get('limitRight') * scbFactor
 
       let currentTime = 0,
           endpoint = this.get('scrolled'),
@@ -445,6 +449,7 @@
           let scbw = this.get('scrollbarWidth')
           if (start < stop) scbw -= delta * scbFactor * (1 - this.config.easing(currentTime / time))
           else scbw += delta * scbFactor * (1 - this.config.easing(currentTime / time))
+
           this.setWidth(scbw)
         }
 
