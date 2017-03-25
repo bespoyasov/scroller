@@ -133,11 +133,19 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  width:100%;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-flex-wrap: nowrap;
+      -ms-flex-wrap: nowrap;
+          flex-wrap: nowrap;
 }
 
 .ab_scroller-anchor {
   padding-right:5px;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .ab_scroller-anchor span {
@@ -155,5 +163,23 @@
   border-bottom:1px dashed rgba(0,0,0,.7)
 }
 
-.ab_scroller.is-no-anchors {}
-.ab_scroller.is-no-scrollbar {}
+
+.ab_scroller.is-no-anchors {
+  padding-bottom:15px;
+}
+
+.ab_scroller.is-no-anchors .ab_scroller-anchors {
+  display:none;
+}
+
+.ab_scroller.is-no-scrollbar {
+  padding-bottom:25px;
+}
+
+.ab_scroller.is-no-scrollbar .ab_scroller-scrollwrap {
+  display:none;
+}
+
+.ab_scroller.is-no-scrollbar.is-no-anchors {
+  padding-bottom:0;
+}

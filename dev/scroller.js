@@ -59,6 +59,7 @@
       this.state = {
         scrolled: 0,
         pointerDown: false,
+        scrollbarPointerDown: false,
         mouseScroll: false,
 
         scrollbarWidth: 0,
@@ -68,6 +69,9 @@
         scrolledDiff: 0,
         downEventTS: 0,
         moveEventTS: 0,
+
+        scrollbarDownPageX: 0,
+        scrollClickDisabled: false,
 
         limitLeft: 0,
         limitRight: 0,
@@ -179,6 +183,9 @@
       const stripNode = getElement(`.${prefix}-strip`, rootNode)
       const linkNodes = getElements('a', stripNode)
 
+      const scrollNode = getElement(`.${prefix}-scrollwrap`, rootNode)
+      const scrollbarNode = getElement(`.${prefix}-scrollbar`, rootNode)
+
       // alignment
       if (this.config.align !== 'center') this.addClass(rootNode, this.config.leftAlignClsnm)
 
@@ -186,6 +193,12 @@
       window.addEventListener('mousemove', this.onPointerMove.bind(this))
       window.addEventListener('mouseup', this.onPointerUp.bind(this))
       stripNode.addEventListener('mousewheel', this.onScroll.bind(this))
+      
+      scrollbarNode.addEventListener('mousedown', this.onScrollbarPointerDown.bind(this))
+      window.addEventListener('mousemove', this.onScrollbarPointerMove.bind(this))
+      window.addEventListener('mouseup', this.onScrollbarPointerUp.bind(this))
+
+      scrollNode.addEventListener('click', this.onScrollClick.bind(this))
 
       // prevent clickng
       Array.from(linkNodes).forEach(node => {
@@ -282,6 +295,7 @@
       e.preventDefault()
 
       this.set('pointerDown', true)
+      this.set('scrollbarPointerDown', false)
       this.set('mouseScroll', false)
       this.set('downEventTS', (new Date()).getTime())
 
@@ -292,6 +306,7 @@
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
       this.addClass(getElement('html'), this.config.draggingClsnm)
+      return false
     }
 
     onPointerMove(e) {
@@ -336,10 +351,12 @@
       this.push('pageX', currentPageX)
 
       this.checkBorderVisibility()
+      return false
     }
 
     onPointerUp(e) {
-      if (!e) return
+      const pointerDown = this.get('pointerDown')
+      if (!e || !pointerDown) return
       e.preventDefault()
 
       this.set('pointerDown', false)
@@ -388,12 +405,15 @@
       }
 
       this.clear('pageX')
+      return false
     }
+
 
     onClickLink(e) {
       e.preventDefault()
       return false
     }
+
 
     onScroll(e) {
       if (!e || !e.deltaX) return
@@ -417,6 +437,90 @@
       this.set('scrolled', result)
 
       this.checkBorderVisibility()
+      return false
+    }
+
+
+    onScrollClick(e) {
+      const scrollClickDisabled = this.get('scrollClickDisabled')
+      if (scrollClickDisabled) {
+        this.set('scrollClickDisabled', false)
+        return
+      }
+      
+      if (!e || !e.preventDefault) return
+      e.preventDefault()
+
+      const scbWidth = this.get('scrollbarWidth')
+      const scbFactor = this.get('scrollbarFactor')
+      const limitLeft = this.get('limitLeft')
+      const limitRight = this.get('limitRight')
+      const rightScbLimit = limitRight * scbFactor
+      const scrolled = this.get('scrolled')
+
+      const pageX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      const center = pageX - scbWidth / 2
+      const leftEdge = center - scbWidth / 2
+      const rightEdge = center + scbWidth / 2
+      
+      let endpoint = center / scbFactor
+      if (leftEdge < limitLeft) endpoint = limitLeft
+      else if (rightEdge > rightScbLimit) endpoint = limitRight
+
+      this.animate(scrolled, endpoint, 10)
+      return false
+    }
+
+    onScrollbarPointerDown(e) {
+      if (!e) return
+      e.preventDefault()
+      e.stopPropagation()
+
+      const currentPageX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      const scrolled = this.get('scrolled')
+      const scrollbarFactor = this.get('scrollbarFactor')
+
+      this.set('scrollbarPointerDown', true)
+      this.set('scrollClickDisabled', true)
+      this.set('pointerDown', false)
+      this.set('mouseScroll', false)
+      this.set('scrollbarDownPageX', currentPageX - scrolled * scrollbarFactor)
+
+      return false
+    }
+
+    onScrollbarPointerMove(e) {
+      const scbPointerDown = this.get('scrollbarPointerDown')
+      if (!e || !scbPointerDown) return
+      e.preventDefault()
+      e.stopPropagation()
+
+      const scrollbarFactor = this.get('scrollbarFactor')
+      const scrollbarDownPageX = this.get('scrollbarDownPageX')
+      const currentPageX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      
+      const limitLeft = this.get('limitLeft')
+      const limitRight = this.get('limitRight')
+      const delta = (currentPageX - scrollbarDownPageX)
+      const result = Math.min(Math.max(delta / scrollbarFactor, limitLeft), limitRight)
+      const scrollbarResult = result * scrollbarFactor
+
+      this.setPos(-1 * result)
+      this.setScbPos(scrollbarResult)
+
+      this.set('scrolled', result)
+      this.checkBorderVisibility()
+      return false
+    }
+
+    onScrollbarPointerUp(e) {
+      const scbPointerDown = this.get('scrollbarPointerDown')
+      
+      if (!e || !scbPointerDown) return
+      e.preventDefault()
+      e.stopPropagation()
+
+      this.set('scrollbarPointerDown', false)
       return false
     }
 
