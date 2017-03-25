@@ -48,14 +48,14 @@ To set these options manually initialize them:
 <script type="text/javascript">
 	const scroller = new Scroller({ 
 		el: document.querySelector('.foo'),
-		noscrollbar: true, 
-		noanchors: true, 
+		noScrollbar: true, 
+		noAnchors: true, 
 		align: 'left'
 	})
 </script>
 ```
 
-## Click on element and callback
+## API
 
 Scroller provides click callback on children elements:
 
@@ -63,8 +63,8 @@ Scroller provides click callback on children elements:
 <script type="text/javascript">
 	const scroller = new Scroller({ 
 		el: document.querySelector('.foo'),
-		noscrollbar: true, 
-		noanchors: true, 
+		noScrollbar: true, 
+		noAnchors: true, 
 		align: 'left',
 
 		onClick: e => { /* e — click event */ }
@@ -72,9 +72,19 @@ Scroller provides click callback on children elements:
 </script>
 ```
 
+Also you can programatically change scroller position by calling `scrollTo` method:
+
+```javascript
+	scroller.scrollTo('start')		// scrolls to first element
+	scroller.scrollTo('center')		// scrolls to center
+	scroller.scrollTo('end')			// scrolls to last element
+	scroller.scrollTo(100)				// scrolls by 100px
+	scroller.scrollTo(100, 2000) 	// scrolls by 100px in 2000 ms
+```
+
 ## Example
 
-Scroller with disabled anchors and left alignment:
+Scroller with disabled scrollbar, active anchors and left alignment:
 
 ```html
 <head>
@@ -82,12 +92,20 @@ Scroller with disabled anchors and left alignment:
 	<link href="scroller.css" rel="stylesheet" /> 
 </head>
 <body>
-	<div class="scroller" data-noscrollbar="true" data-leftIfWide="true">
+	<div class="your-scroller">
 		<img src="example.png" data-anchor="anchor1" />
 		<div data-anchor="anchor2"></div>
 		<table data-anchor="anchor3"></table>
 		<whatever />
 	</div>
+
+	<script type="text/javascript">
+		const myScroller = new Scroller({
+			el: document.querySelector('.your-scroller'),
+			noScrollbar: true,
+			align: 'left'
+		})
+	</script>
 </body>
 ```
 
