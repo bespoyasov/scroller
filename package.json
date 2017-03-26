@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/bespoyasov/scroller/issues"
   },
-  "homepage": "https://github.com/bespoyasov/scroller#readme"
+  "homepage": "https://github.com/bespoyasov/scroller#readme",
+  "dependencies": {
+    "babel-polyfill": "^6.23.0"
+  }
 }

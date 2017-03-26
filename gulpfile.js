@@ -12,7 +12,6 @@ var gulp = require('gulp'),
 		source = require('vinyl-source-stream'),
 
 		concat = require('gulp-concat'),
-
 		notify = require('gulp-notify'),
 		fs = require('fs');
 
@@ -31,14 +30,16 @@ gulp.task('styles', function() {
 
 gulp.task('scripts', function() {
 
-	browserify('dev/scroller.js', {entries: 'dev/scroller.js', debug: true})
+	browserify('dev/scroller.js', {
+		entries: ['./node_modules/babel-polyfill', 'dev/scroller.js'], 
+		debug: true
+	})
 		.transform(babelify, {
 			presets: ['es2015'],
 			plugins: ['transform-class-properties']
 		})
 		.bundle()
     .pipe(source('scroller.js'))
-    .pipe(jshint())
     .pipe(gulp.dest('build/'))
 		.pipe(notify('Scripts task completed'));
 });

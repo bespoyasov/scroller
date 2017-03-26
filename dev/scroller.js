@@ -1,9 +1,34 @@
 (function() {
 
-  // TODO: firefox mousewheel
-  // TODO: check in IE10+
-  // TODO: check on windows
-  // TODO: check on mobile browsers
+  // remove polyfill
+
+  (function (arr) {
+    arr.forEach(function (item) {
+      if (item.hasOwnProperty('remove')) return
+
+      Object.defineProperty(item, 'remove', {
+        configurable: true,
+        enumerable: true,
+        writable: true,
+        value: function remove() {
+          this.parentNode.removeChild(this);
+        }
+      })
+    })
+  })([Element.prototype, CharacterData.prototype, DocumentType.prototype])
+
+
+  // matches polyfill
+
+  if (!Element.prototype.matches) {
+    Element.prototype.matches = Element.prototype.matchesSelector || function(selector) {
+      var matches = document.querySelectorAll(selector), th = this
+      return Array.prototype.some.call(matches, function(e){
+        return e === th
+      })
+    }
+  }
+
 
   // closest polyfill
 
@@ -23,14 +48,35 @@
 
   // helpers
 
-  const getElement = (selector, ctx=document) => {
+  const getElement = (selector='', ctx=document) => {
     const node = ctx.querySelectorAll(selector)
     return node ? node[0] : null
   }
 
-  const getElements = (selector, ctx=document) => {
-    const node = ctx.querySelectorAll(selector)
-    return node || null
+  const getElements = (selector='', ctx=document) => {
+    const nodes = ctx.querySelectorAll(selector)
+    return nodes || null
+  }
+
+  const getEventX = e => {
+    return e.originalEvent 
+        && e.originalEvent.touches 
+        && e.originalEvent.touches.length 
+        && e.originalEvent.touches[0].pageX 
+      || e.pageX 
+      || 0
+  }
+
+  const getChildren = (el) => {
+    let childNodes = el.childNodes,
+        children = [],
+        i = childNodes.length
+
+    while (i--) {
+      if (childNodes[i].nodeType == 1) children.unshift(childNodes[i])
+    }
+
+    return children
   }
 
 
@@ -86,11 +132,13 @@
         limitRight: 0,
         stripWidth: 0,
 
-        len: el.hasChildNodes() && getElements(':scope > *', el).length || 0,
+        swipeDirection: null,
+        touchX: 0,
+        touchY: 0,
+
+        let: el.hasChildNodes() && getChildren(el).length || 0,
         el: el || null,
       }
-
-      this.init(el)
 
       window.raf = (() => {
         return window.requestAnimationFrame ||
@@ -98,6 +146,8 @@
           window.mozRequestAnimationFrame ||
           function(callback) {setTimeout(callback, 1000 / 60)}
       })()
+
+      this.init(el)
     }
 
 
@@ -167,7 +217,7 @@
     }
 
     setPosition(el, pos) {
-      el.style.webkitTransform = 'translate(' + pos + 'px, 0) translateZ(0)'
+      el.style.webkitTransform = 'translateX(' + pos + 'px)'
       el.style.MozTransform =
       el.style.msTransform =
       el.style.OTransform =
@@ -216,18 +266,29 @@
         this.addClass(rootNode, this.config.noScrollbarClsnm)
       }
 
-
+      // scroller surface events
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
-      window.addEventListener('mousemove', this.onPointerMove.bind(this))
-      window.addEventListener('mouseup', this.onPointerUp.bind(this))
-      stripNode.addEventListener('mousewheel', this.onScroll.bind(this, stripNode))
+      stripNode.addEventListener('touchstart', this.onPointerDown.bind(this))
+      document.addEventListener('mousemove', this.onPointerMove.bind(this))
+      document.addEventListener('touchmove', this.onPointerMove.bind(this))
+      document.addEventListener('mouseup', this.onPointerUp.bind(this))
+      document.addEventListener('touchend', this.onPointerUp.bind(this))
       
+      // scrollbar events
       scrollbarNode.addEventListener('mousedown', this.onScrollbarPointerDown.bind(this))
-      window.addEventListener('mousemove', this.onScrollbarPointerMove.bind(this))
-      window.addEventListener('mouseup', this.onScrollbarPointerUp.bind(this))
+      scrollbarNode.addEventListener('touchstart', this.onScrollbarPointerDown.bind(this))
+      document.addEventListener('mousemove', this.onScrollbarPointerMove.bind(this))
+      document.addEventListener('touchmove', this.onScrollbarPointerMove.bind(this))
+      document.addEventListener('mouseup', this.onScrollbarPointerUp.bind(this))
+      document.addEventListener('touchend', this.onScrollbarPointerUp.bind(this))
 
       scrollNode.addEventListener('click', this.onScrollClick.bind(this))
 
+      // mousewheel events
+      const wheelEvent = (/Firefox/i.test(navigator.userAgent)) ? 'wheel' : 'mousewheel'
+      stripNode.addEventListener(wheelEvent, this.onScroll.bind(this))
+
+      // click on anchors
       Array.from(anchorsNodes).forEach(anchorNode => {
         anchorNode.addEventListener('click', this.onAnchorClick.bind(this))
       })
@@ -237,6 +298,7 @@
         node.addEventListener('click', this.onClickLink.bind(this), false)
       })
 
+      // rerender
       window.addEventListener('resize', e => {
         this.setSize()
         this.checkscrollable()
@@ -285,7 +347,7 @@
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
 
-      getElements(':scope > *', wrapperNode).forEach(itemNode => {
+      Array.from(getChildren(wrapperNode)).forEach(itemNode => {
         const itemWrapper = document.createElement('div')
         itemWrapper.innerHTML = itemNode.outerHTML
         itemWrapper.setAttribute('class', `${prefix}-item`)
@@ -301,7 +363,7 @@
       const ancWrapperNode = getElement(`.${prefix}-anchors`, rootNode)
       let anchorsHtml = '', counter = 0
 
-      getElements(':scope > *', wrapperNode).forEach(itemNode => {
+      Array.from(getChildren(wrapperNode)).forEach(itemNode => {
         const anchorText = getElement('[data-anchor]', itemNode).getAttribute('data-anchor')
         anchorsHtml += `<span data-anchorid="${counter}" class="${prefix}-anchor"><span>${anchorText}</span></span>`
         itemNode.setAttribute('data-anchororiginid', counter)
@@ -326,7 +388,7 @@
       wrapperNode.setAttribute('style', '')
       scrollbarNode.setAttribute('style', '')
 
-      itemNodes.forEach(itemNode => {
+      Array.from(itemNodes).forEach(itemNode => {
         const currentHeight = itemNode.offsetHeight
         if (currentHeight > maxHeight) maxHeight = currentHeight
 
@@ -335,6 +397,8 @@
 
       const wrapperWidth = wrapperNode.offsetWidth
       const scrollbarFactor = wrapperWidth / sumWidth
+      const scrolled = this.get('scrolled')
+      const scbScrolled = scrolled * scrollbarFactor
 
       rootNode.style.height = maxHeight + 'px'
       stripNode.style.height = maxHeight + 'px'
@@ -342,6 +406,8 @@
       wrapperNode.style.height = maxHeight + 'px'
       scrollbarNode.style.width = (wrapperWidth * scrollbarFactor) + 'px'
 
+      this.setPos(-1 * scrolled)
+      this.setScbPos(scbScrolled)
       this.set('limitRight', sumWidth + 1 - rootNode.offsetWidth)
       this.set('scrollbarFactor', scrollbarFactor)
       this.set('scrollbarWidth', wrapperWidth * scrollbarFactor)
@@ -357,7 +423,7 @@
       const ancWrapperNode = getElement(`.${prefix}-anchors`, rootNode)
       let sumWidth = 0, wrapperWidth = wrapperNode.offsetWidth
 
-      itemNodes.forEach(itemNode => {
+      Array.from(itemNodes).forEach(itemNode => {
         sumWidth += itemNode.offsetWidth
       })
 
@@ -373,26 +439,32 @@
       }
     }
 
+    checkElement(e) {
+      return e.target.closest(`.${this.config.prefix}`) == this.state.el
+    }
+
 
     onPointerDown(e) {
       const scrollable = this.get('scrollable')
-      
       if (!e || !scrollable) return
-      e.preventDefault()
+
+      this.handleTouchStart(e)
+      if (!e.touches && (!e.originalEvent || !e.originalEvent.touches)) e.preventDefault()
 
       this.set('pointerDown', true)
       this.set('scrollbarPointerDown', false)
       this.set('mouseScroll', false)
       this.set('downEventTS', (new Date()).getTime())
 
-      const diff = this.get('scrolled') + (e.originalEvent && e.originalEvent.pageX || e.pageX)
+      const diff = this.get('scrolled') + getEventX(e)
       this.set('scrolledDiff', diff)
 
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
       this.addClass(getElement('html'), this.config.draggingClsnm)
-      return false
+      
+      return
     }
 
     onPointerMove(e) {
@@ -400,13 +472,17 @@
       const pointerDown = this.get('pointerDown')
 
       if (!e || !pointerDown || !scrollable) return
+      
+      this.handleTouchMove(e)
+      if (this.get('swipeDirection') == 'v') return
+      
       e.preventDefault()
 
       const scrolledDiff = this.get('scrolledDiff')
       const scrolled = this.get('scrolled')
 
       // drag to left is positive number
-      const currentPageX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      const currentPageX = getEventX(e)
       let result = scrolledDiff - currentPageX
 
       const limitLeft = this.get('limitLeft')
@@ -447,8 +523,17 @@
       const pointerDown = this.get('pointerDown')
 
       if (!e || !pointerDown || !scrollable) return
-      e.preventDefault()
 
+      if (this.get('swipeDirection') == 'v') {
+        this.set('pointerDown', false)
+        this.set('scrollbarPointerDown', false)
+        this.set('mouseScroll', false)
+        this.set('swipeDirection', null)
+        this.clear('pageX')
+        return
+      }
+
+      e.preventDefault()
       this.set('pointerDown', false)
 
       const prefix = this.config.prefix
@@ -461,7 +546,7 @@
       const scrolled = this.get('scrolled')
 
       const lastPageX = this.getLastMeaningfull('pageX')
-      const currentEventX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      const currentEventX = getEventX(e)
       const distanceDelta = currentEventX - lastPageX
       const timeDelta = ((new Date()).getTime() - this.get('moveEventTS')) / 1.5
       const endpoint = scrolled - (distanceDelta * 8)
@@ -490,8 +575,8 @@
       else if (endpoint > limitRight) this.animate(scrolled, limitRight, 10)
       // otherwise
       else if (timeDelta < 150 && Math.abs(distanceDelta) > 2) {
-        const timeToEndpoint = Math.abs(distanceDelta) / timeDelta
-        this.animate(scrolled, endpoint, timeToEndpoint)
+        const timeToEndpoint = Math.round(Math.abs(distanceDelta) / timeDelta)
+        this.animate(scrolled, Math.round(endpoint), timeToEndpoint)
       }
 
       this.clear('pageX')
@@ -508,12 +593,9 @@
     }
 
 
-    onScroll(originalNode, e) {
+    onScroll(e) {
       const scrollable = this.get('scrollable')
-
-      if (!e || !e.deltaX || Math.abs(e.deltaY) > Math.abs(e.deltaX) ||  !scrollable) {
-        return
-      }
+      if (!e || !e.deltaX || Math.abs(e.deltaY) > Math.abs(e.deltaX) ||  !scrollable) return
 
       e.preventDefault()
 
@@ -557,7 +639,7 @@
       const rightScbLimit = limitRight * scbFactor
       const scrolled = this.get('scrolled')
 
-      const pageX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      const pageX = getEventX(e)
       const center = pageX - scbWidth / 2
       const leftEdge = center - scbWidth / 2
       const rightEdge = center + scbWidth / 2
@@ -598,7 +680,7 @@
       e.preventDefault()
       e.stopPropagation()
 
-      const currentPageX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      const currentPageX = getEventX(e)
       const scrolled = this.get('scrolled')
       const scrollbarFactor = this.get('scrollbarFactor')
 
@@ -619,7 +701,7 @@
 
       const scrollbarFactor = this.get('scrollbarFactor')
       const scrollbarDownPageX = this.get('scrollbarDownPageX')
-      const currentPageX = e.originalEvent && e.originalEvent.pageX || e.pageX
+      const currentPageX = getEventX(e)
       
       const limitLeft = this.get('limitLeft')
       const limitRight = this.get('limitRight')
@@ -644,6 +726,31 @@
 
       this.set('scrollbarPointerDown', false)
       return false
+    }
+
+
+    handleTouchStart(e) {
+      if (!e.touches && !e.originalEvent) return
+      this.set('touchX', e.touches[0].clientX || e.originalEvent.touches[0].clientX)
+      this.set('touchY', e.touches[0].clientY || e.originalEvent.touches[0].clientY)
+    }
+
+    handleTouchMove(e) {
+      const touchX = this.get('touchX')
+      const touchY = this.get('touchY')
+      if (!touchX || !touchY || (!e.touches && !e.originalEvent)) return
+
+      const xUp = e.touches[0].clientX || e.originalEvent.touches[0].clientX
+      const yUp = e.touches[0].clientY || e.originalEvent.touches[0].clientY
+
+      const xDiff = touchX - xUp
+      const yDiff = touchY - yUp
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) this.set('swipeDirection', 'h')
+      else this.set('swipeDirection', 'v')
+
+      this.set('touchX', 0)
+      this.set('touchY', 0)
     }
 
 
@@ -686,7 +793,7 @@
         else this.checkBorderVisibility()
       }
 
-      tick()
+      return tick()
     }
 
     checkBorderVisibility() {
@@ -736,11 +843,11 @@
 
 
 
-  // autoinit
+  // init config
 
   const autoinit = () => {
     const els = getElements('.scroller')
-    els.forEach(el => {
+    Array.from(els).forEach(el => {
       const scroller = new Scroller({ el })
     })
   }
@@ -750,5 +857,7 @@
   document.onreadystatechange = () => {
     if (document.readyState == "interactive") autoinit()
   }
+
+  window.Scroller = Scroller
 
 }())
