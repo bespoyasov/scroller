@@ -660,6 +660,8 @@
       const anchorid = e.target.closest('[data-anchorid]').getAttribute('data-anchorid')
       if (!anchorid) return
 
+      this.releaseScb()
+
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const targetNode = getElement('[data-anchororiginid="' + anchorid + '"]', rootNode)
