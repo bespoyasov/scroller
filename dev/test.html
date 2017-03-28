@@ -116,13 +116,15 @@
 	})
 
 	setTimeout(function() {
-		scr.update({
-			noScrollbar: true,
-			noAnchors: true,
-			onClick: function(e) {
-				console.log(e)
-			}
-		})
+		// scr.update({
+		// 	noScrollbar: true,
+		// 	noAnchors: true,
+		// 	onClick: function(e) {
+		// 		console.log(e)
+		// 	}
+		// })
+
+		scr.scrollTo('end')
 	}, 4000)
 </script>
 </body>
