@@ -320,9 +320,13 @@
       if (isHidden(rootNode)) {
         let intervalId = setInterval(() => {
           if (!isHidden(rootNode)) {
+            const scrolled = this.get('scrolled')
             clearInterval(intervalId)
-            this.setSize()
-            this.checkScrollable()
+            // no polyfills for triggering resize 
+            // just recalc twice
+            this._update()
+            this._update()
+            this.animate(scrolled, scrolled, 0)
           }
         }, 50)
       }
@@ -341,7 +345,9 @@
         <div class="${prefix}-border ${prefix}-border--right"></div>
         <div class="${prefix}-strip">${prevHtml}</div>
 
-        <div class="${prefix}-scrollwrap"><div class="${prefix}-scrollbar"></div></div>
+        <div class="${prefix}-scrollwrap">
+          <div class="${prefix}-scrollbar"></div>
+        </div>
         <div class="${prefix}-anchors"></div>
       </div>`
 
@@ -371,7 +377,11 @@
       let anchorsHtml = '', counter = 0
 
       Array.from(getChildren(wrapperNode)).forEach(itemNode => {
-        const anchorText = getElement('[data-anchor]', itemNode).getAttribute('data-anchor')
+        const targetNode = getElement('[data-anchor]', itemNode)
+        const anchorText = targetNode 
+          ? targetNode.getAttribute('data-anchor')
+          : ''
+
         anchorsHtml += `<span data-anchorid="${counter}" class="${prefix}-anchor"><span>${anchorText}</span></span>`
         itemNode.setAttribute('data-anchororiginid', counter)
         counter++
@@ -395,17 +405,19 @@
       stripNode.setAttribute('style', '')
       wrapperNode.setAttribute('style', '')
       scrollbarNode.setAttribute('style', '')
+      scrollwrapNode.setAttribute('style', '')
 
       Array.from(itemNodes).forEach(itemNode => {
         const currentHeight = itemNode.offsetHeight
         if (currentHeight > maxHeight) maxHeight = currentHeight
-
         sumWidth += itemNode.offsetWidth
       })
 
       const wrapperWidth = wrapperNode.offsetWidth
+      const scrollwrapWidth = scrollwrapNode.offsetWidth
       const limitRight = sumWidth + 1 - rootNode.offsetWidth
-      const scrollbarFactor = scrollwrapNode.offsetWidth / sumWidth
+
+      const scrollbarFactor = scrollwrapWidth / sumWidth
       const scrolled = Math.min(this.get('scrolled'), limitRight)
       const scbScrolled = scrolled * scrollbarFactor
 
