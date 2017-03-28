@@ -114,6 +114,16 @@
 	var scr = new Scroller({
 		el: document.querySelector('.my-scroller')
 	})
+
+	setTimeout(function() {
+		scr.update({
+			noScrollbar: true,
+			noAnchors: true,
+			onClick: function(e) {
+				console.log(e)
+			}
+		})
+	}, 4000)
 </script>
 </body>
 </html>

@@ -246,7 +246,7 @@
       this.wrapItems()
       this.createAnchors()
       this.setSize()
-      this.checkscrollable()
+      this.checkScrollable()
 
       const prefix = this.config.prefix
       const rootNode = this.state.el
@@ -306,12 +306,12 @@
       // rerender
       window.addEventListener('resize', e => {
         this.setSize()
-        this.checkscrollable()
+        this.checkScrollable()
       })
 
       window.addEventListener('load', e => {
         this.setSize()
-        this.checkscrollable()
+        this.checkScrollable()
       })
 
       // check for display none
@@ -322,7 +322,7 @@
           if (!isHidden(rootNode)) {
             clearInterval(intervalId)
             this.setSize()
-            this.checkscrollable()
+            this.checkScrollable()
           }
         }, 50)
       }
@@ -421,7 +421,7 @@
       this.set('scrollbarWidth', wrapperWidth * scrollbarFactor)
     }
 
-    checkscrollable() {
+    checkScrollable() {
       const prefix = this.config.prefix
       const rootNode = this.state.el
 
@@ -444,6 +444,27 @@
         this.set('scrollable', true)
         this.removeClass(rootNode, 'is-not-scrollable')
         ancWrapperNode.setAttribute('style', `width:auto`)
+      }
+    }
+
+    _update() {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      
+      this.setSize()
+      this.checkScrollable()
+      this.checkBorderVisibility()
+
+      if (this.config.align !== 'center') {
+        this.addClass(rootNode, this.config.leftAlignClsnm)
+      }
+
+      if (this.config.noAnchors) {
+        this.addClass(rootNode, this.config.noAnchorsClsnm)
+      }
+
+      if (this.config.noScrollbar) {
+        this.addClass(rootNode, this.config.noScrollbarClsnm)
       }
     }
 
@@ -848,6 +869,22 @@
       else if (point == 'center') endpoint = limitRight / 2
 
       this.animate(this.get('scrolled'), endpoint, time, true)
+    }
+
+    update(config) {
+      const {
+        align='center',
+        noAnchors=false,
+        noScrollbar=false,
+        onClick
+      } = config
+
+      this.config.align = align
+      this.config.noAnchors = noAnchors
+      this.config.noScrollbar = noScrollbar
+      this.config.onClick = onClick
+
+      this._update()
     }
   }
 
