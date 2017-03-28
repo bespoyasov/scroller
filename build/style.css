@@ -45,6 +45,13 @@
           justify-content: flex-start;
 }
 
+.ab_scroller.is-left-align .ab_scroller-anchors {
+  margin-left:0;
+  right:auto;
+  left:0;
+  margin-right:auto;
+}
+
 .ab_scroller-strip,
 .ab_scroller-strip * {
   cursor:move;
@@ -201,6 +208,8 @@
 .ab_scroller.is-not-scrollable .ab_scroller-strip,
 .ab_scroller.is-not-scrollable .ab_scroller-strip * {
   cursor: initial !important;
+  -webkit-transform: none !important;
+          transform: none !important;
 }
 
 .ab_scroller.is-not-scrollable .ab_scroller-border {
@@ -213,4 +222,11 @@
 
 .ab_scroller.is-not-scrollable .ab_scroller-anchors {
   bottom: -25px;
+}
+
+.ab_scroller.is-not-scrollable .ab_scroller-anchor span,
+.ab_scroller.is-not-scrollable .ab_scroller-anchor span:hover {
+  border:0 !important;
+  cursor: initial;
+  color:rgba(0,0,0,.5)
 }

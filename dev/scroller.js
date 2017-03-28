@@ -63,6 +63,9 @@
         && e.originalEvent.touches 
         && e.originalEvent.touches.length 
         && e.originalEvent.touches[0].pageX 
+      || e.touches
+        && e.touches.length
+        && e.touches[0].pageX
       || e.pageX 
       || 0
   }
@@ -77,6 +80,10 @@
     }
 
     return children
+  }
+
+  const isAndroid = () => {
+    return navigator.userAgent.toLowerCase().indexOf("android") > -1
   }
 
 
@@ -138,6 +145,8 @@
 
         let: el.hasChildNodes() && getChildren(el).length || 0,
         el: el || null,
+
+        isAndroid: isAndroid()
       }
 
       window.raf = (() => {
@@ -266,7 +275,6 @@
         this.addClass(rootNode, this.config.noScrollbarClsnm)
       }
 
-      // scroller surface events
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
       stripNode.addEventListener('touchstart', this.onPointerDown.bind(this))
       document.addEventListener('mousemove', this.onPointerMove.bind(this))
@@ -274,7 +282,6 @@
       document.addEventListener('mouseup', this.onPointerUp.bind(this))
       document.addEventListener('touchend', this.onPointerUp.bind(this))
       
-      // scrollbar events
       scrollbarNode.addEventListener('mousedown', this.onScrollbarPointerDown.bind(this))
       scrollbarNode.addEventListener('touchstart', this.onScrollbarPointerDown.bind(this))
       document.addEventListener('mousemove', this.onScrollbarPointerMove.bind(this))
@@ -284,16 +291,14 @@
 
       scrollNode.addEventListener('click', this.onScrollClick.bind(this))
 
-      // mousewheel events
       const wheelEvent = (/Firefox/i.test(navigator.userAgent)) ? 'wheel' : 'mousewheel'
       stripNode.addEventListener(wheelEvent, this.onScroll.bind(this))
 
-      // click on anchors
       Array.from(anchorsNodes).forEach(anchorNode => {
         anchorNode.addEventListener('click', this.onAnchorClick.bind(this))
       })
 
-      // prevent clickng
+      // prevent clickng on links
       Array.from(linkNodes).forEach(node => {
         node.addEventListener('click', this.onClickLink.bind(this), false)
       })
@@ -321,6 +326,8 @@
           }
         }, 50)
       }
+
+      this.checkBorderVisibility()
     }
 
 
@@ -396,8 +403,9 @@
       })
 
       const wrapperWidth = wrapperNode.offsetWidth
+      const limitRight = sumWidth + 1 - rootNode.offsetWidth
       const scrollbarFactor = wrapperWidth / sumWidth
-      const scrolled = this.get('scrolled')
+      const scrolled = Math.min(this.get('scrolled'), limitRight)
       const scbScrolled = scrolled * scrollbarFactor
 
       rootNode.style.height = maxHeight + 'px'
@@ -408,7 +416,7 @@
 
       this.setPos(-1 * scrolled)
       this.setScbPos(scbScrolled)
-      this.set('limitRight', sumWidth + 1 - rootNode.offsetWidth)
+      this.set('limitRight', limitRight)
       this.set('scrollbarFactor', scrollbarFactor)
       this.set('scrollbarWidth', wrapperWidth * scrollbarFactor)
     }
@@ -449,7 +457,7 @@
       if (!e || !scrollable) return
 
       this.handleTouchStart(e)
-      if (!e.touches && (!e.originalEvent || !e.originalEvent.touches)) e.preventDefault()
+      if (this.get('isAndroid') || !e.touches && (!e.originalEvent || !e.originalEvent.touches)) e.preventDefault()
 
       this.set('pointerDown', true)
       this.set('scrollbarPointerDown', false)
@@ -463,7 +471,7 @@
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
       this.addClass(getElement('html'), this.config.draggingClsnm)
-      
+
       return
     }
 
