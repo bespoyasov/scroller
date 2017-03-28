@@ -1,4 +1,9 @@
 (function() {
+  
+  // Array.from polyfill
+  
+  if (!Array.from) Array.from = require('array-from');
+  
 
   // remove polyfill
 

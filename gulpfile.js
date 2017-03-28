@@ -31,7 +31,7 @@ gulp.task('styles', function() {
 gulp.task('scripts', function() {
 
 	browserify('dev/scroller.js', {
-		entries: ['./node_modules/babel-polyfill', 'dev/scroller.js'], 
+		entries: ['dev/scroller.js'], 
 		debug: true
 	})
 		.transform(babelify, {
