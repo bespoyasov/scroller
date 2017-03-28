@@ -1,6 +1,6 @@
 {
-  "name": "scroller",
-  "version": "2.0.0",
+  "name": "prokrutchik",
+  "version": "2.0.1",
   "description": "Draggable scroller",
   "main": "/build/scroller-min.js",
   "repository": {
@@ -13,7 +13,7 @@
     "drag",
     "drag-n-drop"
   ],
-  "author": "Alex Bespoyasov",
+  "author": "@bespoyasov",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bespoyasov/scroller/issues"
