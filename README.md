@@ -77,7 +77,7 @@ Scroller provides click callback on children elements:
 </script>
 ```
 
-Also you can programatically change scroller position by calling `scrollTo` method:
+Programatically change scroller's position by calling `scrollTo` method:
 
 ```javascript
 scroller.scrollTo('start')		// scrolls to first element
@@ -85,6 +85,16 @@ scroller.scrollTo('center')		// scrolls to center
 scroller.scrollTo('end')			// scrolls to last element
 scroller.scrollTo(100)				// scrolls by 100px
 scroller.scrollTo(100, 2000) 	// scrolls by 100px in 2000 ms
+```
+
+Update scroller's options by calling `update` method:
+```javascript
+scroller.update({
+	noScrollbar: false, 
+	noAnchors: false, 
+	align: 'center',
+	onClick: someFunc
+})
 ```
 
 ## Example
