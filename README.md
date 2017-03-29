@@ -1,10 +1,11 @@
-# Scroller.js
+# Prokrutchik
 
 Puts blocks in line and adds anchors and a scrollbar. Has no dependencies. IE11+.
+If you use React, checkout [Prokrutchik component](https://github.com/bespoyasov/react-scroller)
 
 ## Start
 
-If you use npm:
+With npm:
 ```
 npm i prokrutchik --save
 ```
