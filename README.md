@@ -49,7 +49,7 @@ Scroller accepts data-attributes:
 
 `data-start="center"` — start position. Accepts `end`, `center`, `start`, or number in pixels. By default — `start`.
 
-`data-start="startAnimDuration"` — if you don't need animation on start, set 0.
+`data-startAnimDuration="0"` — if you don't need animation on start, set 0.
 
 `data-anchor="text"` — anchor text of item, acquires to children of scroller.
 
