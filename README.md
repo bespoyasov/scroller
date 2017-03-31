@@ -46,6 +46,10 @@ Scroller accepts data-attributes:
 
 `data-leftalign="true"` — aligns content to left if width of scroller is bigger than width of content in it;
 
+`data-start="center"` — start position. Accepts `end`, `center`, `start`, or number in pixels. By default — `start`.
+
+`data-start="startAnimDuration"` — if you don't need animation on start, set 0.
+
 `data-anchor="text"` — anchor text of item, acquires to children of scroller.
 
 Also accepts config object:
@@ -56,7 +60,9 @@ Also accepts config object:
 		el: document.querySelector('.foo'),
 		noScrollbar: true, 
 		noAnchors: true, 
-		align: 'left'
+		align: 'left',
+		start: 'center',
+		startAnimDuration: 0
 	})
 </script>
 ```

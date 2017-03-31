@@ -20,7 +20,7 @@
 <body style="position:relative;font-family:Verdana; ">
 
 <div class="read-more">
-<div class="scroller">
+<div class="scroller" data-start="center" data-startAnimDuration="0">
 	<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
 	<div class="sick"><a href="#1975" data-anchor="1975"><span><img src="img/i2.jpg" alt="i1" width="200" height="200" /></span></a></div>
 	<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
@@ -112,7 +112,8 @@
 	}, 2000)
 
 	var scr = new Scroller({
-		el: document.querySelector('.my-scroller')
+		el: document.querySelector('.my-scroller'),
+		start: 'center'
 	})
 
 	setTimeout(function() {
@@ -124,7 +125,7 @@
 		// 	}
 		// })
 
-		scr.scrollTo('end')
+		// scr.scrollTo('end')
 	}, 4000)
 </script>
 </body>
