@@ -64,10 +64,9 @@
   }
 
   const getEventX = e => {
-    return e.originalEvent 
-        && e.originalEvent.touches 
-        && e.originalEvent.touches.length 
-        && e.originalEvent.touches[0].pageX 
+    return e.changedTouches
+        && e.changedTouches.length
+        && e.changedTouches[0].pageX
       || e.touches
         && e.touches.length
         && e.touches[0].pageX
@@ -516,7 +515,7 @@
       if (!e || !scrollable) return
 
       this.handleTouchStart(e)
-      if (this.get('isAndroid') || !e.touches && (!e.originalEvent || !e.originalEvent.touches)) e.preventDefault()
+      if (!e.touches && !e.changedTouches) e.preventDefault()
 
       this.set('pointerDown', true)
       this.set('scrollbarPointerDown', false)
@@ -615,6 +614,7 @@
       const lastPageX = this.getLastMeaningfull('pageX')
       const currentEventX = getEventX(e)
       const distanceDelta = currentEventX - lastPageX
+
       const timeDelta = ((new Date()).getTime() - this.get('moveEventTS')) / 1.5
       const endpoint = scrolled - (distanceDelta * 8)
 
@@ -809,18 +809,19 @@
 
 
     handleTouchStart(e) {
-      if (!e.touches && !e.originalEvent) return
-      this.set('touchX', e.touches[0].clientX || e.originalEvent.touches[0].clientX)
-      this.set('touchY', e.touches[0].clientY || e.originalEvent.touches[0].clientY)
+      if (!e.touches && !e.changedTouches) return
+      this.set('touchX', e.changedTouches[0].clientX || e.touches[0].clientX)
+      this.set('touchY', e.changedTouches[0].clientY || e.touches[0].clientY)
+      return
     }
 
     handleTouchMove(e) {
       const touchX = this.get('touchX')
       const touchY = this.get('touchY')
-      if (!touchX || !touchY || (!e.touches && !e.originalEvent)) return
+      if (!touchX || !touchY || (!e.touches && !e.changedTouches)) return
 
-      const xUp = e.touches[0].clientX || e.originalEvent.touches[0].clientX
-      const yUp = e.touches[0].clientY || e.originalEvent.touches[0].clientY
+      const xUp = e.changedTouches[0].clientX || e.touches[0].clientX
+      const yUp = e.changedTouches[0].clientY || e.touches[0].clientY
 
       const xDiff = touchX - xUp
       const yDiff = touchY - yUp
@@ -830,6 +831,7 @@
 
       this.set('touchX', 0)
       this.set('touchY', 0)
+      return
     }
 
 
