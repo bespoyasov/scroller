@@ -1,6 +1,7 @@
 # Prokrutchik
 
 Puts blocks in line and adds anchors and a scrollbar. Has no dependencies. IE11+.
+
 If you use React, checkout [Prokrutchik component](https://github.com/bespoyasov/react-scroller)
 
 ## Start
@@ -89,9 +90,9 @@ Programatically change scroller's position by calling `scrollTo` method:
 ```javascript
 scroller.scrollTo('start')		// scrolls to first element
 scroller.scrollTo('center')		// scrolls to center
-scroller.scrollTo('end')			// scrolls to last element
-scroller.scrollTo(100)				// scrolls by 100px
-scroller.scrollTo(100, 2000) 	// scrolls by 100px in 2000 ms
+scroller.scrollTo('end')		// scrolls to last element
+scroller.scrollTo(100)			// scrolls by 100px
+scroller.scrollTo(100, 2000)		// scrolls by 100px in 2000 ms
 ```
 
 Update scroller's options by calling `update` method:
