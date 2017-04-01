@@ -22,7 +22,7 @@ Oldschool — add this to `<head>` of your page:
 
 Initialize it by:
 
-* Wrapping blocks in a container with class `scroller` (initialization will start automaticly);
+* Wrapping blocks in a container with class `scroller` (initialization will start automatically);
 * Manually creating an instance of a class:
 
 ```html
@@ -45,18 +45,18 @@ Scroller accepts these data-attributes:
 
 `data-noanchors="true"` — disables anchors;
 
-`data-leftalign="true"` — aligns content to left if scroller width is bigger than it's content width;
+`data-leftalign="true"` — aligns content to left if scroller width is bigger than its content width;
 
-`data-start="center"` — start position. Accepts `end`, `center`, `start`, or number in pixels. By default — `start`;
+`data-start="center"` — start position. Accepts `end`, `center`, `start` or number in pixels. By default — `start`;
 
-`data-noStartAnimation="true"` — disables start animation.
+`data-nostartanimation="true"` — disables start animation.
 
 
 And scroller elements accept these:
 
 `data-anchor="text"` — item anchor text;
 
-`data-central="true"` — if this element should be in center on screen at start.
+`data-central="true"` — if this element should be in center on screen at start. The priority of this element is higher than priority of `data-start` option. So if you have them both, scroller will scroll to the element with `data-central`.
 
 
 You can define config object:

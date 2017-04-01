@@ -288,8 +288,8 @@
         this.config.start = rootNode.getAttribute('data-start')
       }
 
-      if (rootNode.getAttribute('data-noStartAnimation')) {
-        this.config.noStartAnimation = rootNode.getAttribute('data-noStartAnimation')
+      if (rootNode.getAttribute('data-nostartanimation')) {
+        this.config.noStartAnimation = rootNode.getAttribute('data-nostartanimation')
       }
 
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
@@ -360,9 +360,6 @@
             this._update()
             this._update()
 
-            // const start = this.config.start || 0
-            // const noStartAnimation = this.config.noStartAnimation || false
-            // this.scrollTo(start, noStartAnimation ? 0 : 1000)
             startAnimationHelper()
           }
         }, 50)
