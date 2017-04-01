@@ -101,7 +101,7 @@
         noAnchors=false,
         noScrollbar=false,
         start=0,
-        startAnimDuration=1000,
+        noStartAnimation=false,
         el,
         onClick
       } = config
@@ -112,7 +112,7 @@
         noScrollbar: noScrollbar,
         onClick: onClick,
         start: start,
-        startAnimDuration: startAnimDuration,
+        noStartAnimation: noStartAnimation,
 
         prefix: 'ab_scroller',
         draggingClsnm: 'is-dragging',
@@ -258,6 +258,7 @@
 
       const prefix = this.config.prefix
       const rootNode = this.state.el
+      const wrapperNode = getElement(`.${prefix}-wrapper`, rootNode)
       const stripNode = getElement(`.${prefix}-strip`, rootNode)
       const linkNodes = getElements('a', stripNode)
 
@@ -287,8 +288,8 @@
         this.config.start = rootNode.getAttribute('data-start')
       }
 
-      if (rootNode.getAttribute('data-startAnimDuration')) {
-        this.config.startAnimDuration = rootNode.getAttribute('data-startAnimDuration')
+      if (rootNode.getAttribute('data-noStartAnimation')) {
+        this.config.noStartAnimation = rootNode.getAttribute('data-noStartAnimation')
       }
 
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
@@ -330,7 +331,23 @@
         this.checkScrollable()
       })
 
-      // check for display none
+
+      const startAnimationHelper = () => {
+        const centralNode = this.findCentralNode()
+        const noStartAnimation = this.config.noStartAnimation
+        let endpoint
+        
+        if (centralNode) {
+          endpoint = centralNode.offsetLeft - (wrapperNode.offsetWidth / 2) + (centralNode.offsetWidth / 2)
+          endpoint = Math.min(centralNode.offsetLeft, endpoint)
+        }
+        else endpoint = this.config.start
+        
+        this.scrollTo(endpoint, noStartAnimation ? 0 : 1000)
+      }
+
+
+      // check if scroller is in hidden block
       const isHidden = el => el.offsetParent === null
 
       if (isHidden(rootNode)) {
@@ -338,21 +355,21 @@
           if (!isHidden(rootNode)) {
             const scrolled = this.get('scrolled')
             clearInterval(intervalId)
-            // no polyfills for triggering resize 
+            // triggering resize is not reliable
             // just recalc twice
             this._update()
             this._update()
 
-            const start = this.config.start || 0
-            const startAnimDuration = this.config.startAnimDuration || 0
-            this.scrollTo(start, startAnimDuration)
+            // const start = this.config.start || 0
+            // const noStartAnimation = this.config.noStartAnimation || false
+            // this.scrollTo(start, noStartAnimation ? 0 : 1000)
+            startAnimationHelper()
           }
         }, 50)
       }
 
-      const start = this.config.start
-      const startAnimDuration = this.config.startAnimDuration
-      this.scrollTo(start, startAnimDuration)
+      
+      startAnimationHelper()
       this.checkBorderVisibility()
     }
 
@@ -389,6 +406,15 @@
         itemNode.parentNode.insertBefore(itemWrapper, itemNode)
         itemNode.remove()
       })
+    }
+
+    findCentralNode() {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const centralNodes = getElements(`[data-central]`, rootNode)
+      return centralNodes && centralNodes.length 
+        ? centralNodes[centralNodes.length - 1].closest(`.${prefix}-item`)
+        : null
     }
 
     createAnchors() {
@@ -934,14 +960,14 @@
         noScrollbar=this.config.noScrollbar,
         onClick=this.config.onClick,
         start=this.config.start,
-        startAnimDuration=this.config.startAnimDuration,
+        noStartAnimation=this.config.noStartAnimation,
       } = config
 
       this.config.align = align
       this.config.noAnchors = noAnchors
       this.config.noScrollbar = noScrollbar
       this.config.onClick = onClick
-      this.config.startAnimDuration = startAnimDuration
+      this.config.noStartAnimation = noStartAnimation
       this.config.start = start
 
       this._update()

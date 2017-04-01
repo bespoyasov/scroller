@@ -20,7 +20,7 @@
 <body style="position:relative;font-family:Verdana; ">
 
 <div class="read-more">
-<div class="scroller" data-start="center" data-startAnimDuration="0">
+<div class="scroller">
 	<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
 	<div class="sick"><a href="#1975" data-anchor="1975"><span><img src="img/i2.jpg" alt="i1" width="200" height="200" /></span></a></div>
 	<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
@@ -30,9 +30,9 @@
 	<div class="sick"><table cellpadding="0" cellspacing="0" border="1" style="width:100%; height:100%;" data-anchor="таблица"><tr><td>И даже</td><td>таблицы</td></tr></table></a></div>
 	<div class="sick"><a href="#1981" data-anchor="81-й"><img src="img/i8.jpg" alt="i1" width="200" height="200" /></a></div>
 	<div class="sick"><a href="#1983" data-anchor="1983"><img src="img/i9.jpg" alt="i1" width="200" height="200" /></a></div>
-	<div class="sick"><a href="#1985" data-anchor="1985"><img src="img/i10.jpg" alt="i1" width="200" height="200" /></a></div>
+	<div class="sick"><a href="#1985" data-anchor="1985" ><img src="img/i10.jpg" alt="i1" width="200" height="200" /></a></div>
 	<img src="img/i11.jpg" alt="i1" data-anchor="1988" width="200" height="240" />
-	<div class="sick "><a href="#1990" data-anchor="Что угодно">Да вообще, всё, что душе угодно :-)</a></div>
+	<div class="sick "><a href="#1990" data-anchor="Что угодно" data-central="true">Да вообще, всё, что душе угодно :-)</a></div>
 	<div class="sick "><a href="#1995" data-anchor="1995"><img src="img/i13.jpg" alt="i1" width="200" height="240" /></a></div>
 	<div class="sick "><a href="#2000" data-anchor="2000"><img src="img/i14.jpg" alt="i1" width="200" height="200" /></a></div>
 	<div class="sick "><a href="#2008" data-anchor="2008"><img src="img/i15.jpg" alt="i1" width="200" height="200" /></a></div>
@@ -76,11 +76,11 @@
 </div>
 
 <div class="hidden">
-	<div class="scroller">
+	<div class="scroller" data-noStartAnimation="true">
 		<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
 		<div class="sick"><a href="#1975" data-anchor="1975"><span><img src="img/i2.jpg" alt="i1" width="200" height="200" /></span></a></div>
 		<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
-		<div class="sick" data-anchor="текст">А так же не только картинки, но и простой текст</a></div>
+		<div class="sick" data-anchor="текст" data-central="true">А так же не только картинки, но и простой текст</a></div>
 		<div class="sick"><a href="#1979" data-anchor="1979"><img src="img/i6.jpg" alt="i1" width="200" height="200" /></a></div>
 		<div class="sick"><table cellpadding="0" cellspacing="0" border="1" style="width:100%; height:100%;" data-anchor="таблица"><tr><td>И даже</td><td>таблицы</td></tr></table></a></div>
 		<div class="sick"><a href="#1981" data-anchor="81-й"><img src="img/i8.jpg" alt="i1" width="200" height="200" /></a></div>
@@ -98,7 +98,7 @@
 		<div class="sick" data-anchor="текст">А так же не только картинки, но и простой текст</a></div>
 		<div class="sick"><a href="#1979" data-anchor="1979"><img src="img/i6.jpg" alt="i1" width="200" height="200" /></a></div>
 		<div class="sick"><table cellpadding="0" cellspacing="0" border="1" style="width:100%; height:100%;" data-anchor="таблица"><tr><td>И даже</td><td>таблицы</td></tr></table></a></div>
-		<div class="sick"><a href="#1981" data-anchor="81-й"><img src="img/i8.jpg" alt="i1" width="200" height="200" /></a></div>
+		<div class="sick"><a href="#1981" data-anchor="81-й" data-central="true"><img src="img/i8.jpg" alt="i1" width="200" height="200" /></a></div>
 		<div class="sick"><a href="#1983" data-anchor="1983"><img src="img/i9.jpg" alt="i1" width="200" height="200" /></a></div>
 		<div class="sick"><a href="#1985" data-anchor="1985"><img src="img/i10.jpg" alt="i1" width="200" height="200" /></a></div>
 		<img src="img/i11.jpg" alt="i1" data-anchor="1988" width="200" height="240" />
@@ -125,8 +125,8 @@
 		// 	}
 		// })
 
-		// scr.scrollTo('end')
-	}, 4000)
+		// scr.scrollTo('start')
+	}, 5000)
 </script>
 </body>
 </html>

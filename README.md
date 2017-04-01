@@ -39,21 +39,27 @@ Initialize it by:
 
 ## Settings
 
-Scroller accepts data-attributes:
+Scroller accepts these data-attributes:
 
 `data-noscrollbar="true"` — disables scrollbar;
 
 `data-noanchors="true"` — disables anchors;
 
-`data-leftalign="true"` — aligns content to left if width of scroller is bigger than width of content in it;
+`data-leftalign="true"` — aligns content to left if scroller width is bigger than it's content width;
 
-`data-start="center"` — start position. Accepts `end`, `center`, `start`, or number in pixels. By default — `start`.
+`data-start="center"` — start position. Accepts `end`, `center`, `start`, or number in pixels. By default — `start`;
 
-`data-startAnimDuration="0"` — if you don't need animation on start, set 0.
+`data-noStartAnimation="true"` — disables start animation.
 
-`data-anchor="text"` — anchor text of item, acquires to children of scroller.
 
-Also accepts config object:
+And scroller elements accept these:
+
+`data-anchor="text"` — item anchor text;
+
+`data-central="true"` — if this element should be in center on screen at start.
+
+
+You can define config object:
 
 ```html
 <script type="text/javascript">
@@ -63,7 +69,7 @@ Also accepts config object:
 		noAnchors: true, 
 		align: 'left',
 		start: 'center',
-		startAnimDuration: 0
+		noStartAnimation: true
 	})
 </script>
 ```
