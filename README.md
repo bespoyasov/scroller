@@ -41,9 +41,9 @@ Initialize it by:
 
 Scroller accepts these data-attributes:
 
-`data-hideScrollbar="true"` — disables scrollbar;
+`data-scrollbar="hidden"` — disables scrollbar. By default — `"visible"`;
 
-`data-hideAnchors="true"` — disables anchors;
+`data-anchors="hidden"` — disables anchors. By default — `"visible"`;
 
 `data-leftAlign="true"` — aligns content to left if scroller width is bigger than its content width;
 
@@ -65,8 +65,8 @@ You can define config object:
 <script type="text/javascript">
   const scroller = new Scroller({ 
     el: document.querySelector('.foo'),
-    hideScrollbar: true, 
-    hideAnchors: true, 
+    scrollbar: 'hidden', 
+    anchors: 'hidden',
     align: 'left',
     start: 'center'
   })
@@ -81,8 +81,8 @@ Scroller provides click callback on children elements:
 <script type="text/javascript">
   const scroller = new Scroller({ 
     el: document.querySelector('.foo'),
-    hideScrollbar: true, 
-    hideAnchors: true, 
+    scrollbar: 'hidden', 
+    anchors: 'hidden',
     align: 'left',
 
     onClick: e => { /* e — click event */ }
@@ -102,8 +102,8 @@ scroller.scrollTo(100)          // scrolls by 100px
 Update scroller's options by calling `update` method:
 ```javascript
 scroller.update({
-  hideScrollbar: false, 
-  hideAnchors: false, 
+  scrollbar: 'hidden', 
+  anchors: 'hidden', 
   align: 'center',
   onClick: someFunc
 })
@@ -129,7 +129,7 @@ Scroller with disabled scrollbar, active anchors and left alignment:
   <script type="text/javascript">
     const myScroller = new Scroller({
       el: document.querySelector('.my-scroller'),
-      hideScrollbar: true,
+      scrollbar: 'hidden,
       align: 'left'
     })
   </script>

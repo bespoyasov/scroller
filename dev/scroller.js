@@ -100,8 +100,8 @@
         align='center',
         noAnchors=false,
         noScrollbar=false,
-        hideScrollbar=false,
-        hideAnchors=false,
+        scrollbar='visible',
+        anchors='visible',
         start=0,
         startAnimation=false,
         el,
@@ -111,8 +111,8 @@
       this.config = {
         align: align,
         // noAnchors, noScrollbar — legacy
-        noAnchors: hideAnchors || noAnchors,
-        noScrollbar: hideScrollbar || noScrollbar,
+        noAnchors: anchors == 'hidden' || noAnchors,
+        noScrollbar: scrollbar == 'hidden' || noScrollbar,
         onClick: onClick,
         start: start,
         startAnimation: startAnimation,
@@ -283,20 +283,18 @@
 
       if (
         this.config.noAnchors || 
-        rootNode.getAttribute('data-hideAnchors') ||
+        rootNode.getAttribute('data-anchors') == 'hidden' ||
         rootNode.getAttribute('data-noanchors') ||
-        rootNode.getAttribute('data-noAnchors') ||
-        rootNode.getAttribute('data-hideanchors')
+        rootNode.getAttribute('data-noAnchors')
       ) {
         this.addClass(rootNode, this.config.noAnchorsClsnm)
       }
 
       if (
         this.config.noScrollbar || 
-        rootNode.getAttribute('data-hideScrollbar') ||
+        rootNode.getAttribute('data-scrollbar') == 'hidden' ||
         rootNode.getAttribute('data-noscrollbar') ||
-        rootNode.getAttribute('data-noScrollbar') ||
-        rootNode.getAttribute('data-hidescrollbar')
+        rootNode.getAttribute('data-noScrollbar')
       ) {
         this.addClass(rootNode, this.config.noScrollbarClsnm)
       }
@@ -974,17 +972,23 @@
       const {
         align=this.config.align,
         noAnchors=this.config.noAnchors,
-        hideAnchors=this.config.noAnchors,
         noScrollbar=this.config.noScrollbar,
-        hideScrollbar=this.config.noScrollbar,
+        scrollbar,
+        anchors,
         onClick=this.config.onClick,
         start=this.config.start,
         startAnimation=this.config.startAnimation
       } = config
 
       this.config.align = align
-      this.config.noAnchors = hideAnchors || noAnchors
-      this.config.noScrollbar = hideScrollbar || noScrollbar
+      this.config.noAnchors = !noAnchors 
+        ? anchors == 'hidden' 
+        : anchors != 'visible'
+
+      this.config.noScrollbar = !noScrollbar
+        ? scrollbar == 'hidden' 
+        : scrollbar != 'visible'
+
       this.config.onClick = onClick
       this.config.start = start
       this.config.startAnimation = startAnimation
