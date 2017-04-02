@@ -129,7 +129,7 @@ Scroller with disabled scrollbar, active anchors and left alignment:
   <script type="text/javascript">
     const myScroller = new Scroller({
       el: document.querySelector('.my-scroller'),
-      scrollbar: 'hidden,
+      scrollbar: 'hidden',
       align: 'left'
     })
   </script>
