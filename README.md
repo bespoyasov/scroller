@@ -14,8 +14,8 @@ npm i prokrutchik --save
 Oldschool — add this to `<head>` of your page:
 
 ```html
-<script src="scroller-min.js" type="text/javascript"></script>
-<link href="scroller-min.css" rel="stylesheet" />
+<script src="/path/to/scroller-min.js" type="text/javascript"></script>
+<link href="/path/to/styles-min.css" type="text/css" rel="stylesheet" />
 ```
 
 ## Initialization
