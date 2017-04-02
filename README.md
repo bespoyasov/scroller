@@ -47,7 +47,7 @@ Scroller accepts these data-attributes:
 
 `data-leftAlign="true"` — aligns content to left if scroller width is bigger than its content width;
 
-`data-start="center"` — start position. Accepts `end`, `center`, `start` or number in pixels. By default — `start`;
+`data-start="center"` — start position. Accepts `"end"`, `"center"`, `"start"` or number in pixels. By default — `"start"`;
 
 `data-startAnimation="true"` — enables start animation. By default scroller will scroll to start position immediately.
 
