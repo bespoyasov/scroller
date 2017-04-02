@@ -103,6 +103,7 @@
         hideScrollbar=false,
         hideAnchors=false,
         start=0,
+        startAnimation=false,
         el,
         onClick
       } = config
@@ -113,6 +114,7 @@
         noScrollbar: hideScrollbar || noScrollbar,
         onClick: onClick,
         start: start,
+        startAnimation: startAnimation,
 
         prefix: 'ab_scroller',
         draggingClsnm: 'is-dragging',
@@ -297,6 +299,10 @@
         this.config.start = rootNode.getAttribute('data-start')
       }
 
+      if (rootNode.getAttribute('data-startAnimation')) {
+        this.config.startAnimation = true
+      }
+
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
       stripNode.addEventListener('touchstart', this.onPointerDown.bind(this))
       document.addEventListener('mousemove', this.onPointerMove.bind(this))
@@ -339,6 +345,7 @@
 
       const startAnimationHelper = () => {
         const centralNode = this.findCentralNode()
+        const animation = this.config.startAnimation ? 1000 : 0
         let endpoint
         
         if (centralNode) {
@@ -347,7 +354,7 @@
         }
         else endpoint = this.config.start
         
-        this.scrollTo(endpoint, 0)
+        this.scrollTo(endpoint, animation)
       }
 
 
@@ -963,6 +970,7 @@
         hideScrollbar=this.config.noScrollbar,
         onClick=this.config.onClick,
         start=this.config.start,
+        startAnimation=this.config.startAnimation
       } = config
 
       this.config.align = align
@@ -970,6 +978,7 @@
       this.config.noScrollbar = hideScrollbar || noScrollbar
       this.config.onClick = onClick
       this.config.start = start
+      this.config.startAnimation = startAnimation
 
       this._update()
     }
