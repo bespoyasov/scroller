@@ -27,7 +27,7 @@ Initialize it by:
 
 ```html
 <div class="foo">
-	<!-- scroller content -->
+  <!-- scroller content -->
 </div>
 
 <script type="text/javascript"> 
