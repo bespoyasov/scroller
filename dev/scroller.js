@@ -110,6 +110,7 @@
 
       this.config = {
         align: align,
+        // noAnchors, noScrollbar — legacy
         noAnchors: hideAnchors || noAnchors,
         noScrollbar: hideScrollbar || noScrollbar,
         onClick: onClick,
@@ -271,26 +272,31 @@
 
       // config
       if (
+        this.config.align !== 'center' ||
         rootNode.getAttribute('data-leftalign') || 
         rootNode.getAttribute('data-leftAlign') || 
         rootNode.getAttribute('data-leftIfWide') ||
-        this.config.align !== 'center'
+        rootNode.getAttribute('data-leftifwide')
       ) {
         this.addClass(rootNode, this.config.leftAlignClsnm)
       }
 
       if (
         this.config.noAnchors || 
+        rootNode.getAttribute('data-hideAnchors') ||
         rootNode.getAttribute('data-noanchors') ||
-        rootNode.getAttribute('data-hideAnchors')
+        rootNode.getAttribute('data-noAnchors') ||
+        rootNode.getAttribute('data-hideanchors')
       ) {
         this.addClass(rootNode, this.config.noAnchorsClsnm)
       }
 
       if (
         this.config.noScrollbar || 
+        rootNode.getAttribute('data-hideScrollbar') ||
         rootNode.getAttribute('data-noscrollbar') ||
-        rootNode.getAttribute('data-hideScrollbar')
+        rootNode.getAttribute('data-noScrollbar') ||
+        rootNode.getAttribute('data-hidescrollbar')
       ) {
         this.addClass(rootNode, this.config.noScrollbarClsnm)
       }
@@ -299,7 +305,10 @@
         this.config.start = rootNode.getAttribute('data-start')
       }
 
-      if (rootNode.getAttribute('data-startAnimation')) {
+      if (
+        rootNode.getAttribute('data-startAnimation') || 
+        rootNode.getAttribute('data-startanimation')
+      ) {
         this.config.startAnimation = true
       }
 
