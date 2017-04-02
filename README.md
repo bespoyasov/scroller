@@ -31,9 +31,9 @@ Initialize it by:
 </div>
 
 <script type="text/javascript"> 
-	const scroller = new Scroller({ 
-		el: document.querySelector('.foo') 
-	})
+  const scroller = new Scroller({ 
+    el: document.querySelector('.foo') 
+  })
 </script>
 ```
 
@@ -63,13 +63,13 @@ You can define config object:
 
 ```html
 <script type="text/javascript">
-	const scroller = new Scroller({ 
-		el: document.querySelector('.foo'),
-		hideScrollbar: true, 
-		hideAnchors: true, 
-		align: 'left',
-		start: 'center'
-	})
+  const scroller = new Scroller({ 
+    el: document.querySelector('.foo'),
+    hideScrollbar: true, 
+    hideAnchors: true, 
+    align: 'left',
+    start: 'center'
+  })
 </script>
 ```
 
@@ -79,33 +79,33 @@ Scroller provides click callback on children elements:
 
 ```html
 <script type="text/javascript">
-	const scroller = new Scroller({ 
-		el: document.querySelector('.foo'),
-		hideScrollbar: true, 
-		hideAnchors: true, 
-		align: 'left',
+  const scroller = new Scroller({ 
+    el: document.querySelector('.foo'),
+    hideScrollbar: true, 
+    hideAnchors: true, 
+    align: 'left',
 
-		onClick: e => { /* e — click event */ }
-	}) 
+    onClick: e => { /* e — click event */ }
+  }) 
 </script>
 ```
 
 Programatically change scroller's position by calling `scrollTo` method:
 
 ```javascript
-scroller.scrollTo('start')		// scrolls to first element
-scroller.scrollTo('center')		// scrolls to center
-scroller.scrollTo('end')		// scrolls to last element
-scroller.scrollTo(100)			// scrolls by 100px
+scroller.scrollTo('start')      // scrolls to first element
+scroller.scrollTo('center')     // scrolls to center
+scroller.scrollTo('end')        // scrolls to last element
+scroller.scrollTo(100)          // scrolls by 100px
 ```
 
 Update scroller's options by calling `update` method:
 ```javascript
 scroller.update({
-	hideScrollbar: false, 
-	hideAnchors: false, 
-	align: 'center',
-	onClick: someFunc
+  hideScrollbar: false, 
+  hideAnchors: false, 
+  align: 'center',
+  onClick: someFunc
 })
 ```
 
@@ -115,24 +115,24 @@ Scroller with disabled scrollbar, active anchors and left alignment:
 
 ```html
 <head>
-	<script src="scroller.js" type="text/javascript"></script>
-	<link href="scroller.css" rel="stylesheet" /> 
+  <script src="scroller.js" type="text/javascript"></script>
+  <link href="scroller.css" rel="stylesheet" /> 
 </head>
 <body>
-	<div class="my-scroller">
-		<img src="example.png" data-anchor="anchor1" />
-		<div data-anchor="anchor2"></div>
-		<table data-anchor="anchor3"></table>
-		<whatever />
-	</div>
+  <div class="my-scroller">
+    <img src="example.png" data-anchor="anchor1" />
+    <div data-anchor="anchor2"></div>
+    <table data-anchor="anchor3"></table>
+    <whatever />
+  </div>
 
-	<script type="text/javascript">
-		const myScroller = new Scroller({
-			el: document.querySelector('.my-scroller'),
-			hideScrollbar: true,
-			align: 'left'
-		})
-	</script>
+  <script type="text/javascript">
+    const myScroller = new Scroller({
+      el: document.querySelector('.my-scroller'),
+      hideScrollbar: true,
+      align: 'left'
+    })
+  </script>
 </body>
 ```
 
