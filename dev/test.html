@@ -76,7 +76,7 @@
 </div>
 
 <div class="hidden">
-	<div class="scroller" data-noStartAnimation="true">
+	<div class="scroller">
 		<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
 		<div class="sick"><a href="#1975" data-anchor="1975"><span><img src="img/i2.jpg" alt="i1" width="200" height="200" /></span></a></div>
 		<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
@@ -117,13 +117,10 @@
 	})
 
 	setTimeout(function() {
-		// scr.update({
-		// 	noScrollbar: true,
-		// 	noAnchors: true,
-		// 	onClick: function(e) {
-		// 		console.log(e)
-		// 	}
-		// })
+		scr.update({
+			hideScrollbar: true,
+			hideAnchors: true
+		})
 
 		// scr.scrollTo('start')
 	}, 5000)

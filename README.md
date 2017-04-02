@@ -41,18 +41,18 @@ Initialize it by:
 
 Scroller accepts these data-attributes:
 
-`data-noscrollbar="true"` — disables scrollbar;
+`data-hideScrollbar="true"` — disables scrollbar;
 
-`data-noanchors="true"` — disables anchors;
+`data-hideAnchors="true"` — disables anchors;
 
-`data-leftalign="true"` — aligns content to left if scroller width is bigger than its content width;
+`data-leftAlign="true"` — aligns content to left if scroller width is bigger than its content width;
 
 `data-start="center"` — start position. Accepts `end`, `center`, `start` or number in pixels. By default — `start`;
 
-`data-nostartanimation="true"` — disables start animation.
+`data-startAnimation="true"` — enables start animation. By default scroller will scroll to start position immediately.
 
 
-And scroller elements accept these:
+Scroller elements accept these:
 
 `data-anchor="text"` — item anchor text;
 
@@ -65,11 +65,10 @@ You can define config object:
 <script type="text/javascript">
 	const scroller = new Scroller({ 
 		el: document.querySelector('.foo'),
-		noScrollbar: true, 
-		noAnchors: true, 
+		hideScrollbar: true, 
+		hideAnchors: true, 
 		align: 'left',
-		start: 'center',
-		noStartAnimation: true
+		start: 'center'
 	})
 </script>
 ```
@@ -82,8 +81,8 @@ Scroller provides click callback on children elements:
 <script type="text/javascript">
 	const scroller = new Scroller({ 
 		el: document.querySelector('.foo'),
-		noScrollbar: true, 
-		noAnchors: true, 
+		hideScrollbar: true, 
+		hideAnchors: true, 
 		align: 'left',
 
 		onClick: e => { /* e — click event */ }
@@ -103,8 +102,8 @@ scroller.scrollTo(100)			// scrolls by 100px
 Update scroller's options by calling `update` method:
 ```javascript
 scroller.update({
-	noScrollbar: false, 
-	noAnchors: false, 
+	hideScrollbar: false, 
+	hideAnchors: false, 
 	align: 'center',
 	onClick: someFunc
 })
@@ -130,7 +129,7 @@ Scroller with disabled scrollbar, active anchors and left alignment:
 	<script type="text/javascript">
 		const myScroller = new Scroller({
 			el: document.querySelector('.your-scroller'),
-			noScrollbar: true,
+			hideScrollbar: true,
 			align: 'left'
 		})
 	</script>

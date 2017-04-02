@@ -100,19 +100,19 @@
         align='center',
         noAnchors=false,
         noScrollbar=false,
+        hideScrollbar=false,
+        hideAnchors=false,
         start=0,
-        noStartAnimation=false,
         el,
         onClick
       } = config
 
       this.config = {
         align: align,
-        noAnchors: noAnchors,
-        noScrollbar: noScrollbar,
+        noAnchors: hideAnchors || noAnchors,
+        noScrollbar: hideScrollbar || noScrollbar,
         onClick: onClick,
         start: start,
-        noStartAnimation: noStartAnimation,
 
         prefix: 'ab_scroller',
         draggingClsnm: 'is-dragging',
@@ -270,26 +270,31 @@
       // config
       if (
         rootNode.getAttribute('data-leftalign') || 
+        rootNode.getAttribute('data-leftAlign') || 
         rootNode.getAttribute('data-leftIfWide') ||
         this.config.align !== 'center'
       ) {
         this.addClass(rootNode, this.config.leftAlignClsnm)
       }
 
-      if (this.config.noAnchors || rootNode.getAttribute('data-noanchors')) {
+      if (
+        this.config.noAnchors || 
+        rootNode.getAttribute('data-noanchors') ||
+        rootNode.getAttribute('data-hideAnchors')
+      ) {
         this.addClass(rootNode, this.config.noAnchorsClsnm)
       }
 
-      if (this.config.noScrollbar || rootNode.getAttribute('data-noscrollbar')) {
+      if (
+        this.config.noScrollbar || 
+        rootNode.getAttribute('data-noscrollbar') ||
+        rootNode.getAttribute('data-hideScrollbar')
+      ) {
         this.addClass(rootNode, this.config.noScrollbarClsnm)
       }
 
       if (rootNode.getAttribute('data-start')) {
         this.config.start = rootNode.getAttribute('data-start')
-      }
-
-      if (rootNode.getAttribute('data-nostartanimation')) {
-        this.config.noStartAnimation = rootNode.getAttribute('data-nostartanimation')
       }
 
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
@@ -334,7 +339,6 @@
 
       const startAnimationHelper = () => {
         const centralNode = this.findCentralNode()
-        const noStartAnimation = this.config.noStartAnimation
         let endpoint
         
         if (centralNode) {
@@ -343,7 +347,7 @@
         }
         else endpoint = this.config.start
         
-        this.scrollTo(endpoint, noStartAnimation ? 0 : 1000)
+        this.scrollTo(endpoint, 0)
       }
 
 
@@ -954,17 +958,17 @@
       const {
         align=this.config.align,
         noAnchors=this.config.noAnchors,
+        hideAnchors=this.config.noAnchors,
         noScrollbar=this.config.noScrollbar,
+        hideScrollbar=this.config.noScrollbar,
         onClick=this.config.onClick,
         start=this.config.start,
-        noStartAnimation=this.config.noStartAnimation,
       } = config
 
       this.config.align = align
-      this.config.noAnchors = noAnchors
-      this.config.noScrollbar = noScrollbar
+      this.config.noAnchors = hideAnchors || noAnchors
+      this.config.noScrollbar = hideScrollbar || noScrollbar
       this.config.onClick = onClick
-      this.config.noStartAnimation = noStartAnimation
       this.config.start = start
 
       this._update()
