@@ -91,7 +91,7 @@
 </div>
 
 
-<div class="my-scroller" data-anchors="hidden">
+<div class="my-scroller" data-scrollbar="hidden" data-anchors="hidden">
 		<div class="sick"><a href="#1975" target="_blank" data-anchor="1975"><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a></div>
 		<div class="sick"><a href="#1975" data-anchor="1975"><span><img src="img/i2.jpg" alt="i1" width="200" height="200" /></span></a></div>
 		<div class="sick"><a href="#1976" data-anchor="1976"><img src="img/i3.jpg" alt="i1" width="200" height="200" /></a></div>
@@ -107,13 +107,13 @@
 <a href="#test">test link</a>
 
 <script type="text/javascript">
-	setTimeout(function() {
-		document.querySelector('.hidden').style.display = 'block'
-	}, 4000)
+	// setTimeout(function() {
+	// 	document.querySelector('.hidden').style.display = 'block'
+	// }, 4000)
 
 	var scr = new Scroller({
 		el: document.querySelector('.my-scroller'),
-		// scrollbar: 'hidden',
+		// scrollbar: 'visible',
 		// anchors: 'hidden'
 	})
 
@@ -122,6 +122,7 @@
 			scrollbar: 'visible',
 			anchors: 'visible'
 		})
+		
 		// scr.scrollTo('start')
 	}, 1000)
 </script>
