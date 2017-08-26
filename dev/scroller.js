@@ -1,4 +1,14 @@
 (function() {
+
+  // if the passive property is accessed
+  var supportsPassive = false
+  try {
+    var opts = Object.defineProperty({}, 'passive', {
+      get: function() { supportsPassive = true }
+    })
+    window.addEventListener('test', null, opts)
+  } catch (e) {}
+
   
   // Array.from polyfill
   
@@ -310,24 +320,26 @@
         this.config.startAnimation = true
       }
 
+      const opts = supportsPassive ? {passive: true} : false
+
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
-      stripNode.addEventListener('touchstart', this.onPointerDown.bind(this))
+      stripNode.addEventListener('touchstart', this.onPointerDown.bind(this), opts)
       document.addEventListener('mousemove', this.onPointerMove.bind(this))
-      document.addEventListener('touchmove', this.onPointerMove.bind(this))
+      document.addEventListener('touchmove', this.onPointerMove.bind(this), opts)
       document.addEventListener('mouseup', this.onPointerUp.bind(this))
-      document.addEventListener('touchend', this.onPointerUp.bind(this))
+      document.addEventListener('touchend', this.onPointerUp.bind(this), opts)
       
       scrollbarNode.addEventListener('mousedown', this.onScrollbarPointerDown.bind(this))
-      scrollbarNode.addEventListener('touchstart', this.onScrollbarPointerDown.bind(this))
+      scrollbarNode.addEventListener('touchstart', this.onScrollbarPointerDown.bind(this), opts)
       document.addEventListener('mousemove', this.onScrollbarPointerMove.bind(this))
-      document.addEventListener('touchmove', this.onScrollbarPointerMove.bind(this))
+      document.addEventListener('touchmove', this.onScrollbarPointerMove.bind(this), opts)
       document.addEventListener('mouseup', this.onScrollbarPointerUp.bind(this))
-      document.addEventListener('touchend', this.onScrollbarPointerUp.bind(this))
+      document.addEventListener('touchend', this.onScrollbarPointerUp.bind(this), opts)
 
       scrollNode.addEventListener('click', this.onScrollClick.bind(this))
 
       const wheelEvent = (/Firefox/i.test(navigator.userAgent)) ? 'wheel' : 'mousewheel'
-      stripNode.addEventListener(wheelEvent, this.onScroll.bind(this))
+      stripNode.addEventListener(wheelEvent, this.onScroll.bind(this), opts)
 
       Array.from(anchorsNodes).forEach(anchorNode => {
         anchorNode.addEventListener('click', this.onAnchorClick.bind(this))
