@@ -709,10 +709,17 @@
       e.preventDefault()
       e.stopPropagation()
 
-      this.releaseScb()
       const prefix = this.config.prefix
       const rootNode = this.state.el
+      this.releaseScb()
+      
+      // focus resolve, see: 
+      // http://wd.dizaina.net/en/internet-maintenance/js-sliders-and-the-tab-key/
+      rootNode.scrollLeft = 0
+      setTimeout(() => {rootNode.scrollLeft = 0}, 0)
+
       const targetNode = e.target.closest(`.${prefix}-item`)
+      const scrollwrapNode = getElement(`.${prefix}-scrollwrap`, rootNode)
       
       const limitLeft = this.get('limitLeft')
       const limitRight = this.get('limitRight')
