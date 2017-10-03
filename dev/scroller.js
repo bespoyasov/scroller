@@ -333,9 +333,10 @@
         anchorNode.addEventListener('click', this.onAnchorClick.bind(this))
       })
 
-      // prevent clickng on links
+      // prevent clickng on links and handle focus event
       Array.from(linkNodes).forEach(node => {
         node.addEventListener('click', this.onClickLink.bind(this), false)
+        node.addEventListener('focus', this.onFocus.bind(this), false)
       })
 
       // rerender
@@ -700,6 +701,28 @@
       if (!scrollable) return e
 
       e.preventDefault()
+      return false
+    }
+
+
+    onFocus(e) {
+      e.preventDefault()
+      e.stopPropagation()
+
+      this.releaseScb()
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const targetNode = e.target.closest(`.${prefix}-item`)
+      
+      const limitLeft = this.get('limitLeft')
+      const limitRight = this.get('limitRight')
+      const scrolled = this.get('scrolled')
+      
+      let endpoint = Math.min(Math.max(targetNode.offsetLeft, limitLeft), limitRight)
+      if (Math.abs(endpoint) < 2) endpoint = 0
+
+      this.set('mouseScroll', false)
+      this.animate(scrolled, endpoint)
       return false
     }
 
