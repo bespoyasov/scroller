@@ -337,6 +337,7 @@
       Array.from(linkNodes).forEach(node => {
         node.addEventListener('click', this.onClickLink.bind(this), false)
         node.addEventListener('focus', this.onFocus.bind(this), false)
+        node.addEventListener('keydown', this.onKeyDown.bind(this), false)
       })
 
       // rerender
@@ -731,6 +732,16 @@
       this.set('mouseScroll', false)
       this.animate(scrolled, endpoint)
       return false
+    }
+
+    
+    // check if enter is pressed
+    onKeyDown(e) {
+      if (!e.keyCode || e.keyCode !== 13) return
+      const ctrlClick = e.ctrlKey || e.metaKey
+      const location = e.target.getAttribute('href')
+      if (ctrlClick) window.open(location, '_blank', {})
+      else window.location = location
     }
 
 
