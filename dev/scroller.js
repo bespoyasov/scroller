@@ -105,7 +105,8 @@
         start=0,
         startAnimation=false,
         el,
-        onClick
+        onClick,
+        useOuterHtml=false,
       } = config
 
       this.config = {
@@ -123,6 +124,11 @@
         borderVsblClsnm: 'is-visible',
         noAnchorsClsnm: 'is-no-anchors',
         noScrollbarClsnm: 'is-no-scrollbar',
+
+        // if we don't need to create marup here
+        // for example react component will render html by itself
+        // so we just take outer markup instead
+        useOuterHtml: useOuterHtml,
 
         easing: pos => pos === 1 ? 1 : -Math.pow(2, -10 * pos) + 1,
       }
@@ -329,9 +335,7 @@
       const wheelEvent = (/Firefox/i.test(navigator.userAgent)) ? 'wheel' : 'mousewheel'
       stripNode.addEventListener(wheelEvent, this.onScroll.bind(this))
 
-      Array.from(anchorsNodes).forEach(anchorNode => {
-        anchorNode.addEventListener('click', this.onAnchorClick.bind(this))
-      })
+      this.bindAnchorsEvents()
 
       // prevent clickng on links and handle focus event
       Array.from(linkNodes).forEach(node => {
@@ -359,7 +363,10 @@
         let endpoint
         
         if (centralNode) {
-          endpoint = centralNode.offsetLeft - (wrapperNode.offsetWidth / 2) + (centralNode.offsetWidth / 2)
+          endpoint = centralNode.offsetLeft 
+            - (wrapperNode.offsetWidth / 2) 
+            + (centralNode.offsetWidth / 2)
+
           endpoint = Math.min(centralNode.offsetLeft, endpoint)
         }
         else endpoint = this.config.start
@@ -392,7 +399,20 @@
     }
 
 
+    bindAnchorsEvents() {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const anchorsNodes = getElements(`.${prefix}-anchor`, rootNode)
+
+      Array.from(anchorsNodes).forEach(anchorNode => {
+        anchorNode.addEventListener('click', this.onAnchorClick.bind(this))
+      })
+    }
+
+
     createWrapper() {
+      if (this.config.useOuterHtml) return
+
       const prefix = this.config.prefix
       const rootNode = this.state.el
 
@@ -413,29 +433,43 @@
     }
 
     wrapItems() {
+      const useOuterHtml = this.config.useOuterHtml
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
 
       Array.from(getChildren(wrapperNode)).forEach(itemNode => {
-        const itemWrapper = document.createElement('div')
-        itemWrapper.innerHTML = itemNode.outerHTML
-        itemWrapper.setAttribute('class', `${prefix}-item`)
-        itemNode.parentNode.insertBefore(itemWrapper, itemNode)
-        itemNode.remove()
+        if (useOuterHtml) {
+          this.addClass(itemNode, `${prefix}-item`)
+        }
+        else {
+          const itemWrapper = document.createElement('div')
+          itemWrapper.innerHTML = itemNode.outerHTML
+          itemWrapper.setAttribute('class', `${prefix}-item`)
+          itemNode.parentNode.insertBefore(itemWrapper, itemNode)
+          itemNode.remove()
+        }
       })
     }
 
     findCentralNode() {
       const prefix = this.config.prefix
       const rootNode = this.state.el
-      const centralNodes = getElements(`[data-central]`, rootNode)
+      const centralNodes = getElements(`[data-central="true"]`, rootNode)
       return centralNodes && centralNodes.length 
         ? centralNodes[centralNodes.length - 1].closest(`.${prefix}-item`)
         : null
     }
 
+    removeAnchors() {
+      const prefix = this.config.prefix
+      const rootNode = this.state.el
+      const ancWrapperNode = getElement(`.${prefix}-anchors`, rootNode)
+      ancWrapperNode.innerHTML = ''
+    }
+
     createAnchors() {
+      const useOuterHtml = this.config.useOuterHtml
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode)
@@ -443,7 +477,10 @@
       let anchorsHtml = '', counter = 0
 
       Array.from(getChildren(wrapperNode)).forEach(itemNode => {
-        const targetNode = getElement('[data-anchor]', itemNode)
+        const targetNode = useOuterHtml 
+          ? itemNode
+          : getElement('[data-anchor]', itemNode)
+
         const anchorText = targetNode 
           ? targetNode.getAttribute('data-anchor')
           : ''
@@ -483,7 +520,18 @@
       const scrollwrapWidth = scrollwrapNode.offsetWidth
       const limitRight = sumWidth + 1 - rootNode.offsetWidth
 
-      const scrollbarFactor = scrollwrapWidth / sumWidth
+      // otherwise will be NaN
+      const scrollbarFactor = scrollwrapWidth !== 0 && sumWidth !== 0 
+        ? scrollwrapWidth / sumWidth
+        : 1
+
+      // if screen is wider than scroller, reset transformations
+      if (scrollbarFactor >= 1) {
+        this.set('scbScrolled', 0)
+        this.set('scrolled', 0)
+        this.releaseScb()
+      }
+
       const scrolled = Math.min(this.get('scrolled'), limitRight)
       const scbScrolled = scrolled * scrollbarFactor
 
@@ -527,6 +575,7 @@
     }
 
     _update() {
+      const useOuterHtml = this.config.useOuterHtml
       const prefix = this.config.prefix
       const rootNode = this.state.el
 
@@ -538,6 +587,13 @@
 
       if (this.config.noScrollbar) this.addClass(rootNode, this.config.noScrollbarClsnm)
       else this.removeClass(rootNode, this.config.noScrollbarClsnm)
+
+      if (useOuterHtml) {
+        this.wrapItems()
+        this.removeAnchors()
+        this.createAnchors()
+        this.bindAnchorsEvents()
+      }
 
       this.setSize()
       this.checkScrollable()
