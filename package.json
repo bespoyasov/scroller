@@ -37,6 +37,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-csso": "^2.0.0",
     "gulp-data": "^1.2.1",
+    "gulp-jshint": "^2.1.0",
     "gulp-minify": "0.0.10",
     "gulp-notify": "^2.2.0",
     "gulp-postcss": "^6.1.0",
