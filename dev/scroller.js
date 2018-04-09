@@ -74,6 +74,12 @@
       || 0
   }
 
+  const isControlClick = e =>
+    e.ctrlKey || e.metaKey
+
+  const isMousewheelClick = e => 
+    e.which === 2 || e.button === 4
+
   const getChildren = (el) => {
     let childNodes = el.childNodes,
         children = [],
@@ -727,9 +733,10 @@
 
         const target = linkNode.getAttribute('target')
         const href = linkNode.getAttribute('href')
-        const ctrlClick = e.ctrlKey || e.metaKey
+        const ctrlClick = isControlClick(e)
+        const wheelClick = isMousewheelClick(e)
 
-        if (ctrlClick) return window.open(href)
+        if (ctrlClick || wheelClick) return window.open(href)
         if (!target && href) return window.location.href = href
         if (target.indexOf('blank') > -1 && href) return window.open(href)
       }
@@ -795,7 +802,7 @@
     // check if enter is pressed
     onKeyDown(e) {
       if (!e.keyCode || e.keyCode !== 13) return
-      const ctrlClick = e.ctrlKey || e.metaKey
+      const ctrlClick = isControlClick(e)
       const location = e.target.getAttribute('href')
       if (ctrlClick) window.open(location, '_blank', {})
       else window.location = location
