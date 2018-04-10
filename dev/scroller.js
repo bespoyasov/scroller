@@ -74,6 +74,15 @@
       || 0
   }
 
+  const isControlClick = e =>
+    e.ctrlKey || e.metaKey
+
+  const isLeftButtonClick = e =>
+    e.which === 1 || e.button === 0
+
+  const isTouchEvent = e =>
+    !!e.touches || !!e.changedTouches
+
   const getChildren = (el) => {
     let childNodes = el.childNodes,
         children = [],
@@ -615,7 +624,10 @@
       if (!e || !scrollable) return
 
       this.handleTouchStart(e)
-      if (!e.touches && !e.changedTouches) e.preventDefault()
+      
+      const tochEvent = isTouchEvent(e)
+      if (!tochEvent) e.preventDefault()
+      if (!tochEvent && !isLeftButtonClick(e)) return
 
       this.set('pointerDown', true)
       this.set('scrollbarPointerDown', false)
@@ -727,7 +739,7 @@
 
         const target = linkNode.getAttribute('target')
         const href = linkNode.getAttribute('href')
-        const ctrlClick = e.ctrlKey || e.metaKey
+        const ctrlClick = isControlClick(e)
 
         if (ctrlClick) return window.open(href)
         if (!target && href) return window.location.href = href
@@ -795,7 +807,7 @@
     // check if enter is pressed
     onKeyDown(e) {
       if (!e.keyCode || e.keyCode !== 13) return
-      const ctrlClick = e.ctrlKey || e.metaKey
+      const ctrlClick = isControlClick(e)
       const location = e.target.getAttribute('href')
       if (ctrlClick) window.open(location, '_blank', {})
       else window.location = location
@@ -893,6 +905,8 @@
 
     onScrollbarPointerDown(e) {
       if (!e) return
+      if (!isTouchEvent(e) && !isLeftButtonClick(e)) return
+      
       e.preventDefault()
       e.stopPropagation()
 
@@ -948,7 +962,7 @@
 
 
     handleTouchStart(e) {
-      if (!e.touches && !e.changedTouches) return
+      if (!isTouchEvent(e)) return
       this.set('touchX', e.changedTouches[0].clientX || e.touches[0].clientX)
       this.set('touchY', e.changedTouches[0].clientY || e.touches[0].clientY)
       return
@@ -957,7 +971,7 @@
     handleTouchMove(e) {
       const touchX = this.get('touchX')
       const touchY = this.get('touchY')
-      if (!touchX || !touchY || (!e.touches && !e.changedTouches)) return
+      if (!touchX || !touchY || !isTouchEvent(e)) return
 
       const xUp = e.changedTouches[0].clientX || e.touches[0].clientX
       const yUp = e.changedTouches[0].clientY || e.touches[0].clientY
