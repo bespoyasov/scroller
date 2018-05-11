@@ -16,9 +16,11 @@ var gulp = require('gulp'),
 		fs = require('fs');
 
 
+var browsers = ['last 2 versions', 'ios 7'];
+
 
 gulp.task('styles', function() {
-	var processors = [autoprefixer({browsers: ['last 2 versions']})];
+	var processors = [autoprefixer({browsers: browsers})];
 
 	return gulp.src('./dev/style.css')
 		.pipe(postcss(processors))
@@ -48,7 +50,7 @@ gulp.task('scripts', function() {
 
 gulp.task('styles-minify', function() {
 
-	var processors = [autoprefixer({browsers: ['last 2 versions']})];
+	var processors = [autoprefixer({ browsers: browsers })];
 
 	return gulp.src('./dev/style.css')
 		.pipe(postcss(processors))
