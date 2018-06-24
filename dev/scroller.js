@@ -737,8 +737,9 @@
       const endpoint = scrolled - (distanceDelta * 8)
 
       const isClick = lastPageX === 0 && timeFromPointerDown < 150
+      const isLongClick = lastPageX === 0
 
-      // clicked
+      // simple click
       if (isClick) {
         if (this.config.onClick) return this.config.onClick(e)
 
@@ -754,7 +755,10 @@
         if (target.indexOf('blank') > -1 && href) return window.open(href)
       }
 
-      // dragged
+      // long click with no motion
+      if (isLongClick) return
+
+      // dragging
       // sticky left
       if (scrolled < limitLeft) this.animate(scrolled, limitLeft, 10, true)
       // too much to left
