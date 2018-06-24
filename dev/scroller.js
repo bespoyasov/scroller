@@ -266,6 +266,14 @@
       el.style.width = width + 'px'
     }
 
+    clearPointerState() {
+      this.set('pointerDown', false)
+      this.set('scrollbarPointerDown', false)
+      this.set('mouseScroll', false)
+      this.set('swipeDirection', null)
+      this.clear('pageX')
+    }
+
 
     init(el) {
       this.createWrapper()
@@ -338,6 +346,8 @@
       document.addEventListener('touchmove', this.onScrollbarPointerMove.bind(this))
       document.addEventListener('mouseup', this.onScrollbarPointerUp.bind(this))
       document.addEventListener('touchend', this.onScrollbarPointerUp.bind(this))
+
+      document.addEventListener('touchforcechange', this.onForceTouch.bind(this))
 
       scrollNode.addEventListener('click', this.onScrollClick.bind(this))
 
@@ -703,11 +713,7 @@
       if (!e || !pointerDown || !scrollable) return
 
       if (this.get('swipeDirection') == 'v') {
-        this.set('pointerDown', false)
-        this.set('scrollbarPointerDown', false)
-        this.set('mouseScroll', false)
-        this.set('swipeDirection', null)
-        this.clear('pageX')
+        this.clearPointerState()
         return
       }
 
@@ -763,6 +769,15 @@
 
       this.clear('pageX')
       return false
+    }
+
+
+    onForceTouch(e) {
+      const force = e.touches[0].force || 0
+      if (force < 0.2) return
+      
+      this.clearPointerState()
+      return
     }
 
 
