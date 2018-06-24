@@ -134,7 +134,7 @@
         noAnchorsClsnm: 'is-no-anchors',
         noScrollbarClsnm: 'is-no-scrollbar',
 
-        // if we don't need to create marup here
+        // if we don't need to create markup
         // for example react component will render html by itself
         // so we just take outer markup instead
         useOuterHtml: useOuterHtml,
@@ -346,8 +346,6 @@
       document.addEventListener('touchmove', this.onScrollbarPointerMove.bind(this))
       document.addEventListener('mouseup', this.onScrollbarPointerUp.bind(this))
       document.addEventListener('touchend', this.onScrollbarPointerUp.bind(this))
-
-      document.addEventListener('touchforcechange', this.onForceTouch.bind(this))
 
       scrollNode.addEventListener('click', this.onScrollClick.bind(this))
 
@@ -642,7 +640,7 @@
       this.set('pointerDown', true)
       this.set('scrollbarPointerDown', false)
       this.set('mouseScroll', false)
-      this.set('downEventTS', (new Date()).getTime())
+      this.set('downEventTS', Date.now())
 
       const diff = this.get('scrolled') + getEventX(e)
       this.set('scrolledDiff', diff)
@@ -699,7 +697,7 @@
       this.setScbPos(scrollbarResult)
 
       this.set('scrolled', result)
-      this.set('moveEventTS', (new Date()).getTime())
+      this.set('moveEventTS', Date.now())
       this.push('pageX', currentPageX)
 
       this.checkBorderVisibility()
@@ -733,11 +731,15 @@
       const currentEventX = getEventX(e)
       const distanceDelta = currentEventX - lastPageX
 
-      const timeDelta = ((new Date()).getTime() - this.get('moveEventTS')) / 1.5
+      const nowTS = Date.now()
+      const timeFromLastMove = (nowTS - this.get('moveEventTS')) / 1.5
+      const timeFromPointerDown = nowTS - this.get('downEventTS')
       const endpoint = scrolled - (distanceDelta * 8)
 
+      const isClick = lastPageX === 0 && timeFromPointerDown < 150
+
       // clicked
-      if (lastPageX === 0) {
+      if (isClick) {
         if (this.config.onClick) return this.config.onClick(e)
 
         const linkNode = e.target.closest('a')
@@ -762,22 +764,13 @@
       // too much to right
       else if (endpoint > limitRight) this.animate(scrolled, limitRight, 10)
       // otherwise
-      else if (timeDelta < 150 && Math.abs(distanceDelta) > 2) {
-        const timeToEndpoint = Math.round(Math.abs(distanceDelta) / timeDelta)
+      else if (timeFromLastMove < 150 && Math.abs(distanceDelta) > 2) {
+        const timeToEndpoint = Math.round(Math.abs(distanceDelta) / timeFromLastMove)
         this.animate(scrolled, Math.round(endpoint), timeToEndpoint)
       }
 
       this.clear('pageX')
       return false
-    }
-
-
-    onForceTouch(e) {
-      const force = e.touches[0].force || 0
-      if (force < 0.2) return
-      
-      this.clearPointerState()
-      return
     }
 
 
