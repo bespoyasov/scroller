@@ -47,6 +47,18 @@
   }
 
 
+  // passive event listeners polyfill
+  let passiveSupported = false
+  
+  try {
+    let options = Object.defineProperty({}, 'passive', {
+      get: () => { passiveSupported = true }
+    })
+
+    window.addEventListener('test', null, options)
+  } catch(err) {}
+
+
   // helpers
   const getElement = (selector='', ctx=document) => {
     const node = ctx.querySelectorAll(selector)
@@ -322,7 +334,9 @@
 
       // passive: false needed to prevent scrolling in Safari on latest iOS
       // https://stackoverflow.com/questions/49500339/cant-prevent-touchmove-from-scrolling-window-on-ios
-      const touchMoveEventConfig = { passive: false }
+      const touchMoveEventConfig = passiveSupported 
+        ? { passive: false }
+        : false
 
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
       stripNode.addEventListener('touchstart', this.onPointerDown.bind(this))
