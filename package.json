@@ -1,6 +1,6 @@
 {
   "name": "prokrutchik",
-  "version": "2.3.4",
+  "version": "2.3.5",
   "description": "Draggable scroller",
   "main": "./build/scroller-min.js",
   "repository": {
