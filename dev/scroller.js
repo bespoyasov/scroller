@@ -294,31 +294,25 @@
       const anchorsNodes = getElements(`.${prefix}-anchor`, rootNode)
 
       // config
-      if (
-        this.config.align !== 'center' ||
-        rootNode.getAttribute('data-leftalign') || 
-        rootNode.getAttribute('data-leftAlign') || 
-        rootNode.getAttribute('data-leftIfWide') ||
-        rootNode.getAttribute('data-leftifwide')
-      ) {
+      if (this.config.align !== 'center' 
+        || rootNode.getAttribute('data-leftalign') 
+        || rootNode.getAttribute('data-leftAlign') 
+        || rootNode.getAttribute('data-leftIfWide') 
+        || rootNode.getAttribute('data-leftifwide')) {
         this.addClass(rootNode, this.config.leftAlignClsnm)
       }
 
-      if (
-        this.config.noAnchors || 
-        rootNode.getAttribute('data-anchors') == 'hidden' ||
-        rootNode.getAttribute('data-noanchors') ||
-        rootNode.getAttribute('data-noAnchors')
-      ) {
+      if (this.config.noAnchors 
+        || rootNode.getAttribute('data-anchors') == 'hidden' 
+        || rootNode.getAttribute('data-noanchors') 
+        || rootNode.getAttribute('data-noAnchors')) {
         this.addClass(rootNode, this.config.noAnchorsClsnm)
       }
 
-      if (
-        this.config.noScrollbar || 
-        rootNode.getAttribute('data-scrollbar') == 'hidden' ||
-        rootNode.getAttribute('data-noscrollbar') ||
-        rootNode.getAttribute('data-noScrollbar')
-      ) {
+      if (this.config.noScrollbar 
+        || rootNode.getAttribute('data-scrollbar') == 'hidden' 
+        || rootNode.getAttribute('data-noscrollbar') 
+        || rootNode.getAttribute('data-noScrollbar')) {
         this.addClass(rootNode, this.config.noScrollbarClsnm)
       }
 
@@ -326,10 +320,8 @@
         this.config.start = rootNode.getAttribute('data-start')
       }
 
-      if (
-        rootNode.getAttribute('data-startAnimation') || 
-        rootNode.getAttribute('data-startanimation')
-      ) {
+      if (rootNode.getAttribute('data-startAnimation') 
+        || rootNode.getAttribute('data-startanimation')) {
         this.config.startAnimation = true
       }
 
