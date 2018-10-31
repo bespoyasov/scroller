@@ -91,7 +91,7 @@
   }
 
   const isAndroid = () => {
-    return navigator.userAgent.toLowerCase().indexOf("android") > -1
+    return navigator.userAgent.toLowerCase().indexOf('android') > -1
   }
 
 
@@ -319,10 +319,15 @@
         this.config.startAnimation = true
       }
 
+
+      // passive: false needed to prevent scrolling in Safari on latest iOS
+      // https://stackoverflow.com/questions/49500339/cant-prevent-touchmove-from-scrolling-window-on-ios
+      const touchMoveEventConfig = { passive: false }
+
       stripNode.addEventListener('mousedown', this.onPointerDown.bind(this))
       stripNode.addEventListener('touchstart', this.onPointerDown.bind(this))
       document.addEventListener('mousemove', this.onPointerMove.bind(this))
-      document.addEventListener('touchmove', this.onPointerMove.bind(this))
+      document.addEventListener('touchmove', this.onPointerMove.bind(this), touchMoveEventConfig)
       document.addEventListener('mouseup', this.onPointerUp.bind(this))
       document.addEventListener('touchend', this.onPointerUp.bind(this))
       
@@ -646,7 +651,7 @@
       if (!e || !pointerDown || !scrollable) return
       
       this.handleTouchMove(e)
-      if (this.get('swipeDirection') == 'v') return
+      if (this.get('swipeDirection') === 'v') return
       
       e.preventDefault()
 
@@ -696,7 +701,7 @@
 
       if (!e || !pointerDown || !scrollable) return
 
-      if (this.get('swipeDirection') == 'v') {
+      if (this.get('swipeDirection') === 'v') {
         this.clearPointerState()
         return
       }
@@ -1064,7 +1069,6 @@
 
 
     // public API
-
     scrollTo(point, time=1000) {
       const limitRight = this.get('limitRight')
       const limitLeft = this.get('limitLeft')
@@ -1110,7 +1114,6 @@
 
 
   // init config
-
   const autoinit = () => {
     const els = getElements('.scroller')
     Array.from(els).forEach(el => {
@@ -1121,9 +1124,8 @@
   document.addEventListener('DOMContentLoaded', () => autoinit)
 
   document.onreadystatechange = () => {
-    if (document.readyState == "interactive") autoinit()
+    if (document.readyState == 'interactive') autoinit()
   }
 
   window.Scroller = Scroller
-
 }())
