@@ -1,12 +1,10 @@
 (function() {
   
   // Array.from polyfill
-  
-  if (!Array.from) Array.from = require('array-from');
+  if (!Array.from) Array.from = require('array-from')
   
 
   // remove polyfill
-
   (function (arr) {
     arr.forEach(function (item) {
       if (item.hasOwnProperty('remove')) return
@@ -16,7 +14,7 @@
         enumerable: true,
         writable: true,
         value: function remove() {
-          this.parentNode.removeChild(this);
+          this.parentNode.removeChild(this)
         }
       })
     })
@@ -24,7 +22,6 @@
 
 
   // matches polyfill
-
   if (!Element.prototype.matches) {
     Element.prototype.matches = Element.prototype.matchesSelector || function(selector) {
       var matches = document.querySelectorAll(selector), th = this
@@ -36,7 +33,6 @@
 
 
   // closest polyfill
-
   if (!Element.prototype.closest) {
     Element.prototype.closest = function(css) {
       var node = this
@@ -52,7 +48,6 @@
 
 
   // helpers
-
   const getElement = (selector='', ctx=document) => {
     const node = ctx.querySelectorAll(selector)
     return node ? node[0] : null
@@ -102,7 +97,6 @@
 
 
   // scroller
-
   class Scroller {
     constructor(config) {
       const {
