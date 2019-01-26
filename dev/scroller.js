@@ -1105,7 +1105,7 @@
         onClick=this.config.onClick,
         start=this.config.start,
         startAnimation=this.config.startAnimation
-      } = config
+      } = config || {}
 
       this.config.align = align
       this.config.noAnchors = !noAnchors 
