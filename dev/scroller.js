@@ -503,9 +503,8 @@
           ? itemNode
           : getElement('[data-anchor]', itemNode)
 
-        const anchorText = targetNode 
-          ? targetNode.getAttribute('data-anchor')
-          : ''
+        const attrContent = targetNode ? targetNode.getAttribute('data-anchor') : ''
+        const anchorText = attrContent || ''
 
         anchorsHtml += `<span data-anchorid="${counter}" class="${prefix}-anchor"><span>${anchorText}</span></span>`
         itemNode.setAttribute('data-anchororiginid', counter)
