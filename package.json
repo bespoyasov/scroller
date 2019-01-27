@@ -13,7 +13,11 @@
     "drag",
     "drag-n-drop"
   ],
-  "author": "@bespoyasov",
+  "author": {
+    "name": "Alex Bespoyasov",
+    "email": "bespoyasov@me.com",
+    "url": "https://bespoyasov.ru"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bespoyasov/scroller/issues"
