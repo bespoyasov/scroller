@@ -1,8 +1,8 @@
 (function() {
-  
+
   // Array.from polyfill
   if (!Array.from) Array.from = require('array-from')
-  
+
 
   // remove polyfill
   (function (arr) {
@@ -49,7 +49,7 @@
 
   // passive event listeners polyfill
   let passiveSupported = false
-  
+
   try {
     let options = Object.defineProperty({}, 'passive', {
       get: () => { passiveSupported = true }
@@ -77,7 +77,7 @@
       || e.touches
         && e.touches.length
         && e.touches[0].pageX
-      || e.pageX 
+      || e.pageX
       || 0
   }
 
@@ -300,24 +300,24 @@
       const anchorsNodes = getElements(`.${prefix}-anchor`, rootNode)
 
       // config
-      if (this.config.align !== 'center' 
-        || rootNode.getAttribute('data-leftalign') 
-        || rootNode.getAttribute('data-leftAlign') 
-        || rootNode.getAttribute('data-leftIfWide') 
+      if (this.config.align !== 'center'
+        || rootNode.getAttribute('data-leftalign')
+        || rootNode.getAttribute('data-leftAlign')
+        || rootNode.getAttribute('data-leftIfWide')
         || rootNode.getAttribute('data-leftifwide')) {
         this.addClass(rootNode, this.config.leftAlignClsnm)
       }
 
-      if (this.config.noAnchors 
-        || rootNode.getAttribute('data-anchors') == 'hidden' 
-        || rootNode.getAttribute('data-noanchors') 
+      if (this.config.noAnchors
+        || rootNode.getAttribute('data-anchors') == 'hidden'
+        || rootNode.getAttribute('data-noanchors')
         || rootNode.getAttribute('data-noAnchors')) {
         this.addClass(rootNode, this.config.noAnchorsClsnm)
       }
 
-      if (this.config.noScrollbar 
-        || rootNode.getAttribute('data-scrollbar') == 'hidden' 
-        || rootNode.getAttribute('data-noscrollbar') 
+      if (this.config.noScrollbar
+        || rootNode.getAttribute('data-scrollbar') == 'hidden'
+        || rootNode.getAttribute('data-noscrollbar')
         || rootNode.getAttribute('data-noScrollbar')) {
         this.addClass(rootNode, this.config.noScrollbarClsnm)
       }
@@ -326,7 +326,7 @@
         this.config.start = rootNode.getAttribute('data-start')
       }
 
-      if (rootNode.getAttribute('data-startAnimation') 
+      if (rootNode.getAttribute('data-startAnimation')
         || rootNode.getAttribute('data-startanimation')) {
         this.config.startAnimation = true
       }
@@ -334,7 +334,7 @@
 
       // passive: false needed to prevent scrolling in Safari on latest iOS
       // https://stackoverflow.com/questions/49500339/cant-prevent-touchmove-from-scrolling-window-on-ios
-      const touchMoveEventConfig = passiveSupported 
+      const touchMoveEventConfig = passiveSupported
         ? { passive: false }
         : false
 
@@ -344,7 +344,7 @@
       document.addEventListener('touchmove', this.onPointerMove.bind(this), touchMoveEventConfig)
       document.addEventListener('mouseup', this.onPointerUp.bind(this))
       document.addEventListener('touchend', this.onPointerUp.bind(this))
-      
+
       scrollbarNode.addEventListener('mousedown', this.onScrollbarPointerDown.bind(this))
       scrollbarNode.addEventListener('touchstart', this.onScrollbarPointerDown.bind(this))
       document.addEventListener('mousemove', this.onScrollbarPointerMove.bind(this))
@@ -383,16 +383,16 @@
         const centralNode = this.findCentralNode()
         const animation = this.config.startAnimation ? 1000 : 0
         let endpoint
-        
+
         if (centralNode) {
-          endpoint = centralNode.offsetLeft 
-            - (wrapperNode.offsetWidth / 2) 
+          endpoint = centralNode.offsetLeft
+            - (wrapperNode.offsetWidth / 2)
             + (centralNode.offsetWidth / 2)
 
           endpoint = Math.min(centralNode.offsetLeft, endpoint)
         }
         else endpoint = this.config.start
-        
+
         this.scrollTo(endpoint, animation)
       }
 
@@ -415,7 +415,7 @@
         }, 50)
       }
 
-      
+
       startAnimationHelper()
       this.checkBorderVisibility()
     }
@@ -478,7 +478,7 @@
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const centralNodes = getElements(`[data-central="true"]`, rootNode)
-      return centralNodes && centralNodes.length 
+      return centralNodes && centralNodes.length
         ? centralNodes[centralNodes.length - 1].closest(`.${prefix}-item`)
         : null
     }
@@ -499,7 +499,7 @@
       let anchorsHtml = '', counter = 0
 
       Array.from(getChildren(wrapperNode)).forEach(itemNode => {
-        const targetNode = useOuterHtml 
+        const targetNode = useOuterHtml
           ? itemNode
           : getElement('[data-anchor]', itemNode)
 
@@ -525,7 +525,8 @@
       const itemNodes = getElements(`.${prefix}-item`, rootNode)
       let maxHeight = 0, sumWidth = 0
 
-      rootNode.setAttribute('style', '')
+      // save rootNode's style.height to prevent "jumps" of content below
+      // it won't affect items' offsetHeights calculations
       stripNode.setAttribute('style', '')
       wrapperNode.setAttribute('style', '')
       scrollbarNode.setAttribute('style', '')
@@ -542,12 +543,12 @@
       const limitRight = sumWidth + 1 - rootNode.offsetWidth
 
       // otherwise will be NaN
-      const scrollbarFactor = scrollwrapWidth !== 0 && sumWidth !== 0 
+      const scrollbarFactor = scrollwrapWidth !== 0 && sumWidth !== 0
         ? scrollwrapWidth / sumWidth
         : 1
 
       // if screen is wider than scroller, reset transformations
-      if (scrollbarFactor >= 1) {
+      if (scrollbarFactor > 1) {
         this.set('scbScrolled', 0)
         this.set('scrolled', 0)
         this.releaseScb()
@@ -636,7 +637,7 @@
       if (!e || !scrollable) return
 
       this.handleTouchStart(e)
-      
+
       const tochEvent = isTouchEvent(e)
       if (!tochEvent) e.preventDefault()
       if (!tochEvent && !isLeftButtonClick(e)) return
@@ -662,10 +663,10 @@
       const pointerDown = this.get('pointerDown')
 
       if (!e || !pointerDown || !scrollable) return
-      
+
       this.handleTouchMove(e)
       if (this.get('swipeDirection') === 'v') return
-      
+
       e.preventDefault()
 
       const scrolledDiff = this.get('scrolledDiff')
@@ -798,19 +799,19 @@
       const prefix = this.config.prefix
       const rootNode = this.state.el
       this.releaseScb()
-      
-      // focus resolve, see: 
+
+      // focus resolve, see:
       // http://wd.dizaina.net/en/internet-maintenance/js-sliders-and-the-tab-key/
       rootNode.scrollLeft = 0
       setTimeout(() => {rootNode.scrollLeft = 0}, 0)
 
       const targetNode = e.target.closest(`.${prefix}-item`)
       const scrollwrapNode = getElement(`.${prefix}-scrollwrap`, rootNode)
-      
+
       const limitLeft = this.get('limitLeft')
       const limitRight = this.get('limitRight')
       const scrolled = this.get('scrolled')
-      
+
       let endpoint = Math.min(Math.max(targetNode.offsetLeft, limitLeft), limitRight)
       if (Math.abs(endpoint) < 2) endpoint = 0
 
@@ -819,7 +820,7 @@
       return false
     }
 
-    
+
     // check if enter is pressed
     onKeyDown(e) {
       if (!e.keyCode || e.keyCode !== 13) return
@@ -849,7 +850,7 @@
 
       if (result == limitRight) this.alignScbToRight()
       else this.releaseScb()
-      
+
       this.setScbPos(scrollbarResult)
       this.setWidth(scrollbarWidth)
       this.set('scrolled', result)
@@ -868,7 +869,7 @@
         this.set('scrollClickDisabled', false)
         return
       }
-      
+
       if (!e || !e.preventDefault || !scrollable) return
       e.preventDefault()
 
@@ -883,7 +884,7 @@
       const center = pageX - scbWidth / 2
       const leftEdge = center - scbWidth / 2
       const rightEdge = center + scbWidth / 2
-      
+
       let endpoint = center / scbFactor
       if (leftEdge < limitLeft) endpoint = limitLeft
       else if (rightEdge > rightScbLimit) endpoint = limitRight
@@ -892,11 +893,11 @@
       return false
     }
 
-    
+
     onAnchorClick(e) {
       const scrollable = this.get('scrollable')
-      if (!e || !e.target || !scrollable) return 
-      
+      if (!e || !e.target || !scrollable) return
+
       const anchorid = e.target.closest('[data-anchorid]').getAttribute('data-anchorid')
       if (!anchorid) return
 
@@ -905,11 +906,11 @@
       const prefix = this.config.prefix
       const rootNode = this.state.el
       const targetNode = getElement('[data-anchororiginid="' + anchorid + '"]', rootNode)
-      
+
       const limitLeft = this.get('limitLeft')
       const limitRight = this.get('limitRight')
       const scrolled = this.get('scrolled')
-      
+
       let endpoint = Math.min(Math.max(targetNode.offsetLeft, limitLeft), limitRight)
       if (Math.abs(endpoint) < 2) endpoint = 0
 
@@ -922,7 +923,7 @@
     onScrollbarPointerDown(e) {
       if (!e) return
       if (!isTouchEvent(e) && !isLeftButtonClick(e)) return
-      
+
       e.preventDefault()
       e.stopPropagation()
 
@@ -950,7 +951,7 @@
       const scrollbarFactor = this.get('scrollbarFactor')
       const scrollbarDownPageX = this.get('scrollbarDownPageX')
       const currentPageX = getEventX(e)
-      
+
       const limitLeft = this.get('limitLeft')
       const limitRight = this.get('limitRight')
       const delta = (currentPageX - scrollbarDownPageX)
@@ -967,7 +968,7 @@
 
     onScrollbarPointerUp(e) {
       const scbPointerDown = this.get('scrollbarPointerDown')
-      
+
       if (!e || !scbPointerDown) return
       e.preventDefault()
       e.stopPropagation()
@@ -1026,7 +1027,7 @@
         scbEndpoint = currentTime < 1
           ? start * scbFactor + delta * this.config.easing(currentTime / time) * scbFactor
           : stop * scbFactor
-        
+
         scbEndpoint = Math.min(scbEndpoint, rightScbLimit)
 
         if (!animateWidth) {
@@ -1108,12 +1109,12 @@
       } = config || {}
 
       this.config.align = align
-      this.config.noAnchors = !noAnchors 
-        ? anchors == 'hidden' 
+      this.config.noAnchors = !noAnchors
+        ? anchors == 'hidden'
         : anchors != 'visible'
 
       this.config.noScrollbar = !noScrollbar
-        ? scrollbar == 'hidden' 
+        ? scrollbar == 'hidden'
         : scrollbar != 'visible'
 
       this.config.onClick = onClick
