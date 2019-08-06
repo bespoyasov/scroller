@@ -547,7 +547,7 @@
         : 1
 
       // if screen is wider than scroller, reset transformations
-      if (scrollbarFactor >= 1) {
+      if (scrollbarFactor > 1) {
         this.set('scbScrolled', 0)
         this.set('scrolled', 0)
         this.releaseScb()
