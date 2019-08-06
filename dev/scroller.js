@@ -525,7 +525,8 @@
       const itemNodes = getElements(`.${prefix}-item`, rootNode)
       let maxHeight = 0, sumWidth = 0
 
-      rootNode.setAttribute('style', '')
+      // save rootNode's style.height to prevent "jumps" of content below
+      // it won't affect items' offsetHeights calculations
       stripNode.setAttribute('style', '')
       wrapperNode.setAttribute('style', '')
       scrollbarNode.setAttribute('style', '')
