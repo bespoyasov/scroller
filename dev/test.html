@@ -186,7 +186,7 @@
       <img src="img/i11.jpg" alt="i1" data-anchor="1988" width="200" height="240" />
     </div>
 
-    <div class="scroller">
+    <div class="scroller with-dynamic-heights">
       <div class="sick">
         <a href="#1975" target="_blank"
           ><img src="img/i1.jpg" alt="i1" width="200" height="240" /><br /><span>dfgdfgd</span></a
@@ -354,25 +354,42 @@
 
     <a href="#test">test link</a>
 
+    <label>
+      <input type="checkbox" id="checkbox" checked />
+      Скроллбар
+    </label>
+
     <script type="text/javascript">
-      // setTimeout(function() {
-      // 	document.querySelector('.hidden').style.display = 'block'
-      // }, 4000)
+      setTimeout(function() {
+        document.querySelector('.hidden').style.display = 'block';
+      }, 4000);
 
       var scr = new Scroller({
         el: document.querySelector('.my-scroller'),
         // scrollbar: 'visible',
         // anchors: 'hidden'
-      })
+      });
 
       setTimeout(function() {
         scr.update({
           scrollbar: 'visible',
           anchors: 'visible',
-        })
+        });
+      }, 1000);
 
-        // scr.scrollTo('start')
-      }, 1000)
+      var input = document.querySelector('#checkbox');
+      input.addEventListener('change', function(e) {
+        scr.update({
+          scrollbar: e.target.checked ? 'visible' : 'hidden',
+        });
+      });
     </script>
+
+    <style>
+      .with-dynamic-heights img {
+        width: 10vw;
+        height: auto;
+      }
+    </style>
   </body>
 </html>
