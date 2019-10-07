@@ -136,4 +136,4 @@ Scroller with disabled scrollbar, active anchors and left alignment:
 </body>
 ```
 
-http://scroller.bespoyasov.ru
+https://scroller.bespoyasov.ru
