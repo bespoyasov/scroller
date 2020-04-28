@@ -2,7 +2,8 @@
 
 Puts blocks in line and adds anchors and a scrollbar. Has no dependencies. IE11+.
 
-If you use React, checkout [Prokrutchik component](https://github.com/bespoyasov/react-scroller)
+If you use React, checkout [React component](https://github.com/bespoyasov/react-scroller),
+and for Vue, checkout [Vue compoent](https://github.com/bespoyasov/vue-prokrutchik).
 
 ## Start
 
