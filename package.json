@@ -3,6 +3,7 @@
   "version": "2.3.9",
   "description": "Draggable scroller",
   "main": "./build/scroller-min.js",
+  "types": "./build/scroller.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bespoyasov/scroller.git"
