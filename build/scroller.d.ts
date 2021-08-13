@@ -4,6 +4,8 @@ type Anchors = "hidden" | "visible";
 
 type Scrollbar = "hidden" | "visible";
 
+type ScrollToPoint = number | `${number}` | "start" | "center" | "end";
+
 interface ScrollerConfig {
   align?: Align;
   /**
@@ -20,10 +22,10 @@ interface ScrollerConfig {
   noScrollbar?: boolean;
   scrollbar?: Scrollbar;
   anchors?: Anchors;
-  start?: number;
+  start?: ScrollToPoint;
   startAnimation?: boolean;
   el: HTMLElement | null;
-  onClick: (event: MouseEvent | TouchEvent) => void;
+  onClick?(event: MouseEvent | TouchEvent): void;
   /**
    * If we don't need to create markup
    * e.g. react component will render html by itself
@@ -32,8 +34,6 @@ interface ScrollerConfig {
    */
   useOuterHtml?: boolean;
 }
-
-type ScrollToPoint = number | `${number}` | "start" | "center" | "end";
 
 // TODO: probably remove
 interface State {
