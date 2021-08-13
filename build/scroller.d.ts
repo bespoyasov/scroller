@@ -36,32 +36,6 @@ interface ScrollerConstructorConfig {
 interface ScrollerUpdateConfig
   extends Omit<ScrollerConstructorConfig, "el" | "useOuterHtml"> {}
 
-// TODO: probably remove
-interface State {
-  scrolled: number;
-  scrollable: boolean;
-  pointerDown: boolean;
-  scrollbarPointerDown: boolean;
-  mouseScroll: boolean;
-  scrollbarWidth: number;
-  scrollbarFactor: number;
-  pageX: number[];
-  scrolledDiff: number;
-  downEventTS: number;
-  moveEventTS: number;
-  scrollbarDownPageX: number;
-  scrollClickDisabled: boolean;
-  limitLeft: number;
-  limitRight: number;
-  stripWidth: number;
-  swipeDirection: null | "v" | "h";
-  touchX: number;
-  touchY: number;
-  let: number;
-  el: HTMLElement | null;
-  isAndroid: boolean;
-}
-
 export interface ScrollerConstructor {
   new (config: ScrollerConstructorConfig): ScrollerInstance;
 }
@@ -113,21 +87,6 @@ export interface ScrollerInstance {
   alignScbToRight(): void;
   removeClass(element: HTMLElement, className: string): void;
   addClass(element: HTMLElement, className: string): void;
-  getLastMeaningfull<StateProperty extends keyof State>(
-    property: StateProperty
-  ): State[StateProperty];
-  clear<StateProperty extends keyof State>(property: StateProperty): void;
-  push<StateProperty extends keyof State>(
-    property: StateProperty,
-    value: State[StateProperty]
-  ): void;
-  set<StateProperty extends keyof State>(
-    property: StateProperty,
-    value: State[StateProperty]
-  ): void;
-  get<StateProperty extends keyof State>(
-    property: StateProperty
-  ): State[StateProperty] | null;
 }
 
 declare const Scroller: ScrollerConstructor;
