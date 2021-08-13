@@ -6,7 +6,7 @@ type Scrollbar = "hidden" | "visible";
 
 type ScrollToPoint = number | `${number}` | "start" | "center" | "end";
 
-interface ScrollerConfig {
+interface ScrollerConstructorConfig {
   align?: Align;
   /**
    * TODO: probably remove
@@ -35,6 +35,9 @@ interface ScrollerConfig {
   useOuterHtml?: boolean;
 }
 
+interface ScrollerUpdateConfig
+  extends Omit<ScrollerConstructorConfig, "el" | "useOuterHtml"> {}
+
 // TODO: probably remove
 interface State {
   scrolled: number;
@@ -62,13 +65,13 @@ interface State {
 }
 
 export interface ScrollerConstructor {
-  new (config: ScrollerConfig): ScrollerInstance;
+  new (config: ScrollerConstructorConfig): ScrollerInstance;
 }
 
 export interface ScrollerInstance {
   // public
   scrollTo(point: ScrollToPoint, time?: number): void;
-  update(config: ScrollerConfig): void;
+  update(config: ScrollerUpdateConfig): void;
 
   // TODO: probably remove
   // private
