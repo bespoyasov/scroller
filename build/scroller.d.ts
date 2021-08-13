@@ -1,10 +1,10 @@
-type Align = "center";
+type Align = "left" | "center" | "right";
 
 type Anchors = "hidden" | "visible";
 
 type Scrollbar = "hidden" | "visible";
 
-interface ScrollerConfig<Element extends HTMLElement> {
+interface ScrollerConfig {
   align?: Align;
   /**
    * TODO: probably remove
@@ -22,7 +22,7 @@ interface ScrollerConfig<Element extends HTMLElement> {
   anchors?: Anchors;
   start?: number;
   startAnimation?: boolean;
-  el: Element;
+  el: HTMLElement | null;
   onClick: (event: MouseEvent | TouchEvent) => void;
   /**
    * If we don't need to create markup
@@ -36,7 +36,7 @@ interface ScrollerConfig<Element extends HTMLElement> {
 type ScrollToPoint = number | `${number}` | "start" | "center" | "end";
 
 // TODO: probably remove
-interface State<ScrollableElement extends HTMLElement> {
+interface State {
   scrolled: number;
   scrollable: boolean;
   pointerDown: boolean;
@@ -57,16 +57,18 @@ interface State<ScrollableElement extends HTMLElement> {
   touchX: number;
   touchY: number;
   let: number;
-  el: ScrollableElement | null;
+  el: HTMLElement | null;
   isAndroid: boolean;
 }
 
-export interface Scroller<ScrollableElement extends HTMLElement> {
-  new (config: ScrollerConfig<ScrollableElement>): Scroller<ScrollableElement>;
+export interface ScrollerConstructor {
+  new (config: ScrollerConfig): ScrollerInstance;
+}
 
+export interface ScrollerInstance {
   // public
-  scrollTo(point: ScrollToPoint, time?: number);
-  update(config: ScrollerConfig<ScrollableElement>): void;
+  scrollTo(point: ScrollToPoint, time?: number): void;
+  update(config: ScrollerConfig): void;
 
   // TODO: probably remove
   // private
@@ -100,25 +102,16 @@ export interface Scroller<ScrollableElement extends HTMLElement> {
   wrapItems(): void;
   createWrapper(): void;
   bindAnchorsEvents(): void;
-  init(element: ScrollableElement): void;
+  init(element: HTMLElement): void;
   clearPointerState(): void;
   setWidth(width: number): void;
-  setPosition<Element extends HTMLElement>(
-    element: Element | null,
-    position: number
-  ): void;
+  setPosition(element: HTMLElement | null, position: number): void;
   setScbPos(position: number): void;
   setPos(position: number): void;
   releaseScb(): void;
   alignScbToRight(): void;
-  removeClass<Element extends HTMLElement>(
-    element: Element,
-    className: string
-  ): void;
-  addClass<Element extends HTMLElement>(
-    element: Element,
-    className: string
-  ): void;
+  removeClass(element: HTMLElement, className: string): void;
+  addClass(element: HTMLElement, className: string): void;
   getLastMeaningfull<StateProperty extends keyof State>(
     property: StateProperty
   ): State[StateProperty];
@@ -136,4 +129,10 @@ export interface Scroller<ScrollableElement extends HTMLElement> {
   ): State[StateProperty] | null;
 }
 
-declare const Scroller: Scroller;
+declare const Scroller: ScrollerConstructor;
+
+declare global {
+  interface Window {
+    Scroller: ScrollerConstructor;
+  }
+}
