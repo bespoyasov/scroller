@@ -7,6 +7,9 @@ type ScrollbarVisibility = "hidden" | "visible";
 type ScrollToPoint = number | `${number}` | "start" | "center" | "end";
 
 interface ScrollerConstructorConfig {
+  /**
+   * By default, it's `left` aligned
+   */
   align?: Align;
   /**
    * @deprecated please use {anchors} as 'hidden'
