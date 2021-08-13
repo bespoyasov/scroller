@@ -1,8 +1,8 @@
 type Align = "left" | "center" | "right";
 
-type Anchors = "hidden" | "visible";
+type AnchorsVisibility = "hidden" | "visible";
 
-type Scrollbar = "hidden" | "visible";
+type ScrollbarVisibility = "hidden" | "visible";
 
 type ScrollToPoint = number | `${number}` | "start" | "center" | "end";
 
@@ -11,17 +11,17 @@ interface ScrollerConstructorConfig {
   /**
    * TODO: probably remove
    * @deprecated please use {anchors} as 'hidden'
-   * @see {Anchors}
+   * @see {AnchorsVisibility}
    */
   noAnchors?: boolean;
   /**
    * TODO: probably remove
    * @deprecated please use {scrollbar} as 'hidden'
-   * @see {Scrollbar}
+   * @see {ScrollbarVisibility}
    */
   noScrollbar?: boolean;
-  scrollbar?: Scrollbar;
-  anchors?: Anchors;
+  scrollbar?: ScrollbarVisibility;
+  anchors?: AnchorsVisibility;
   start?: ScrollToPoint;
   startAnimation?: boolean;
   el: HTMLElement | null;
