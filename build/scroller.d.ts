@@ -9,13 +9,11 @@ type ScrollToPoint = number | `${number}` | "start" | "center" | "end";
 interface ScrollerConstructorConfig {
   align?: Align;
   /**
-   * TODO: probably remove
    * @deprecated please use {anchors} as 'hidden'
    * @see {AnchorsVisibility}
    */
   noAnchors?: boolean;
   /**
-   * TODO: probably remove
    * @deprecated please use {scrollbar} as 'hidden'
    * @see {ScrollbarVisibility}
    */
