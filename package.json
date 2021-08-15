@@ -46,5 +46,8 @@
     "gulp-rename": "^1.2.2",
     "jshint": "^2.9.2",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "peerDependencies": {
+    "typescript": "^4.0.0"
   }
 }
