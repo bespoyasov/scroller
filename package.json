@@ -37,17 +37,13 @@
     "babelify": "^7.3.0",
     "browserify": "^13.0.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
-    "gulp-browserify": "^0.5.1",
     "gulp-concat": "^2.6.0",
     "gulp-csso": "^2.0.0",
-    "gulp-data": "^1.2.1",
     "gulp-jshint": "^2.1.0",
     "gulp-minify": "0.0.10",
     "gulp-notify": "^2.2.0",
     "gulp-postcss": "^6.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^2.3.1",
     "jshint": "^2.9.2",
     "vinyl-source-stream": "^1.1.0"
   }
