@@ -3,6 +3,7 @@
   "version": "2.3.9",
   "description": "Draggable scroller",
   "main": "./build/scroller-min.js",
+  "types": "./build/scroller.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bespoyasov/scroller.git"
@@ -45,5 +46,8 @@
     "gulp-rename": "^1.2.2",
     "jshint": "^2.9.2",
     "vinyl-source-stream": "^1.1.0"
+  },
+  "peerDependencies": {
+    "typescript": "^4.0.0"
   }
 }
