@@ -55,14 +55,15 @@ const styles_minify = () => {
 }
 
 const scripts_minify = () => {
-    watch('./dev/**/*.css', styles);
-    watch('./dev/**/*.js', scripts);
-
     return gulp.src('build/scroller.js')
         .pipe(minify())
         .pipe(gulp.dest('build/'))
         .pipe(notify('Scripts-minify task completed'));
 }
 
+exports.default = series(styles, scripts, () => {
+    watch('./dev/**/*.css', styles);
+    watch('./dev/**/*.js', scripts);
+})
 
 exports.build = series(styles, scripts, styles_minify, scripts_minify);
