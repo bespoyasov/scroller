@@ -19,6 +19,9 @@
     "email": "bespoyasov@me.com",
     "url": "https://bespoyasov.ru"
   },
+  "scripts": {
+    "prepublishOnly": "gulp build"
+  },
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/bespoyasov/scroller/issues"

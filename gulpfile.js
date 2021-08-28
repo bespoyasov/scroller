@@ -22,15 +22,15 @@ const browsers = ['last 2 versions', 'ios 7'];
 const styles = () => {
     const processors = [autoprefixer({browsers: browsers})];
 
-    return gulp.src('./dev/style.css')
+    return gulp.src('./src/style.css')
         .pipe(postcss(processors))
         .pipe(gulp.dest('./build/'))
         .pipe(notify('Styles task completed'));
 }
 
 const scripts = () => {
-    return browserify('dev/scroller.js', {
-        entries: ['dev/scroller.js'],
+    return browserify('src/scroller.js', {
+        entries: ['src/scroller.js'],
         debug: true
     })
         .transform(babelify, {
@@ -46,7 +46,7 @@ const scripts = () => {
 const styles_minify = () => {
     const processors = [autoprefixer({ browsers: browsers })];
 
-    return gulp.src('./dev/style.css')
+    return gulp.src('./src/style.css')
         .pipe(postcss(processors))
         .pipe(csso())
         .pipe(rename('styles-min.css'))
@@ -62,8 +62,8 @@ const scripts_minify = () => {
 }
 
 exports.default = series(styles, scripts, () => {
-    watch('./dev/**/*.css', styles);
-    watch('./dev/**/*.js', scripts);
+    watch('./src/**/*.css', styles);
+    watch('./src/**/*.js', scripts);
 })
 
 exports.build = series(styles, scripts, styles_minify, scripts_minify);
