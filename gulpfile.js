@@ -38,7 +38,7 @@ const scripts = () => {
         debug: true
     })
         .transform(babelify, {
-            presets: ['es2015'],
+            presets: ['es2020'],
             plugins: ['transform-class-properties']
         })
         .bundle()
