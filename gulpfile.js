@@ -18,6 +18,10 @@ const gulp = require('gulp'),
 const { watch, series } = gulp;
 const browsers = ['last 2 versions', 'ios 7'];
 
+const typings = () => {
+    return gulp.src('./src/scroller.d.ts')
+        .pipe(gulp.dest('build/'))
+}
 
 const styles = () => {
     const processors = [autoprefixer({browsers: browsers})];
@@ -66,4 +70,4 @@ exports.default = series(styles, scripts, () => {
     watch('./src/**/*.js', scripts);
 })
 
-exports.build = series(styles, scripts, styles_minify, scripts_minify);
+exports.build = series(typings, styles, scripts, styles_minify, scripts_minify);
