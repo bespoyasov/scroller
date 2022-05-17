@@ -109,17 +109,6 @@
         el: el || null,
       };
 
-      window.raf = (() => {
-        return (
-          window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          function (callback) {
-            setTimeout(callback, 1000 / 60);
-          }
-        );
-      })();
-
       this.init(el);
     }
 
@@ -1031,7 +1020,7 @@
         this.setPos(-1 * endpoint);
         this.set("scrolled", endpoint);
 
-        if (currentTime < 1) raf(tick);
+        if (currentTime < 1) window.requestAnimationFrame(tick);
         else this.checkBorderVisibility();
       };
 
