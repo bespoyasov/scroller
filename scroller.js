@@ -1,8 +1,7 @@
 (function () {
-  // helpers
   const getElement = (selector = "", ctx = document) => {
-    const node = ctx.querySelectorAll(selector);
-    return node ? node[0] : null;
+    const node = ctx.querySelector(selector);
+    return node || null;
   };
 
   const getElements = (selector = "", ctx = document) => {
