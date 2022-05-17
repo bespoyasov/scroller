@@ -1101,11 +1101,6 @@
     });
   };
 
-  document.addEventListener("DOMContentLoaded", () => autoinit);
-
-  document.onreadystatechange = () => {
-    if (document.readyState == "interactive") autoinit();
-  };
-
+  document.addEventListener("DOMContentLoaded", autoinit);
   window.Scroller = Scroller;
 })();
