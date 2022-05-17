@@ -145,16 +145,12 @@
       return field[field.length - toIgnore] || 0;
     }
 
-    addClass(el, cl) {
-      if (!new RegExp("(\\s|^)" + cl + "(\\s|$)").test(el.className)) {
-        el.className += " " + cl;
-      }
+    addClass(el, className) {
+      el.classList.add(className);
     }
 
-    removeClass(el, cl) {
-      el.className = el.className
-        .replace(new RegExp("(\\s+|^)" + cl + "(\\s+|$)", "g"), " ")
-        .replace(/^\s+|\s+$/g, "");
+    removeClass(el, className) {
+      el.classList.remove(className);
     }
 
     alignScbToRight() {
