@@ -182,12 +182,7 @@
     }
 
     setPosition(el, pos) {
-      el.style.webkitTransform = "translateX(" + pos + "px)";
-      el.style.MozTransform =
-        el.style.msTransform =
-        el.style.OTransform =
-        el.style.transform =
-          "translateX(" + pos + "px)";
+      el.style.transform = "translateX(" + pos + "px)";
     }
 
     setWidth(width) {
