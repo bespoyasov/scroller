@@ -38,10 +38,6 @@
     return children;
   };
 
-  const isAndroid = () => {
-    return navigator.userAgent.toLowerCase().indexOf("android") > -1;
-  };
-
   // scroller
   class Scroller {
     constructor(config) {
@@ -111,8 +107,6 @@
 
         let: (el.hasChildNodes() && getChildren(el).length) || 0,
         el: el || null,
-
-        isAndroid: isAndroid(),
       };
 
       window.raf = (() => {
