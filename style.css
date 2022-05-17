@@ -2,7 +2,7 @@
   position: relative;
   overflow: hidden;
   user-select: none;
-  padding-bottom:40px;
+  padding-bottom: 40px;
 }
 
 .ab_scroller * {
@@ -12,17 +12,17 @@
 
 .ab_scroller-wrapper {
   position: relative;
-  width:100%;
-  height:auto;
+  width: 100%;
+  height: auto;
 }
 
 .ab_scroller-strip {
   position: absolute;
-  left:0;
-  top:0;
-  width:100000px;
-  min-width:100%;
-  display:flex;
+  left: 0;
+  top: 0;
+  width: 100000px;
+  min-width: 100%;
+  display: flex;
   flex-wrap: nowrap;
   justify-content: center;
 }
@@ -32,21 +32,21 @@
 }
 
 .ab_scroller.is-left-align .ab_scroller-anchors {
-  margin-left:0;
-  right:auto;
-  left:0;
-  margin-right:auto;
+  margin-left: 0;
+  right: auto;
+  left: 0;
+  margin-right: auto;
 }
 
 .ab_scroller-strip,
 .ab_scroller-strip * {
-  cursor:move;
-  cursor:-webkit-grab;
-  cursor:-moz-grab;
-  cursor:-o-grab;
-  cursor:-ms-grab;
-  cursor:grab;
-  *cursor:move!important;
+  cursor: move;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+  cursor: -o-grab;
+  cursor: -ms-grab;
+  cursor: grab;
+  *cursor: move !important;
 }
 
 .is-dragging,
@@ -57,7 +57,7 @@
   cursor: -moz-grabbing;
   cursor: -o-grabbing;
   cursor: -ms-grabbing;
-  cursor: grabbing
+  cursor: grabbing;
 }
 
 .ab_scroller-strip a,
@@ -66,30 +66,29 @@
 }
 
 .ab_scroller-strip:after {
-  clear:both;
-  content:' ';
-  display:block;
+  clear: both;
+  content: " ";
+  display: block;
 }
-
 
 .ab_scroller-border {
   position: absolute;
-  top:0;
-  bottom:0;
-  background: rgba(0,0,0,.2);
-  width:1px;
-  height:auto;
-  z-index:5;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.2);
+  width: 1px;
+  height: auto;
+  z-index: 5;
   opacity: 0;
   transition: opacity 0.2s;
 }
 
 .ab_scroller-border--left {
-  left:0;
+  left: 0;
 }
 
 .ab_scroller-border--right {
-  right:0;
+  right: 0;
 }
 
 .ab_scroller-border.is-visible {
@@ -98,27 +97,27 @@
 
 .ab_scroller-scrollwrap {
   position: absolute;
-  bottom:-15px;
-  left:0;
-  right:0;
-  height:7px;
+  bottom: -15px;
+  left: 0;
+  right: 0;
+  height: 7px;
 }
 
 .ab_scroller-scrollbar {
   position: absolute;
-  left:0;
-  top:0;
-  height:100%;
+  left: 0;
+  top: 0;
+  height: 100%;
   border-radius: 5px;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   cursor: move !important;
-  min-width:20px;
+  min-width: 20px;
 }
 
 .ab_scroller-scrollbar.is-right {
-  left:auto;
+  left: auto;
   transform: none !important;
-  right:0 !important
+  right: 0 !important;
 }
 
 .ab_scroller-anchors {
@@ -126,17 +125,17 @@
   bottom: -40px;
   font-size: 12px;
   display: flex;
-  width:100%;
+  width: 100%;
   justify-content: space-between;
   flex-wrap: nowrap;
 
   margin: auto;
-  left:0;
-  right:0;
+  left: 0;
+  right: 0;
 }
 
 .ab_scroller-anchor {
-  padding-right:5px;
+  padding-right: 5px;
   box-sizing: border-box;
   overflow: hidden;
 }
@@ -144,46 +143,44 @@
 .ab_scroller-anchor span {
   white-space: nowrap !important;
   overflow: hidden;
-  display:block;
-  color:rgba(0,0,0,.5);
-  border-bottom:1px dashed rgba(0,0,0,.2);
+  display: block;
+  color: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.2);
   cursor: pointer;
   transition: border-color 0.2s, color 0.2s;
 }
 
 .ab_scroller-anchor span:hover {
-  color:black;
-  border-bottom:1px dashed rgba(0,0,0,.7)
+  color: black;
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.7);
 }
 
-
 .ab_scroller.is-no-anchors {
-  padding-bottom:15px;
+  padding-bottom: 15px;
 }
 
 .ab_scroller.is-no-anchors .ab_scroller-anchors {
-  display:none;
+  display: none;
 }
 
 .ab_scroller.is-no-scrollbar {
-  padding-bottom:25px;
+  padding-bottom: 25px;
 }
 
 .ab_scroller.is-no-scrollbar .ab_scroller-scrollwrap {
-  display:none;
+  display: none;
 }
 
 .ab_scroller.is-no-scrollbar .ab_scroller-anchors {
-  bottom:-25px;
+  bottom: -25px;
 }
 
 .ab_scroller.is-no-scrollbar.is-no-anchors {
-  padding-bottom:0;
+  padding-bottom: 0;
 }
 
-
 .ab_scroller.is-not-scrollable {
-  padding-bottom:25px;
+  padding-bottom: 25px;
 }
 
 .ab_scroller.is-not-scrollable .ab_scroller-strip,
@@ -193,11 +190,11 @@
 }
 
 .ab_scroller.is-not-scrollable .ab_scroller-border {
-  display:none !important;
+  display: none !important;
 }
 
 .ab_scroller.is-not-scrollable .ab_scroller-scrollwrap {
-  display:none;
+  display: none;
 }
 
 .ab_scroller.is-not-scrollable .ab_scroller-anchors {
@@ -206,7 +203,7 @@
 
 .ab_scroller.is-not-scrollable .ab_scroller-anchor span,
 .ab_scroller.is-not-scrollable .ab_scroller-anchor span:hover {
-  border:0 !important;
+  border: 0 !important;
   cursor: initial;
-  color:rgba(0,0,0,.5)
+  color: rgba(0, 0, 0, 0.5);
 }
