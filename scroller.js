@@ -42,13 +42,14 @@
   class Scroller {
     constructor(config) {
       const {
+        el,
+        onClick,
+
+        start = 0,
         align = "center",
         scrollbar = "visible",
         anchors = "visible",
-        start = 0,
         startAnimation = false,
-        el,
-        onClick,
         useOuterHtml = false,
       } = config;
 
