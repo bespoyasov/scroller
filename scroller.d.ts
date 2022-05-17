@@ -1,4 +1,4 @@
-type Align = "left" | "center" | "right";
+type Align = "left" | "center";
 
 type AnchorsVisibility = "hidden" | "visible";
 
