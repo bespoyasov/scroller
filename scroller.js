@@ -127,7 +127,7 @@
       if (field && field.length) field.length = 0;
     }
 
-    getLastMeaningfull(prop) {
+    getLastMeaningful(prop) {
       const field = this.state[prop];
       const toIgnore = field && field.length && field.length > 3 ? 3 : 1;
       return field[field.length - toIgnore] || 0;
@@ -592,9 +592,9 @@
 
       this.handleTouchStart(e);
 
-      const tochEvent = isTouchEvent(e);
-      if (!tochEvent) e.preventDefault();
-      if (!tochEvent && !isLeftButtonClick(e)) return;
+      const touchEvent = isTouchEvent(e);
+      if (!touchEvent) e.preventDefault();
+      if (!touchEvent && !isLeftButtonClick(e)) return;
 
       this.set("pointerDown", true);
       this.set("scrollbarPointerDown", false);
@@ -686,7 +686,7 @@
       const limitRight = this.get("limitRight");
       const scrolled = this.get("scrolled");
 
-      const lastPageX = this.getLastMeaningfull("pageX");
+      const lastPageX = this.getLastMeaningful("pageX");
       const currentEventX = getEventX(e);
       const distanceDelta = currentEventX - lastPageX;
 
