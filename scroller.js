@@ -245,18 +245,12 @@
         this.config.startAnimation = true;
       }
 
-      // passive: false needed to prevent scrolling in Safari on latest iOS
-      // https://stackoverflow.com/questions/49500339/cant-prevent-touchmove-from-scrolling-window-on-ios
-      const touchMoveEventConfig = { passive: false };
-
       stripNode.addEventListener("mousedown", this.onPointerDown.bind(this));
       stripNode.addEventListener("touchstart", this.onPointerDown.bind(this));
       document.addEventListener("mousemove", this.onPointerMove.bind(this));
-      document.addEventListener(
-        "touchmove",
-        this.onPointerMove.bind(this),
-        touchMoveEventConfig
-      );
+      document.addEventListener("touchmove", this.onPointerMove.bind(this), {
+        passive: false,
+      });
       document.addEventListener("mouseup", this.onPointerUp.bind(this));
       document.addEventListener("touchend", this.onPointerUp.bind(this));
 
