@@ -218,8 +218,7 @@
       // config
       if (
         this.config.align !== "center" ||
-        rootNode.getAttribute("data-leftalign") ||
-        rootNode.getAttribute("data-leftAlign")
+        rootNode.getAttribute("data-leftalign")
       ) {
         this.addClass(rootNode, this.config.leftAlignClsnm);
       }
@@ -242,10 +241,7 @@
         this.config.start = rootNode.getAttribute("data-start");
       }
 
-      if (
-        rootNode.getAttribute("data-startAnimation") ||
-        rootNode.getAttribute("data-startanimation")
-      ) {
+      if (rootNode.getAttribute("data-startAnimation")) {
         this.config.startAnimation = true;
       }
 
