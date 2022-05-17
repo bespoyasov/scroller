@@ -21,15 +21,13 @@
   };
 
   const isControlClick = (e) => e.ctrlKey || e.metaKey;
-
   const isLeftButtonClick = (e) => e.which === 1 || e.button === 0;
-
   const isTouchEvent = (e) => !!e.touches || !!e.changedTouches;
 
   const getChildren = (el) => {
-    let childNodes = el.childNodes,
-      children = [],
-      i = childNodes.length;
+    let childNodes = el.childNodes;
+    let children = [];
+    let i = childNodes.length;
 
     while (i--) {
       if (childNodes[i].nodeType == 1) children.unshift(childNodes[i]);
@@ -136,8 +134,9 @@
     }
 
     addClass(el, cl) {
-      if (!new RegExp("(\\s|^)" + cl + "(\\s|$)").test(el.className))
+      if (!new RegExp("(\\s|^)" + cl + "(\\s|$)").test(el.className)) {
         el.className += " " + cl;
+      }
     }
 
     removeClass(el, cl) {
@@ -336,7 +335,9 @@
             centralNode.offsetWidth / 2;
 
           endpoint = Math.min(centralNode.offsetLeft, endpoint);
-        } else endpoint = this.config.start;
+        } else {
+          endpoint = this.config.start;
+        }
 
         this.scrollTo(endpoint, animation);
       };
@@ -436,8 +437,8 @@
       const rootNode = this.state.el;
       const wrapperNode = getElement(`.${prefix}-strip`, rootNode);
       const ancWrapperNode = getElement(`.${prefix}-anchors`, rootNode);
-      let anchorsHtml = "",
-        counter = 0;
+      let anchorsHtml = "";
+      let counter = 0;
 
       Array.from(getChildren(wrapperNode)).forEach((itemNode) => {
         const targetNode = useOuterHtml
@@ -466,8 +467,8 @@
       const scrollbarNode = getElement(`.${prefix}-scrollbar`, rootNode);
       const scrollwrapNode = getElement(`.${prefix}-scrollwrap`, rootNode);
       const itemNodes = getElements(`.${prefix}-item`, rootNode);
-      let maxHeight = 0,
-        sumWidth = 0;
+      let maxHeight = 0;
+      let sumWidth = 0;
 
       // save rootNode's style.height to prevent "jumps" of content below
       // it won't affect items' offsetHeights calculations
@@ -523,8 +524,8 @@
       const wrapperNode = getElement(`.${prefix}-wrapper`, rootNode);
       const itemNodes = getElements(`.${prefix}-item`, rootNode);
       const ancWrapperNode = getElement(`.${prefix}-anchors`, rootNode);
-      let sumWidth = 0,
-        wrapperWidth = wrapperNode.offsetWidth;
+      let sumWidth = 0;
+      let wrapperWidth = wrapperNode.offsetWidth;
 
       Array.from(itemNodes).forEach((itemNode) => {
         sumWidth += itemNode.offsetWidth;
@@ -546,17 +547,23 @@
       const prefix = this.config.prefix;
       const rootNode = this.state.el;
 
-      if (this.config.align !== "center")
+      if (this.config.align !== "center") {
         this.addClass(rootNode, this.config.leftAlignClsnm);
-      else this.removeClass(rootNode, this.config.leftAlignClsnm);
+      } else {
+        this.removeClass(rootNode, this.config.leftAlignClsnm);
+      }
 
-      if (this.config.noAnchors)
+      if (this.config.noAnchors) {
         this.addClass(rootNode, this.config.noAnchorsClsnm);
-      else this.removeClass(rootNode, this.config.noAnchorsClsnm);
+      } else {
+        this.removeClass(rootNode, this.config.noAnchorsClsnm);
+      }
 
-      if (this.config.noScrollbar)
+      if (this.config.noScrollbar) {
         this.addClass(rootNode, this.config.noScrollbarClsnm);
-      else this.removeClass(rootNode, this.config.noScrollbarClsnm);
+      } else {
+        this.removeClass(rootNode, this.config.noScrollbarClsnm);
+      }
 
       if (useOuterHtml) {
         this.wrapItems();
@@ -1005,12 +1012,13 @@
           this.setScbPos(scbEndpoint);
         } else {
           let scbw = this.get("scrollbarWidth");
-          if (start < stop)
+          if (start < stop) {
             scbw -=
               delta * scbFactor * (1 - this.config.easing(currentTime / time));
-          else
+          } else {
             scbw +=
               delta * scbFactor * (1 - this.config.easing(currentTime / time));
+          }
 
           this.setWidth(scbw);
         }
