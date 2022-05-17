@@ -55,13 +55,13 @@
       } = config;
 
       this.config = {
-        align: align,
+        align,
         // noAnchors, noScrollbar — legacy
         noAnchors: anchors == "hidden" || noAnchors,
         noScrollbar: scrollbar == "hidden" || noScrollbar,
-        onClick: onClick,
-        start: start,
-        startAnimation: startAnimation,
+        onClick,
+        start,
+        startAnimation,
 
         prefix: "ab_scroller",
         draggingClsnm: "is-dragging",
@@ -73,7 +73,7 @@
         // if we don't need to create markup
         // for example react component will render html by itself
         // so we just take outer markup instead
-        useOuterHtml: useOuterHtml,
+        useOuterHtml,
 
         easing: easeOutExpo,
       };
