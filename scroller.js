@@ -36,6 +36,8 @@
     return children;
   };
 
+  const easeOutExpo = (pos) => (pos === 1 ? 1 : -Math.pow(2, -10 * pos) + 1);
+
   // scroller
   class Scroller {
     constructor(config) {
@@ -73,7 +75,7 @@
         // so we just take outer markup instead
         useOuterHtml: useOuterHtml,
 
-        easing: (pos) => (pos === 1 ? 1 : -Math.pow(2, -10 * pos) + 1),
+        easing: easeOutExpo,
       };
 
       this.state = {
