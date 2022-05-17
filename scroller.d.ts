@@ -11,16 +11,6 @@ interface ScrollerConstructorConfig {
    * By default, it's `left` aligned
    */
   align?: Align;
-  /**
-   * @deprecated please use {anchors} as 'hidden'
-   * @see {AnchorsVisibility}
-   */
-  noAnchors?: boolean;
-  /**
-   * @deprecated please use {scrollbar} as 'hidden'
-   * @see {ScrollbarVisibility}
-   */
-  noScrollbar?: boolean;
   scrollbar?: ScrollbarVisibility;
   anchors?: AnchorsVisibility;
   start?: ScrollToPoint;

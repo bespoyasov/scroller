@@ -43,8 +43,6 @@
     constructor(config) {
       const {
         align = "center",
-        noAnchors = false,
-        noScrollbar = false,
         scrollbar = "visible",
         anchors = "visible",
         start = 0,
@@ -56,9 +54,8 @@
 
       this.config = {
         align,
-        // noAnchors, noScrollbar — legacy
-        noAnchors: anchors == "hidden" || noAnchors,
-        noScrollbar: scrollbar == "hidden" || noScrollbar,
+        noAnchors: anchors == "hidden",
+        noScrollbar: scrollbar == "hidden",
         onClick,
         start,
         startAnimation,
@@ -1077,8 +1074,6 @@
     update(config) {
       const {
         align = this.config.align,
-        noAnchors = this.config.noAnchors,
-        noScrollbar = this.config.noScrollbar,
         scrollbar,
         anchors,
         onClick = this.config.onClick,
@@ -1087,13 +1082,8 @@
       } = config || {};
 
       this.config.align = align;
-      this.config.noAnchors = !noAnchors
-        ? anchors == "hidden"
-        : anchors != "visible";
-
-      this.config.noScrollbar = !noScrollbar
-        ? scrollbar == "hidden"
-        : scrollbar != "visible";
+      this.config.noAnchors = anchors === "hidden";
+      this.config.noScrollbar = scrollbar === "hidden";
 
       this.config.onClick = onClick;
       this.config.start = start;
