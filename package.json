@@ -2,8 +2,8 @@
   "name": "prokrutchik",
   "version": "2.4.0",
   "description": "Draggable scroller",
-  "main": "./build/scroller-min.js",
-  "types": "./build/scroller.d.ts",
+  "main": "scroller.js",
+  "types": "scroller.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bespoyasov/scroller.git"
