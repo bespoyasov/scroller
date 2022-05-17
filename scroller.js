@@ -1,4 +1,16 @@
 (function () {
+  const createWrapperTemplate = (prefix) =>
+    `<div class="${prefix}-wrapper">
+  <div class="${prefix}-border ${prefix}-border--left"></div>
+  <div class="${prefix}-border ${prefix}-border--right"></div>
+  <div class="${prefix}-strip">${prevHtml}</div>
+
+  <div class="${prefix}-scrollwrap">
+    <div class="${prefix}-scrollbar"></div>
+  </div>
+  <div class="${prefix}-anchors"></div>
+</div>`;
+
   const getElement = (selector = "", ctx = document) => {
     const node = ctx.querySelector(selector);
     return node || null;
@@ -365,16 +377,7 @@
       const rootNode = this.state.el;
 
       const prevHtml = rootNode.innerHTML;
-      const wrapperHtml = `<div class="${prefix}-wrapper">
-        <div class="${prefix}-border ${prefix}-border--left"></div>
-        <div class="${prefix}-border ${prefix}-border--right"></div>
-        <div class="${prefix}-strip">${prevHtml}</div>
-
-        <div class="${prefix}-scrollwrap">
-          <div class="${prefix}-scrollbar"></div>
-        </div>
-        <div class="${prefix}-anchors"></div>
-      </div>`;
+      const wrapperHtml = createWrapperTemplate(prefix);
 
       rootNode.innerHTML = wrapperHtml;
       this.addClass(rootNode, prefix);
