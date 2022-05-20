@@ -1,3 +1,6 @@
 *.log
 .vscode
 node_modules
+
+scroller.*js
+scroller.*js.map
