@@ -1,0 +1,21 @@
+/* Scroller Scope */
+
+.scroller {
+  --scroll-height: 8px;
+  --vertical-margin: 10px;
+
+  --transition-duration: 0.1s;
+}
+
+.scroller,
+.scroller * {
+  box-sizing: border-box;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.scroller {
+  position: relative;
+  overflow: hidden;
+}
