@@ -1,6 +1,7 @@
 import { classNames, modifiers } from "./classes.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
 
+import { isHidden } from "./visibility";
 import { createRuntimeConfig } from "./config.js";
 import { createInitialState } from "./state.js";
 
@@ -83,5 +84,10 @@ export class Scroller {
   setScrollHandlePosition() {
     const position = this.state.position * -this.state.containerRatio;
     setPosition(this.handle, position);
+  }
+
+  checkScrollbarVisibility() {
+    const hidden = !this.state.scrollable || isHidden(this.config.scrollbar);
+    classIf(this.root, modifiers.noScrollbar, hidden);
   }
 }
