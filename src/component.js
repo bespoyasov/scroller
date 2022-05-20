@@ -1,5 +1,5 @@
 import { classNames, modifiers } from "./classes.js";
-import { classIf } from "./dom.js";
+import { classIf, setPosition, setWidth } from "./dom.js";
 
 import { createRuntimeConfig } from "./config.js";
 import { createInitialState } from "./state.js";
@@ -72,5 +72,15 @@ export class Scroller {
   updateScrollability() {
     this.state.scrollable = this.root.offsetWidth < this.content.offsetWidth;
     classIf(this.root, !this.state.scrollable, modifiers.nonScrollable);
+  }
+
+  setScrollHandleWidth() {
+    const value = this.scrollbar.offsetWidth * this.state.containerRatio;
+    setWidth(this.handle, value);
+  }
+
+  setScrollHandlePosition() {
+    const position = this.state.position * -this.state.containerRatio;
+    setPosition(this.handle, position);
   }
 }
