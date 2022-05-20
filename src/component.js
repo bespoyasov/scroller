@@ -24,7 +24,6 @@ export class Scroller {
     this.config = createRuntimeConfig({ config, element });
 
     this.#init(element);
-    this.#attachEventHandlers();
   }
 
   #init(element) {
@@ -32,6 +31,7 @@ export class Scroller {
     else this.#createLayout(element);
 
     this.#render();
+    this.#attachEventHandlers();
   }
 
   #attachEventHandlers() {
