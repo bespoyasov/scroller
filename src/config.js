@@ -1,4 +1,4 @@
-import { visibility } from "./visibility";
+import { visibility } from "./visibility.js";
 
 export function createRuntimeConfig({ element, config }) {
   const { dataset } = element;

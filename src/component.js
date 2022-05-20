@@ -1,7 +1,7 @@
 import { classNames, modifiers } from "./classes.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
 
-import { isHidden } from "./visibility";
+import { isHidden } from "./visibility.js";
 import { createRuntimeConfig } from "./config.js";
 import { createInitialState } from "./state.js";
 
