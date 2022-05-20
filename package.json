@@ -31,7 +31,7 @@
   "scripts": {
     "lint": "npx eslint src/**",
     "prebuild": "npm run lint",
-    "build": "npx swc src -C module.type=umd -o scroller.browser.js"
+    "build": "npx swc scroller.js -o scroller.browser.js"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.57",
