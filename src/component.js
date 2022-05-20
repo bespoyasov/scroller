@@ -51,5 +51,7 @@ export class Scroller {
     root.append(content);
     root.append(scrollbar);
     root.append(navigation);
+
+    this.useRoot(root);
   }
 }
