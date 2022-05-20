@@ -67,8 +67,10 @@ export class Scroller {
 
   #useRoot(element) {
     this.root = element;
+
     this.container = element.querySelector(`.${classNames.container}`);
     this.content = element.querySelector(`.${classNames.content}`);
+    this.navigation = element.querySelector(`.${classNames.nav}`);
 
     this.scrollbar = element.querySelector(`.${classNames.scrollbar}`);
     this.handle = element.querySelector(`.${classNames.handle}`);
