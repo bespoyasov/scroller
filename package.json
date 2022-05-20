@@ -1,0 +1,29 @@
+{
+  "name": "prokrutchik",
+  "version": "3.0.0",
+  "description": "Draggable content scroller.",
+  "keywords": [
+    "scroller",
+    "scroll",
+    "drag",
+    "drag-n-drop"
+  ],
+  "type": "module",
+  "types": "scroller.d.ts",
+  "exports": {
+    ".": "./scroller.js",
+    "./package.json": "./package.json",
+    "./scroller.css": "./scroller.css"
+  },
+  "files": [
+    "scroller.js",
+    "scroller.css",
+    "scroller.d.ts"
+  ],
+  "engines": {
+    "node": ">=14.16"
+  },
+  "author": "Alex Bespoyasov <bespoyasov@me.com>",
+  "repository": "bespoyasov/scroller",
+  "license": "ISC"
+}
