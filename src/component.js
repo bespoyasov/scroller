@@ -135,10 +135,14 @@ export class Scroller {
     event.preventDefault();
 
     const { deltaX: dx } = event;
-    const { position, start, end } = this.state;
+    const { position } = this.state;
 
-    const updated = Math.min(Math.max(position - dx, end), start);
-    this.#moveTo(updated);
+    this.#moveTo(this.#restrained(position - dx));
+  }
+
+  #restrained(position) {
+    const { start, end } = this.state;
+    return Math.min(Math.max(position, end), start);
   }
 
   #moveTo(position) {
