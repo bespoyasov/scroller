@@ -122,3 +122,41 @@
 .no-scrollbar .scroller-scrollbar {
   display: none;
 }
+
+/* Navigation */
+
+.scroller-navigation {
+  margin: var(--vertical-margin) 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.scroller-button {
+  -webkit-appearance: none;
+  appearance: none;
+
+  padding: 0;
+  margin: 0;
+
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+
+  color: inherit;
+  font-size: 0.8em;
+  white-space: nowrap !important;
+
+  opacity: 0.5;
+  transition: opacity var(--transition-duration);
+}
+
+.scroller-button:focus,
+.scroller-button:hover {
+  opacity: 1;
+}
+
+.scroller-navigation:empty,
+.no-navigation .scroller-navigation {
+  display: none;
+}
