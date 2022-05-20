@@ -3,4 +3,4 @@ export const visibility = {
   visible: "visible",
 };
 
-export const isHidden = (value) => value === visibility;
+export const isHidden = (value) => value === visibility.hidden;
