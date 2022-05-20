@@ -11,3 +11,14 @@ export function createContentContainer() {
   container.className = classNames.container;
   return container;
 }
+
+export function createScrollBar() {
+  const scrollbar = document.createElement("div");
+  const handle = document.createElement("div");
+
+  handle.className = classNames.handle;
+  scrollbar.className = classNames.scrollbar;
+  scrollbar.append(handle);
+
+  return scrollbar;
+}
