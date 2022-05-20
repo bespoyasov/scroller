@@ -9,3 +9,10 @@ body {
 .scroller {
   margin: 0 0 5em;
 }
+
+.item {
+  width: 500px;
+  padding: 50px;
+  text-align: center;
+  border: 1px solid;
+}
