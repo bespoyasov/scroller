@@ -20,6 +20,9 @@ export class Scroller {
     else this.createLayout(element);
   }
 
-  useRoot(element) {}
+  useRoot(element) {
+    this.root = element;
+  }
+
   createLayout(element) {}
 }
