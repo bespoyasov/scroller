@@ -67,4 +67,8 @@ export class Scroller {
     this.state.containerRatio = Math.min(rootWidth / contentWidth, 1);
     this.state.scrollbarRatio = Math.min(scrollbarWidth / rootWidth, 1);
   }
+
+  updateScrollability() {
+    this.state.scrollable = this.root.offsetWidth < this.content.offsetWidth;
+  }
 }
