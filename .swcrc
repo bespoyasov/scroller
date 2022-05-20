@@ -1,0 +1,6 @@
+{
+  "minify": true,
+  "jsc": {
+    "target": "es2020"
+  }
+}
