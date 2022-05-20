@@ -25,5 +25,9 @@
   },
   "author": "Alex Bespoyasov <bespoyasov@me.com>",
   "repository": "bespoyasov/scroller",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.187"
+  }
 }
