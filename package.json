@@ -13,10 +13,12 @@
   "exports": {
     ".": "./scroller.js",
     "./package.json": "./package.json",
+    "./scroller.browser.js": "./scroller.browser.js",
     "./scroller.css": "./scroller.css"
   },
   "files": [
     "scroller.js",
+    "scroller.browser.js",
     "scroller.css",
     "scroller.d.ts"
   ],
