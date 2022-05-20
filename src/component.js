@@ -90,4 +90,9 @@ export class Scroller {
     const hidden = !this.state.scrollable || isHidden(this.config.scrollbar);
     classIf(this.root, modifiers.noScrollbar, hidden);
   }
+
+  checkNavigationVisibility() {
+    const hidden = !this.state.scrollable || isHidden(this.config.navigation);
+    classIf(this.root, modifiers.noNavigation, hidden);
+  }
 }
