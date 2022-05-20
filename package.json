@@ -31,7 +31,7 @@
   "scripts": {
     "lint": "npx eslint src/**",
     "prebuild": "npm run lint",
-    "build": "npm run build:module && npm run build:browser",
+    "build": "npm run build:module & npm run build:browser",
     "build:module": "npx swc src -C module.type=es6 -o scroller.js",
     "build:browser": "npx swc src -C module.type=umd -o scroller.browser.js"
   },
