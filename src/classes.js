@@ -11,3 +11,7 @@ export const classNames = {
   scrollbar: `scroller-scrollbar`,
   handle: `scroller-handle`,
 };
+
+export const modifiers = {
+  nonScrollable: "is-not-scrollable",
+};
