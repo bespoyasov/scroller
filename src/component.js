@@ -19,7 +19,7 @@ export class Scroller {
     this.state = createInitialState();
     this.config = createRuntimeConfig({ config, element });
 
-    this.init();
+    this.init(element);
   }
 
   init(element) {
