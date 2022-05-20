@@ -1,5 +1,6 @@
 import { classNames, modifiers } from "./classes.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
+import { throttle } from "./throttle.js";
 
 import { isHidden } from "./visibility.js";
 import { createRuntimeConfig } from "./config.js";
@@ -22,6 +23,7 @@ export class Scroller {
     this.config = createRuntimeConfig({ config, element });
 
     this.#init(element);
+    this.#attachEventHandlers();
   }
 
   #init(element) {
@@ -29,6 +31,10 @@ export class Scroller {
     else this.#createLayout(element);
 
     this.#render();
+  }
+
+  #attachEventHandlers() {
+    window.addEventListener("resize", throttle(this.#render.bind(this)));
   }
 
   #createLayout(element) {
