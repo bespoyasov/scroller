@@ -14,4 +14,7 @@ export const classNames = {
 
 export const modifiers = {
   nonScrollable: "is-not-scrollable",
+
+  noScrollbar: "no-scrollbar",
+  noNavigation: "no-navigation",
 };
