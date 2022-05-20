@@ -7,5 +7,8 @@ export function createInitialState() {
     containerRatio: 1,
     scrollbarRatio: 1,
     scrollable: true,
+
+    scrolling: false,
+    touching: false,
   };
 }
