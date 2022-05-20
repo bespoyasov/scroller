@@ -15,5 +15,11 @@ export class Scroller {
     this.init();
   }
 
-  init() {}
+  init(element) {
+    if (this.config.useExternalLayout) this.useRoot(element);
+    else this.createLayout(element);
+  }
+
+  useRoot(element) {}
+  createLayout(element) {}
 }
