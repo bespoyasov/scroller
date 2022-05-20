@@ -1,5 +1,6 @@
 import { classNames, modifiers } from "./classes.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
+import { hasHorizontalDirection } from "./event.js";
 import { throttle } from "./throttle.js";
 
 import { isHidden } from "./visibility.js";
@@ -34,6 +35,8 @@ export class Scroller {
   }
 
   #attachEventHandlers() {
+    this.container.addEventListener("wheel", this.#onScroll.bind(this));
+
     window.addEventListener("resize", throttle(this.#render.bind(this)));
   }
 
@@ -124,6 +127,17 @@ export class Scroller {
 
     classIf(this.root, leftVisible, borderLeft);
     classIf(this.root, rightVisible, borderRight);
+  }
+
+  #onScroll(event) {
+    if (!hasHorizontalDirection(event) || !this.state.scrollable) return;
+    event.preventDefault();
+
+    const { deltaX: dx } = event;
+    const { position, start, end } = this.state;
+
+    const updated = Math.min(Math.max(position - dx, end), start);
+    this.#moveTo(updated);
   }
 
   #moveTo(position) {
