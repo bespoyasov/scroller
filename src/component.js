@@ -27,6 +27,8 @@ export class Scroller {
   init(element) {
     if (this.config.useExternalLayout) this.useRoot(element);
     else this.createLayout(element);
+
+    this.render();
   }
 
   useRoot(element) {
@@ -59,6 +61,18 @@ export class Scroller {
     root.append(navigation);
 
     this.useRoot(root);
+  }
+
+  render() {
+    this.updateDimensions();
+    this.updateScrollability();
+
+    this.setScrollHandleWidth();
+    this.setScrollHandlePosition();
+
+    this.checkScrollbarVisibility();
+    this.checkNavigationVisibility();
+    this.checkBorderVisibility();
   }
 
   updateDimensions() {
