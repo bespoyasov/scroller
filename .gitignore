@@ -2,5 +2,4 @@
 .vscode
 node_modules
 
-scroller.*js
-scroller.*js.map
+scroller.browser.*
