@@ -42,5 +42,8 @@ export class Scroller {
 
     root.className = element.className;
     root.style = element.style;
+
+    element.className = classNames.content;
+    element.style = null;
   }
 }
