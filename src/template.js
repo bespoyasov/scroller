@@ -22,3 +22,21 @@ export function createScrollBar() {
 
   return scrollbar;
 }
+
+export function createNavigation(contentItems) {
+  const navigation = document.createElement("footer");
+  const buttons = contentItems
+    .filter((element) => !!element.dataset.anchor)
+    .map((element) => {
+      const button = document.createElement("button");
+      button.className = classNames.button;
+      button.innerText = element.dataset.anchor;
+      button.dataset.id = element.dataset.anchor;
+      button.type = "button";
+      return button;
+    });
+
+  navigation.className = classNames.nav;
+  navigation.append(...buttons);
+  return navigation;
+}
