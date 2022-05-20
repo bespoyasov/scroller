@@ -30,9 +30,10 @@ export class Scroller {
 
   useRoot(element) {
     this.root = element;
-
     this.content = element.querySelector(`.${classNames.content}`);
+
     this.scrollbar = element.querySelector(`.${classNames.scrollbar}`);
+    this.handle = element.querySelector(`.${classNames.handle}`);
   }
 
   createLayout(element) {
