@@ -70,5 +70,8 @@ export class Scroller {
 
   updateScrollability() {
     this.state.scrollable = this.root.offsetWidth < this.content.offsetWidth;
+
+    if (!this.state.scrollable) this.root.classList.add("is-not-scrollable");
+    else this.root.classList.remove("is-not-scrollable");
   }
 }
