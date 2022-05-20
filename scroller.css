@@ -5,7 +5,9 @@
   --vertical-margin: 10px;
 
   --transition-duration: 0.1s;
+
   --adornment-color: rgba(0, 0, 0, 0.5);
+  --control-color: rgba(0, 0, 0, 0.5);
 }
 
 .scroller,
@@ -86,4 +88,37 @@
 
 .has-left-align .scroller-content {
   justify-content: start;
+}
+
+/* Scrollbar */
+
+.scroller-scrollbar {
+  margin: var(--vertical-margin) 0;
+  height: var(--scroll-height);
+  position: relative;
+  cursor: pointer;
+}
+
+.scroller-handle {
+  height: 100%;
+  min-width: 20px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background-color: var(--control-color);
+  border-radius: 5px;
+  cursor: move;
+
+  opacity: 0.5;
+  transition: opacity var(--transition-duration);
+}
+
+.scroller-handle:hover {
+  opacity: 1;
+}
+
+.no-scrollbar .scroller-scrollbar {
+  display: none;
 }
