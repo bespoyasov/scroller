@@ -1,4 +1,5 @@
 import { classNames, modifiers } from "./classes.js";
+import { classIf } from "./dom.js";
 
 import { createRuntimeConfig } from "./config.js";
 import { createInitialState } from "./state.js";
@@ -70,8 +71,6 @@ export class Scroller {
 
   updateScrollability() {
     this.state.scrollable = this.root.offsetWidth < this.content.offsetWidth;
-
-    if (!this.state.scrollable) this.root.classList.add(modifiers.nonScrollable);
-    else this.root.classList.remove(modifiers.nonScrollable);
+    classIf(this.root, !this.state.scrollable, modifiers.nonScrollable);
   }
 }
