@@ -21,25 +21,17 @@ export class Scroller {
     this.state = createInitialState();
     this.config = createRuntimeConfig({ config, element });
 
-    this.init(element);
+    this.#init(element);
   }
 
-  init(element) {
-    if (this.config.useExternalLayout) this.useRoot(element);
-    else this.createLayout(element);
+  #init(element) {
+    if (this.config.useExternalLayout) this.#useRoot(element);
+    else this.#createLayout(element);
 
-    this.render();
+    this.#render();
   }
 
-  useRoot(element) {
-    this.root = element;
-    this.content = element.querySelector(`.${classNames.content}`);
-
-    this.scrollbar = element.querySelector(`.${classNames.scrollbar}`);
-    this.handle = element.querySelector(`.${classNames.handle}`);
-  }
-
-  createLayout(element) {
+  #createLayout(element) {
     const items = [...element.children];
     items.forEach((el) => el.classList.add(classNames.item));
 
@@ -60,22 +52,30 @@ export class Scroller {
     root.append(scrollbar);
     root.append(navigation);
 
-    this.useRoot(root);
+    this.#useRoot(root);
   }
 
-  render() {
-    this.updateDimensions();
-    this.updateScrollability();
+  #useRoot(element) {
+    this.root = element;
+    this.content = element.querySelector(`.${classNames.content}`);
 
-    this.setScrollHandleWidth();
-    this.setScrollHandlePosition();
-
-    this.checkScrollbarVisibility();
-    this.checkNavigationVisibility();
-    this.checkBorderVisibility();
+    this.scrollbar = element.querySelector(`.${classNames.scrollbar}`);
+    this.handle = element.querySelector(`.${classNames.handle}`);
   }
 
-  updateDimensions() {
+  #render() {
+    this.#updateDimensions();
+    this.#updateScrollability();
+
+    this.#setScrollHandleWidth();
+    this.#setScrollHandlePosition();
+
+    this.#checkScrollbarVisibility();
+    this.#checkNavigationVisibility();
+    this.#checkBorderVisibility();
+  }
+
+  #updateDimensions() {
     const { offsetWidth: rootWidth } = this.root;
     const { offsetWidth: contentWidth } = this.content;
     const { offsetWidth: scrollbarWidth } = this.scrollbar;
@@ -85,32 +85,32 @@ export class Scroller {
     this.state.scrollbarRatio = Math.min(scrollbarWidth / rootWidth, 1);
   }
 
-  updateScrollability() {
+  #updateScrollability() {
     this.state.scrollable = this.root.offsetWidth < this.content.offsetWidth;
     classIf(this.root, !this.state.scrollable, modifiers.nonScrollable);
   }
 
-  setScrollHandleWidth() {
+  #setScrollHandleWidth() {
     const value = this.scrollbar.offsetWidth * this.state.containerRatio;
     setWidth(this.handle, value);
   }
 
-  setScrollHandlePosition() {
+  #setScrollHandlePosition() {
     const position = this.state.position * -this.state.containerRatio;
     setPosition(this.handle, position);
   }
 
-  checkScrollbarVisibility() {
+  #checkScrollbarVisibility() {
     const hidden = !this.state.scrollable || isHidden(this.config.scrollbar);
     classIf(this.root, hidden, modifiers.noScrollbar);
   }
 
-  checkNavigationVisibility() {
+  #checkNavigationVisibility() {
     const hidden = !this.state.scrollable || isHidden(this.config.navigation);
     classIf(this.root, hidden, modifiers.noNavigation);
   }
 
-  checkBorderVisibility() {
+  #checkBorderVisibility() {
     const { borderLeft, borderRight } = modifiers;
     const leftVisible = this.state.position < this.state.start;
     const rightVisible = this.state.position > this.state.end;
