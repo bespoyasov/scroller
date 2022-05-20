@@ -45,5 +45,11 @@ export class Scroller {
 
     element.className = classNames.content;
     element.style = null;
+    element.insertAdjacentElement("afterend", root);
+
+    content.append(element);
+    root.append(content);
+    root.append(scrollbar);
+    root.append(navigation);
   }
 }
