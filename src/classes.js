@@ -17,4 +17,7 @@ export const modifiers = {
 
   noScrollbar: "no-scrollbar",
   noNavigation: "no-navigation",
+
+  borderLeft: "has-left-border",
+  borderRight: "has-right-border",
 };

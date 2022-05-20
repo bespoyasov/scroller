@@ -95,4 +95,13 @@ export class Scroller {
     const hidden = !this.state.scrollable || isHidden(this.config.navigation);
     classIf(this.root, hidden, modifiers.noNavigation);
   }
+
+  checkBorderVisibility() {
+    const { borderLeft, borderRight } = modifiers;
+    const leftVisible = this.state.position < this.state.start;
+    const rightVisible = this.state.position > this.state.end;
+
+    classIf(this.root, leftVisible, borderLeft);
+    classIf(this.root, rightVisible, borderRight);
+  }
 }
