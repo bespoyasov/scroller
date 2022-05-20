@@ -1,5 +1,3 @@
-*.zip
+.github
+.vscode
 node_modules
-dev/img
-dev/style.css
-dev/test.html
