@@ -63,3 +63,27 @@
 .is-not-scrollable .scroller-container {
   cursor: unset;
 }
+
+/* Content Container */
+
+.scroller-content,
+.scroller-content > li {
+  list-style: none;
+}
+
+.scroller-content {
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+
+  display: inline-flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  will-change: transition;
+}
+
+.has-left-align .scroller-content {
+  justify-content: start;
+}
