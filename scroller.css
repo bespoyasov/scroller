@@ -5,6 +5,7 @@
   --vertical-margin: 10px;
 
   --transition-duration: 0.1s;
+  --adornment-color: rgba(0, 0, 0, 0.5);
 }
 
 .scroller,
@@ -18,4 +19,47 @@
 .scroller {
   position: relative;
   overflow: hidden;
+}
+
+/* Component Container */
+
+.scroller-container {
+  position: relative;
+  min-width: 100%;
+  cursor: move;
+  cursor: grab;
+}
+
+.scroller-container::before,
+.scroller-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--adornment-color);
+  width: 1px;
+  height: auto;
+  opacity: 0;
+  transition: opacity var(--transition-duration);
+}
+
+.scroller-container::before {
+  left: 0;
+}
+
+.scroller-container::after {
+  right: 0;
+}
+
+.has-left-border .scroller-container::before,
+.has-right-border .scroller-container::after {
+  opacity: 1;
+}
+
+.is-dragging .scroller-container {
+  cursor: grabbing;
+}
+
+.is-not-scrollable .scroller-container {
+  cursor: unset;
 }
