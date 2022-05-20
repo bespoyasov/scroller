@@ -54,4 +54,14 @@ export class Scroller {
 
     this.useRoot(root);
   }
+
+  updateDimensions() {
+    const { offsetWidth: rootWidth } = this.root;
+    const { offsetWidth: contentWidth } = this.content;
+    const { offsetWidth: scrollbarWidth } = this.scrollbar;
+
+    this.state.end = rootWidth - contentWidth;
+    this.state.containerRatio = Math.min(rootWidth / contentWidth, 1);
+    this.state.scrollbarRatio = Math.min(scrollbarWidth / rootWidth, 1);
+  }
 }
