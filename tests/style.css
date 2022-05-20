@@ -1,0 +1,11 @@
+body {
+  font-family: Helvetica, sans-serif;
+}
+
+.hidden {
+  display: none;
+}
+
+.scroller {
+  margin: 0 0 5em;
+}
