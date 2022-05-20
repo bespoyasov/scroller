@@ -36,6 +36,7 @@ export class Scroller {
 
   #attachEventHandlers() {
     this.container.addEventListener("wheel", this.#onScroll.bind(this));
+    this.navigation.addEventListener("click", this.#onNavigationClick.bind(this));
 
     window.addEventListener("load", this.#render.bind(this));
     window.addEventListener("resize", throttle(this.#render.bind(this)));
@@ -130,6 +131,14 @@ export class Scroller {
 
     classIf(this.root, leftVisible, borderLeft);
     classIf(this.root, rightVisible, borderRight);
+  }
+
+  #onNavigationClick(event) {
+    const { id } = event.target.dataset;
+    const targetNode = this.content.querySelector(`[data-anchor="${id}"]`);
+    if (!id || !targetNode) return;
+
+    this.#moveTo(this.#restrained(-targetNode.offsetLeft));
   }
 
   #onScroll(event) {
