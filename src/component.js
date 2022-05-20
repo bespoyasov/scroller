@@ -33,6 +33,7 @@ export class Scroller {
 
   createLayout(element) {
     const items = [...element.children];
+    items.forEach((el) => el.classList.add(classNames.item));
 
     const root = createComponentRoot();
     const content = createContentContainer();
