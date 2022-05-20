@@ -39,5 +39,8 @@ export class Scroller {
     const content = createContentContainer();
     const scrollbar = createScrollBar();
     const navigation = createNavigation(items);
+
+    root.className = element.className;
+    root.style = element.style;
   }
 }
