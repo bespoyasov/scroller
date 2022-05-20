@@ -16,3 +16,10 @@ body {
   text-align: center;
   border: 1px solid;
 }
+
+.narrow .scroller-scrollbar,
+.narrow .scroller-navigation {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
