@@ -124,4 +124,15 @@ export class Scroller {
     classIf(this.root, leftVisible, borderLeft);
     classIf(this.root, rightVisible, borderRight);
   }
+
+  #moveTo(position) {
+    const { containerRatio, scrollbarRatio } = this.state;
+    const scrollPosition = -position * containerRatio * scrollbarRatio;
+
+    setPosition(this.content, position);
+    setPosition(this.handle, scrollPosition);
+
+    this.state.position = position;
+    this.#checkBorderVisibility();
+  }
 }
