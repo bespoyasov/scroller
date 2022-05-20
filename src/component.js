@@ -3,6 +3,13 @@ import { classNames } from "./classes.js";
 import { createRuntimeConfig } from "./config.js";
 import { createInitialState } from "./state.js";
 
+import {
+  createComponentRoot,
+  createContentContainer,
+  createNavigation,
+  createScrollBar,
+} from "./template.js";
+
 export class Scroller {
   static className = classNames.namespace;
 
@@ -24,5 +31,12 @@ export class Scroller {
     this.root = element;
   }
 
-  createLayout(element) {}
+  createLayout(element) {
+    const items = [...element.children];
+
+    const root = createComponentRoot();
+    const content = createContentContainer();
+    const scrollbar = createScrollBar();
+    const navigation = createNavigation(items);
+  }
 }
