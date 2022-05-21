@@ -1,7 +1,4 @@
-function easeOutExpo(position) {
-  return position === 1 ? 1 : -Math.pow(2, -10 * position) + 1;
-}
-
+const easeOutExpo = (position) => (position === 1 ? 1 : -Math.pow(2, -10 * position) + 1);
 const nope = () => false;
 
 export function animateValue({ from, to, callback, stop = nope, time = 250 }) {
