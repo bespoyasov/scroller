@@ -87,8 +87,8 @@ export class Scroller {
     this.#checkNavigationVisibility();
     this.#checkBorderVisibility();
 
-    this.#setScrollHandleWidth();
-    this.#setMovablePositions();
+    this.#adjustScrollHandleWidth();
+    this.#adjustMovablePositions();
   }
 
   #updateDimensions() {
@@ -106,12 +106,12 @@ export class Scroller {
     classIf(this.root, !this.state.scrollable, modifiers.nonScrollable);
   }
 
-  #setScrollHandleWidth() {
+  #adjustScrollHandleWidth() {
     const value = this.scrollbar.offsetWidth * this.state.containerRatio;
     setWidth(this.handle, value);
   }
 
-  #setMovablePositions() {
+  #adjustMovablePositions() {
     const position = this.#restrained(this.state.position);
     this.#moveTo(position);
   }
