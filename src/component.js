@@ -81,14 +81,14 @@ export class Scroller {
 
   #render() {
     this.#updateDimensions();
+
     this.#checkScrollability();
-
-    this.#setScrollHandleWidth();
-    this.#setScrollHandlePosition();
-
     this.#checkScrollbarVisibility();
     this.#checkNavigationVisibility();
     this.#checkBorderVisibility();
+
+    this.#setScrollHandleWidth();
+    this.#setScrollHandlePosition();
   }
 
   #updateDimensions() {
