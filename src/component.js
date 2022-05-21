@@ -1,4 +1,4 @@
-import { classNames, modifiers } from "./selectors.js";
+import { classNames, modifiers, select } from "./selectors.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
 import { hasHorizontalDirection } from "./event.js";
 
@@ -137,7 +137,7 @@ export class Scroller {
 
   #onNavigationClick(event) {
     const { id } = event.target.dataset;
-    const targetNode = this.content.querySelector(`[data-anchor="${id}"]`);
+    const targetNode = this.content.querySelector(select.byNavigationId(id));
     if (!id || !targetNode) return;
 
     const { position } = this.state;

@@ -21,3 +21,7 @@ export const modifiers = {
   borderLeft: "has-left-border",
   borderRight: "has-right-border",
 };
+
+export const select = {
+  byNavigationId: (id) => `[data-anchor="${id}"]`,
+};
