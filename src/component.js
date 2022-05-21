@@ -88,7 +88,7 @@ export class Scroller {
     this.#checkBorderVisibility();
 
     this.#setScrollHandleWidth();
-    this.#setScrollHandlePosition();
+    this.#setMovablePositions();
   }
 
   #updateDimensions() {
@@ -111,9 +111,9 @@ export class Scroller {
     setWidth(this.handle, value);
   }
 
-  #setScrollHandlePosition() {
-    const position = this.state.position * -this.state.containerRatio;
-    setPosition(this.handle, position);
+  #setMovablePositions() {
+    const position = this.#restrained(this.state.position);
+    this.#moveTo(position);
   }
 
   #checkScrollbarVisibility() {
