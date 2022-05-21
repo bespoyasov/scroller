@@ -1,4 +1,4 @@
-import { classNames } from "./classes.js";
+import { classNames } from "./selectors.js";
 
 export function createComponentRoot() {
   const root = document.createElement("article");

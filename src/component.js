@@ -1,4 +1,4 @@
-import { classNames, modifiers } from "./classes.js";
+import { classNames, modifiers } from "./selectors.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
 import { hasHorizontalDirection } from "./event.js";
 
