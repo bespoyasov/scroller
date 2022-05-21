@@ -81,7 +81,7 @@ export class Scroller {
 
   #render() {
     this.#updateDimensions();
-    this.#updateScrollability();
+    this.#checkScrollability();
 
     this.#setScrollHandleWidth();
     this.#setScrollHandlePosition();
@@ -101,7 +101,7 @@ export class Scroller {
     this.state.scrollbarRatio = Math.min(scrollbarWidth / rootWidth, 1);
   }
 
-  #updateScrollability() {
+  #checkScrollability() {
     this.state.scrollable = this.root.offsetWidth < this.content.offsetWidth;
     classIf(this.root, !this.state.scrollable, modifiers.nonScrollable);
   }
