@@ -166,4 +166,8 @@ export class Scroller {
     this.state.position = position;
     this.#checkBorderVisibility();
   }
+
+  #stopAnimation() {
+    return this.state.scrolling || this.state.touching;
+  }
 }
