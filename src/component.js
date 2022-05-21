@@ -1,6 +1,8 @@
 import { classNames, modifiers } from "./classes.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
 import { hasHorizontalDirection } from "./event.js";
+
+import { animateValue } from "./animate.js";
 import { throttle } from "./throttle.js";
 
 import { isHidden } from "./visibility.js";
@@ -138,7 +140,15 @@ export class Scroller {
     const targetNode = this.content.querySelector(`[data-anchor="${id}"]`);
     if (!id || !targetNode) return;
 
-    this.#moveTo(this.#restrained(-targetNode.offsetLeft));
+    const { position } = this.state;
+    const destination = this.#restrained(-targetNode.offsetLeft);
+
+    animateValue({
+      from: position,
+      to: destination,
+      stop: this.#stopAnimation.bind(this),
+      callback: this.#moveTo.bind(this),
+    });
   }
 
   #onScroll(event) {
