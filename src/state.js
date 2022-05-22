@@ -12,6 +12,7 @@ export function createInitialState() {
 
     draggingContent: false,
     draggingHandle: false,
-    dragOrigin: 0,
+    dragStartEvent: 0,
+    dragStartPosition: 0,
   };
 }
