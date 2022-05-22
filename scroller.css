@@ -115,7 +115,8 @@
   transition: opacity var(--transition-duration);
 }
 
-.scroller-handle:hover {
+.scroller-handle:hover,
+.scroller-handle:active {
   opacity: 1;
 }
 
