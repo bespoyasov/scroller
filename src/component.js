@@ -1,6 +1,6 @@
 import { classNames, modifiers, select } from "./selectors.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
-import { hasHorizontalDirection } from "./event.js";
+import { coordinatesOf, hasHorizontalDirection } from "./event.js";
 
 import { animateValue } from "./animate.js";
 import { throttle } from "./throttle.js";
@@ -38,6 +38,7 @@ export class Scroller {
 
   #attachEventHandlers() {
     this.container.addEventListener("wheel", this.#onScroll.bind(this));
+    this.scrollbar.addEventListener("click", this.#onScrollbarClick.bind(this));
     this.navigation.addEventListener("click", this.#onNavigationClick.bind(this));
 
     window.addEventListener("load", this.#render.bind(this));
@@ -142,6 +143,20 @@ export class Scroller {
 
     const destination = this.#restrained(-targetNode.offsetLeft);
     this.#slideTo(destination);
+  }
+
+  #onScrollbarClick(event) {
+    event.preventDefault();
+
+    const { x } = coordinatesOf(event, "offset");
+    const { offsetWidth: scrollbarWidth } = this.scrollbar;
+    const { offsetWidth: handleWidth } = this.handle;
+    const { offsetWidth: contentWidth } = this.content;
+
+    const relativePosition = (x - handleWidth / 2) / scrollbarWidth;
+    const absolutePosition = this.#restrained(contentWidth * -relativePosition);
+
+    this.#slideTo(absolutePosition);
   }
 
   #onScroll(event) {
