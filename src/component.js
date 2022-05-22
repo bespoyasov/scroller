@@ -195,6 +195,7 @@ export class Scroller {
   }
 
   #stopAnimation() {
-    return this.state.scrolling || this.state.draggingContent || this.state.draggingHandle;
+    const { scrolling, draggingContent, draggingHandle } = this.state;
+    return scrolling || draggingContent || draggingHandle;
   }
 }
