@@ -140,15 +140,8 @@ export class Scroller {
     const targetNode = this.content.querySelector(select.byNavigationId(id));
     if (!id || !targetNode) return;
 
-    const { position } = this.state;
     const destination = this.#restrained(-targetNode.offsetLeft);
-
-    animateValue({
-      from: position,
-      to: destination,
-      stop: this.#stopAnimation.bind(this),
-      callback: this.#moveTo.bind(this),
-    });
+    this.#slideTo(destination);
   }
 
   #onScroll(event) {
@@ -164,6 +157,15 @@ export class Scroller {
   #restrained(position) {
     const { start, end } = this.state;
     return Math.min(Math.max(position, end), start);
+  }
+
+  #slideTo(destination) {
+    animateValue({
+      to: destination,
+      from: this.state.position,
+      stop: this.#stopAnimation.bind(this),
+      callback: this.#moveTo.bind(this),
+    });
   }
 
   #moveTo(position) {
