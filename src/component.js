@@ -37,6 +37,13 @@ export class Scroller {
   }
 
   #attachEventHandlers() {
+    this.handle.addEventListener("mousedown", this.#onHandleTouch.bind(this));
+    this.handle.addEventListener("touchstart", this.#onHandleTouch.bind(this));
+    document.addEventListener("mousemove", this.#onHandleDrag.bind(this));
+    document.addEventListener("touchmove", this.#onHandleDrag.bind(this), { passive: true });
+    document.addEventListener("mouseup", this.#onHandleRelease.bind(this));
+    document.addEventListener("touchend", this.#onHandleRelease.bind(this));
+
     this.container.addEventListener("wheel", this.#onScroll.bind(this));
     this.scrollbar.addEventListener("click", this.#onScrollbarClick.bind(this));
     this.navigation.addEventListener("click", this.#onNavigationClick.bind(this));
@@ -134,6 +141,34 @@ export class Scroller {
 
     classIf(this.root, leftVisible, borderLeft);
     classIf(this.root, rightVisible, borderRight);
+  }
+
+  #onHandleTouch(event) {
+    event.preventDefault();
+    const { x } = coordinatesOf(event);
+
+    this.state.draggingHandle = true;
+    this.state.dragStartEvent = x;
+    this.state.dragStartPosition = this.state.position;
+  }
+
+  #onHandleDrag(event) {
+    if (!this.state.draggingHandle) return;
+    event.preventDefault();
+
+    const { dragStartPosition, dragStartEvent, scrollbarRatio, containerRatio } = this.state;
+    const { x: dx } = coordinatesOf(event);
+
+    const distance = (dragStartEvent - dx) / scrollbarRatio / containerRatio;
+    const position = this.#restrained(dragStartPosition + distance);
+    this.#moveTo(position);
+  }
+
+  #onHandleRelease(event) {
+    if (!this.state.draggingHandle) return;
+
+    event.preventDefault();
+    this.state.draggingHandle = false;
   }
 
   #onNavigationClick(event) {
