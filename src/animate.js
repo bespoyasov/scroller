@@ -21,6 +21,7 @@ export function animateValue({ from, to, callback, stop = nope, time = 250 }) {
 
     callback(position);
 
+    if (elapsed >= time) return;
     if (forward && position >= to) return;
     if (!forward && position <= to) return;
     window.requestAnimationFrame(tick);
