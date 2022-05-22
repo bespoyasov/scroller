@@ -11,5 +11,6 @@ export function createInitialState() {
     scrolling: false,
     draggingContent: false,
     draggingHandle: false,
+    dragOrigin: 0,
   };
 }
