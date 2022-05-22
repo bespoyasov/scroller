@@ -146,6 +146,7 @@ export class Scroller {
   }
 
   #onScrollbarClick(event) {
+    if (!this.state.draggingHandle) return;
     event.preventDefault();
 
     const { x } = coordinatesOf(event, "offset");
