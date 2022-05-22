@@ -9,6 +9,7 @@ export function createInitialState() {
     scrollable: true,
 
     scrolling: false,
-    dragging: false,
+    draggingContent: false,
+    draggingHandle: false,
   };
 }
