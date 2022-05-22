@@ -6,9 +6,10 @@ export function createInitialState() {
 
     containerRatio: 1,
     scrollbarRatio: 1,
-    scrollable: true,
 
+    scrollable: true,
     scrolling: false,
+
     draggingContent: false,
     draggingHandle: false,
     dragOrigin: 0,
