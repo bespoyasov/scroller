@@ -38,7 +38,6 @@ export class Scroller {
 
   #attachEventHandlers() {
     this.handle.addEventListener("click", this.#preventBubbling.bind(this));
-
     this.handle.addEventListener("mousedown", this.#onHandleTouch.bind(this));
     this.handle.addEventListener("touchstart", this.#onHandleTouch.bind(this));
     document.addEventListener("mousemove", this.#onHandleDrag.bind(this));
@@ -46,6 +45,7 @@ export class Scroller {
     document.addEventListener("mouseup", this.#onHandleRelease.bind(this));
     document.addEventListener("touchend", this.#onHandleRelease.bind(this));
 
+    this.content.addEventListener("click", this.#onContentClick.bind(this));
     this.content.addEventListener("mousedown", this.#onContentTouch.bind(this));
     this.content.addEventListener("touchstart", this.#onContentTouch.bind(this));
     document.addEventListener("mousemove", this.#onContentDrag.bind(this));
@@ -178,6 +178,17 @@ export class Scroller {
 
     event.preventDefault();
     this.state.draggingContent = false;
+  }
+
+  #onContentClick(event) {
+    const link = event.target.closest("a");
+    if (!link) return;
+
+    const { dragStartEvent } = this.state;
+    const { x } = coordinatesOf(event);
+    if (dragStartEvent === x) return;
+
+    event.preventDefault();
   }
 
   #onHandleTouch(event) {
