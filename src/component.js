@@ -170,6 +170,8 @@ export class Scroller {
 
     const distance = dragStartEvent - dx;
     const position = this.#restrained(dragStartPosition - distance);
+
+    this.#traceAcceleration(dx);
     this.#moveTo(position);
   }
 
@@ -189,6 +191,10 @@ export class Scroller {
     if (dragStartEvent === x) return;
 
     event.preventDefault();
+  }
+
+  #traceAcceleration(pointerX) {
+    this.state.pointerMovement.push(pointerX);
   }
 
   #onHandleTouch(event) {
