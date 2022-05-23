@@ -166,13 +166,12 @@ export class Scroller {
     event.preventDefault();
 
     const { dragStartPosition, dragStartEvent } = this.state;
-    const { x: dx } = coordinatesOf(event);
-    const { timeStamp } = event;
+    const { x: dx, t } = coordinatesOf(event);
 
     const distance = dragStartEvent - dx;
     const position = this.#restrained(dragStartPosition - distance);
 
-    this.#traceAcceleration({ x: dx, t: timeStamp });
+    this.#traceAcceleration({ x: dx, t });
     this.#moveTo(position);
   }
 
