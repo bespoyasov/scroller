@@ -37,6 +37,8 @@ export class Scroller {
   }
 
   #attachEventHandlers() {
+    this.handle.addEventListener("click", this.#preventBubbling.bind(this));
+
     this.handle.addEventListener("mousedown", this.#onHandleTouch.bind(this));
     this.handle.addEventListener("touchstart", this.#onHandleTouch.bind(this));
     document.addEventListener("mousemove", this.#onHandleDrag.bind(this));
@@ -181,7 +183,6 @@ export class Scroller {
   }
 
   #onScrollbarClick(event) {
-    if (!this.state.draggingHandle) return;
     event.preventDefault();
 
     const { x } = coordinatesOf(event, "offset");
@@ -233,5 +234,9 @@ export class Scroller {
   #stopAnimation() {
     const { scrolling, draggingContent, draggingHandle } = this.state;
     return scrolling || draggingContent || draggingHandle;
+  }
+
+  #preventBubbling(event) {
+    event.stopPropagation();
   }
 }
