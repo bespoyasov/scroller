@@ -183,8 +183,7 @@ export class Scroller {
   }
 
   #onContentClick(event) {
-    const link = event.target.closest("a");
-    if (!link) return;
+    if (!event.target.closest("a")) return;
 
     const { dragStartEvent } = this.state;
     const { x } = coordinatesOf(event);
