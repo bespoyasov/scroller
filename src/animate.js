@@ -1,7 +1,7 @@
 const easeOutExpo = (position) => (position === 1 ? 1 : -Math.pow(2, -10 * position) + 1);
 const nope = () => false;
 
-export function animateValue({ from, to, callback, stop = nope, time: duration = 250 }) {
+export function animateValue({ from, to, callback, stop = nope, duration = 250 }) {
   if (to === from || !duration) return callback(to);
 
   const distance = Math.abs(to - from);
