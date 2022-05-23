@@ -180,6 +180,7 @@ export class Scroller {
 
     event.preventDefault();
     this.state.draggingContent = false;
+    this.state.pointerMovement = [];
   }
 
   #onContentClick(event) {
