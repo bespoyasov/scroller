@@ -2,6 +2,7 @@ import { classNames, modifiers, select } from "./selectors.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
 import { coordinatesOf, hasHorizontalDirection } from "./event.js";
 
+import { calculateDeceleration } from "./physics.js";
 import { animateValue } from "./animate.js";
 import { throttle } from "./throttle.js";
 
@@ -177,10 +178,18 @@ export class Scroller {
 
   #onContentRelease(event) {
     if (!this.state.draggingContent) return;
-
     event.preventDefault();
+
+    const { x, t } = coordinatesOf(event);
+    this.#traceAcceleration({ x, t });
+
+    const { position, pointerMovement } = this.state;
+    const { distance, duration } = calculateDeceleration(pointerMovement);
+    const afterDeceleration = this.#restrained(position + distance);
+
     this.state.draggingContent = false;
     this.state.pointerMovement = [];
+    this.#slideTo(afterDeceleration, duration);
   }
 
   #onContentClick(event) {
