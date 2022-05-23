@@ -14,7 +14,5 @@ export function createInitialState() {
     draggingHandle: false,
     dragStartEvent: 0,
     dragStartPosition: 0,
-
-    linksDisabled: false,
   };
 }
