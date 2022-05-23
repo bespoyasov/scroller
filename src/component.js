@@ -264,12 +264,13 @@ export class Scroller {
     return Math.min(Math.max(position, end), start);
   }
 
-  #slideTo(destination) {
+  #slideTo(destination, duration) {
     animateValue({
       to: destination,
       from: this.state.position,
       stop: this.#stopAnimation.bind(this),
       callback: this.#moveTo.bind(this),
+      duration,
     });
   }
 
