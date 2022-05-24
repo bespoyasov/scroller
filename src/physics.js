@@ -11,3 +11,11 @@ export function calculateDeceleration(movement) {
 
   return { distance, duration };
 }
+
+const stretchFactor = 0.2;
+
+export function calculateStretch({ value, min, max }) {
+  if (value > max) return value * stretchFactor;
+  if (value < min) return min - Math.abs(value - min) * stretchFactor;
+  return value;
+}
