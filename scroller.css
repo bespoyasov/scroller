@@ -83,7 +83,8 @@
   justify-content: center;
   align-items: flex-start;
 
-  will-change: transition;
+  --position: 0px;
+  transform: translateX(var(--position));
 }
 
 .has-left-align .scroller-content {
@@ -113,6 +114,9 @@
 
   opacity: 0.5;
   transition: opacity var(--transition-duration);
+
+  --position: 0px;
+  transform: translateX(var(--position));
 }
 
 .scroller-handle:hover,
