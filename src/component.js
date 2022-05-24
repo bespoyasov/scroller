@@ -2,7 +2,7 @@ import { classNames, modifiers, select } from "./selectors.js";
 import { classIf, setPosition, setWidth } from "./dom.js";
 import { coordinatesOf, hasHorizontalDirection } from "./event.js";
 
-import { calculateDeceleration } from "./physics.js";
+import { calculateDeceleration, calculateStretch } from "./physics.js";
 import { animateValue } from "./animate.js";
 import { throttle } from "./throttle.js";
 
@@ -270,6 +270,11 @@ export class Scroller {
   #restrained(position) {
     const { start, end } = this.state;
     return Math.min(Math.max(position, end), start);
+  }
+
+  #stretched(position) {
+    const { start: max, end: min } = this.state;
+    return calculateStretch({ value: position, min, max });
   }
 
   #slideTo(destination, duration) {
