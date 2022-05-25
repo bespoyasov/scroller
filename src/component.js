@@ -155,8 +155,6 @@ export class Scroller {
   }
 
   #onContentTouch(event) {
-    event.preventDefault();
-
     this.state.scrolling = false;
     this.state.draggingContent = true;
     this.state.dragStartPoint = coordinatesOf(event);
@@ -179,7 +177,6 @@ export class Scroller {
 
   #onContentRelease(event) {
     if (!this.state.draggingContent) return;
-    event.preventDefault();
 
     const { x, t } = coordinatesOf(event);
     this.#traceAcceleration({ x, t });
