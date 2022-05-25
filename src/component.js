@@ -156,11 +156,10 @@ export class Scroller {
 
   #onContentTouch(event) {
     event.preventDefault();
-    const { x } = coordinatesOf(event);
 
     this.state.scrolling = false;
     this.state.draggingContent = true;
-    this.state.dragStartEvent = x;
+    this.state.dragStartEvent = coordinatesOf(event);
     this.state.dragStartPosition = this.state.position;
   }
 
@@ -171,7 +170,7 @@ export class Scroller {
     const { dragStartPosition, dragStartEvent } = this.state;
     const { x: dx, t } = coordinatesOf(event);
 
-    const distance = dragStartEvent - dx;
+    const distance = dragStartEvent.x - dx;
     const position = this.#stretched(dragStartPosition - distance);
 
     this.#traceAcceleration({ x: dx, t });
@@ -199,7 +198,7 @@ export class Scroller {
 
     const { dragStartEvent } = this.state;
     const { x } = coordinatesOf(event);
-    if (dragStartEvent === x) return;
+    if (dragStartEvent.x === x) return;
 
     event.preventDefault();
   }
@@ -210,10 +209,9 @@ export class Scroller {
 
   #onHandleTouch(event) {
     event.preventDefault();
-    const { x } = coordinatesOf(event);
 
     this.state.draggingHandle = true;
-    this.state.dragStartEvent = x;
+    this.state.dragStartEvent = coordinatesOf(event);
     this.state.dragStartPosition = this.state.position;
   }
 
@@ -224,7 +222,7 @@ export class Scroller {
     const { dragStartPosition, dragStartEvent, scrollbarRatio, containerRatio } = this.state;
     const { x: dx } = coordinatesOf(event);
 
-    const distance = (dragStartEvent - dx) / scrollbarRatio / containerRatio;
+    const distance = (dragStartEvent.x - dx) / scrollbarRatio / containerRatio;
     const position = this.#restrained(dragStartPosition + distance);
     this.#moveTo(position);
   }
