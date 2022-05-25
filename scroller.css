@@ -116,7 +116,11 @@
   transition: opacity var(--transition-duration);
 
   --position: 0px;
-  transform: translateX(var(--position));
+  --shrink-factor: 1;
+  --shrink-origin: center;
+
+  transform: translateX(var(--position)) scaleX(var(--shrink-factor));
+  transform-origin: var(--shrink-origin);
 }
 
 .scroller-handle:hover,
