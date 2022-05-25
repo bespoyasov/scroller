@@ -7,6 +7,7 @@ import { animateValue } from "./animate.js";
 import { throttle } from "./throttle.js";
 
 import { isHidden } from "./visibility.js";
+import { transformOrigin } from "./transform.js";
 import { createRuntimeConfig } from "./config.js";
 import { createInitialState } from "./state.js";
 
@@ -298,6 +299,30 @@ export class Scroller {
 
     this.state.position = position;
     this.#checkBorderVisibility();
+  }
+
+  #calculateScrollPosition(rawContentPosition) {
+    const { containerRatio, scrollbarRatio } = this.state;
+    const position = this.#restrained(rawContentPosition);
+    return -position * containerRatio * scrollbarRatio;
+  }
+
+  #calculateScrollShrink(rawContentPosition) {
+    const { offsetWidth } = this.root;
+    const { start, end } = this.state;
+
+    const boundedPosition = this.#restrained(rawContentPosition);
+    const difference = Math.abs(rawContentPosition - boundedPosition);
+
+    const factor = 1 - difference / offsetWidth;
+    const origin =
+      rawContentPosition > start
+        ? transformOrigin.start
+        : rawContentPosition < end
+        ? transformOrigin.end
+        : transformOrigin.center;
+
+    return { factor, origin };
   }
 
   #stopAnimation() {
