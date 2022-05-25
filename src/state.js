@@ -12,7 +12,7 @@ export function createInitialState() {
 
     draggingContent: false,
     draggingHandle: false,
-    dragStartEvent: { x: 0, y: 0 },
+    dragStartPoint: { x: 0, y: 0 },
     dragStartPosition: 0,
 
     pointerMovement: [],

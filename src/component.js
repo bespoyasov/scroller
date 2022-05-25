@@ -159,7 +159,7 @@ export class Scroller {
 
     this.state.scrolling = false;
     this.state.draggingContent = true;
-    this.state.dragStartEvent = coordinatesOf(event);
+    this.state.dragStartPoint = coordinatesOf(event);
     this.state.dragStartPosition = this.state.position;
   }
 
@@ -167,10 +167,10 @@ export class Scroller {
     if (!this.state.draggingContent) return;
     event.preventDefault();
 
-    const { dragStartPosition, dragStartEvent } = this.state;
+    const { dragStartPosition, dragStartPoint } = this.state;
     const { x: dx, t } = coordinatesOf(event);
 
-    const distance = dragStartEvent.x - dx;
+    const distance = dragStartPoint.x - dx;
     const position = this.#stretched(dragStartPosition - distance);
 
     this.#traceAcceleration({ x: dx, t });
@@ -196,9 +196,9 @@ export class Scroller {
   #onContentClick(event) {
     if (!event.target.closest("a")) return;
 
-    const { dragStartEvent } = this.state;
+    const { dragStartPoint } = this.state;
     const { x } = coordinatesOf(event);
-    if (dragStartEvent.x === x) return;
+    if (dragStartPoint.x === x) return;
 
     event.preventDefault();
   }
@@ -211,7 +211,7 @@ export class Scroller {
     event.preventDefault();
 
     this.state.draggingHandle = true;
-    this.state.dragStartEvent = coordinatesOf(event);
+    this.state.dragStartPoint = coordinatesOf(event);
     this.state.dragStartPosition = this.state.position;
   }
 
@@ -219,10 +219,10 @@ export class Scroller {
     if (!this.state.draggingHandle) return;
     event.preventDefault();
 
-    const { dragStartPosition, dragStartEvent, scrollbarRatio, containerRatio } = this.state;
+    const { dragStartPosition, dragStartPoint, scrollbarRatio, containerRatio } = this.state;
     const { x: dx } = coordinatesOf(event);
 
-    const distance = (dragStartEvent.x - dx) / scrollbarRatio / containerRatio;
+    const distance = (dragStartPoint.x - dx) / scrollbarRatio / containerRatio;
     const position = this.#restrained(dragStartPosition + distance);
     this.#moveTo(position);
   }
