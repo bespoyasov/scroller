@@ -43,7 +43,7 @@ export class Scroller {
     this.handle.addEventListener("mousedown", this.#onHandleTouch.bind(this));
     this.handle.addEventListener("touchstart", this.#onHandleTouch.bind(this));
     document.addEventListener("mousemove", this.#onHandleDrag.bind(this));
-    document.addEventListener("touchmove", this.#onHandleDrag.bind(this), { passive: true });
+    document.addEventListener("touchmove", this.#onHandleDrag.bind(this));
     document.addEventListener("mouseup", this.#onHandleRelease.bind(this));
     document.addEventListener("touchend", this.#onHandleRelease.bind(this));
 
@@ -51,7 +51,7 @@ export class Scroller {
     this.content.addEventListener("mousedown", this.#onContentTouch.bind(this));
     this.content.addEventListener("touchstart", this.#onContentTouch.bind(this));
     document.addEventListener("mousemove", this.#onContentDrag.bind(this));
-    document.addEventListener("touchmove", this.#onContentDrag.bind(this), { passive: true });
+    document.addEventListener("touchmove", this.#onContentDrag.bind(this));
     document.addEventListener("mouseup", this.#onContentRelease.bind(this));
     document.addEventListener("touchend", this.#onContentRelease.bind(this));
 
