@@ -1,5 +1,5 @@
 import { classNames, modifiers, select } from "./selectors.js";
-import { classIf, setPosition, setWidth } from "./dom.js";
+import { classIf, setPosition, setShrink, setWidth } from "./dom.js";
 import { coordinatesOf, hasHorizontalDirection } from "./event.js";
 
 import { calculateDeceleration, calculateStretch } from "./physics.js";
@@ -291,11 +291,12 @@ export class Scroller {
   }
 
   #moveTo(position) {
-    const { containerRatio, scrollbarRatio } = this.state;
-    const scrollPosition = -position * containerRatio * scrollbarRatio;
+    const scrollPosition = this.#calculateScrollPosition(position);
+    const scrollShrink = this.#calculateScrollShrink(position);
 
     setPosition(this.content, position);
     setPosition(this.handle, scrollPosition);
+    setShrink(this.handle, scrollShrink);
 
     this.state.position = position;
     this.#checkBorderVisibility();
