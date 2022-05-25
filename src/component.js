@@ -157,6 +157,7 @@ export class Scroller {
     event.preventDefault();
     const { x } = coordinatesOf(event);
 
+    this.state.scrolling = false;
     this.state.draggingContent = true;
     this.state.dragStartEvent = x;
     this.state.dragStartPosition = this.state.position;
@@ -264,6 +265,7 @@ export class Scroller {
     const { deltaX: dx } = event;
     const { position } = this.state;
 
+    this.state.scrolling = true;
     this.#moveTo(this.#restrained(position - dx));
   }
 
