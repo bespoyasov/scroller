@@ -21,6 +21,7 @@
 .scroller {
   position: relative;
   overflow: hidden;
+  touch-action: manipulation;
 }
 
 /* Component Container */
