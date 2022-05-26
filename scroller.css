@@ -59,10 +59,6 @@
   opacity: 1;
 }
 
-.is-dragging .scroller-container {
-  cursor: grabbing;
-}
-
 .is-not-scrollable .scroller-container {
   cursor: unset;
 }
@@ -169,4 +165,16 @@
 .scroller-navigation:empty,
 .no-navigation .scroller-navigation {
   display: none;
+}
+
+/* Dynamic State Modifiers */
+
+.is-dragging-content,
+.is-dragging-content * {
+  cursor: grabbing !important;
+}
+
+.is-dragging-handle,
+.is-dragging-handle * {
+  cursor: move !important;
 }

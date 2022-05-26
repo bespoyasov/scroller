@@ -90,6 +90,7 @@ export class Scroller {
 
   #useRoot(element) {
     this.root = element;
+    this.env = element.closest("body");
 
     this.container = element.querySelector(`.${classNames.container}`);
     this.content = element.querySelector(`.${classNames.content}`);
@@ -160,6 +161,8 @@ export class Scroller {
     this.state.draggingContent = true;
     this.state.dragStartPoint = coordinatesOf(event);
     this.state.dragStartPosition = this.state.position;
+
+    this.env.classList.add(modifiers.draggingContent);
   }
 
   #onContentDrag(event) {
@@ -191,6 +194,8 @@ export class Scroller {
     this.state.draggingContent = false;
     this.state.pointerMovement = [];
     this.state.swipeDirection = null;
+
+    this.env.classList.remove(modifiers.draggingContent);
     this.#slideTo(afterDeceleration, duration);
   }
 
@@ -227,6 +232,8 @@ export class Scroller {
     this.state.draggingHandle = true;
     this.state.dragStartPoint = coordinatesOf(event);
     this.state.dragStartPosition = this.state.position;
+
+    this.env.classList.add(modifiers.draggingHandle);
   }
 
   #onHandleDrag(event) {
@@ -246,6 +253,7 @@ export class Scroller {
 
     event.preventDefault();
     this.state.draggingHandle = false;
+    this.env.classList.remove(modifiers.draggingHandle);
   }
 
   #onNavigationClick(event) {
