@@ -182,6 +182,7 @@ export class Scroller {
   }
 
   #onContentRelease(event) {
+    if (this.state.swipeDirection) this.state.swipeDirection = null;
     if (!this.state.draggingContent) return;
 
     const { x, t } = coordinatesOf(event);
@@ -193,7 +194,6 @@ export class Scroller {
 
     this.state.draggingContent = false;
     this.state.pointerMovement = [];
-    this.state.swipeDirection = null;
 
     this.env.classList.remove(modifiers.draggingContent);
     this.#slideTo(afterDeceleration, duration);
