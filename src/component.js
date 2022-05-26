@@ -214,7 +214,7 @@ export class Scroller {
   }
 
   #detectSwipeDirection(event) {
-    if (this.state.swipeDirection) return;
+    if (!this.state.draggingContent || this.state.swipeDirection) return;
     if (!isTouchEvent(event)) return;
 
     const { dragStartPoint } = this.state;
