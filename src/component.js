@@ -52,7 +52,7 @@ export class Scroller {
     this.content.addEventListener("mousedown", this.#onContentTouch.bind(this));
     this.content.addEventListener("touchstart", this.#onContentTouch.bind(this));
     document.addEventListener("mousemove", this.#onContentDrag.bind(this));
-    document.addEventListener("touchmove", this.#onContentDrag.bind(this));
+    document.addEventListener("touchmove", this.#onContentDrag.bind(this), { passive: false });
     document.addEventListener("mouseup", this.#onContentRelease.bind(this));
     document.addEventListener("touchend", this.#onContentRelease.bind(this));
 
