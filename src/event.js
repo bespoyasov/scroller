@@ -6,3 +6,7 @@ export function coordinatesOf(event, kind = "page") {
   const { [`${kind}X`]: x, [`${kind}Y`]: y, timeStamp: t } = event;
   return { x, y, t };
 }
+
+export function isTouchEvent(event) {
+  return Boolean(event.changedTouches);
+}
