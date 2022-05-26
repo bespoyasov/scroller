@@ -163,6 +163,8 @@ export class Scroller {
   }
 
   #onContentDrag(event) {
+    this.#detectSwipeDirection(event);
+
     if (!this.state.draggingContent) return;
     event.preventDefault();
 
