@@ -16,5 +16,6 @@ export function createInitialState() {
     dragStartPosition: 0,
 
     pointerMovement: [],
+    swipeDirection: null,
   };
 }
