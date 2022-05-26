@@ -1,6 +1,7 @@
 import { classNames, modifiers, select } from "./selectors.js";
 import { classIf, setPosition, setShrink, setWidth } from "./dom.js";
-import { coordinatesOf, hasHorizontalDirection } from "./event.js";
+import { coordinatesOf, hasHorizontalDirection, isTouchEvent } from "./event.js";
+import { direction, detectDirection } from "./swipe.js";
 
 import { calculateDeceleration, calculateStretch } from "./physics.js";
 import { animateValue } from "./animate.js";
@@ -187,6 +188,7 @@ export class Scroller {
 
     this.state.draggingContent = false;
     this.state.pointerMovement = [];
+    this.state.swipeDirection = null;
     this.#slideTo(afterDeceleration, duration);
   }
 
@@ -202,6 +204,19 @@ export class Scroller {
 
   #traceAcceleration(entry) {
     this.state.pointerMovement.push(entry);
+  }
+
+  #detectSwipeDirection(event) {
+    if (this.state.swipeDirection) return;
+    if (!isTouchEvent(event)) return;
+
+    const { dragStartPoint } = this.state;
+    const currentPoint = coordinatesOf(event);
+    const swipeDirection = detectDirection(currentPoint, dragStartPoint);
+    const preventScroll = swipeDirection === direction.horizontal;
+
+    this.state.swipeDirection = swipeDirection;
+    this.state.draggingContent = preventScroll;
   }
 
   #onHandleTouch(event) {
