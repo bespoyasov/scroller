@@ -31,7 +31,7 @@
   "scripts": {
     "lint": "npx eslint src/**",
     "prebuild": "npm run lint",
-    "build": "npx swc scroller.js -o scroller.browser.js"
+    "build": "npx esbuild scroller.js --bundle --outfile=scroller.browser.js --target=es2020"
   },
   "devDependencies": {
     "@swc/cli": "^0.1.57",
