@@ -14,6 +14,8 @@ export const classNames = {
 
 export const modifiers = {
   nonScrollable: "is-not-scrollable",
+  hasAlignmentStart: "has-start-align",
+  hasAlignmentEnd: "has-end-align",
 
   draggingContent: "is-dragging-content",
   draggingHandle: "is-dragging-handle",
