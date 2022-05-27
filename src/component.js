@@ -36,6 +36,14 @@ export class Scroller {
     this.#scrollTo(this.#normalize(position));
   }
 
+  update(newSettings) {
+    const element = this.root;
+    const config = { ...this.config, ...newSettings };
+
+    this.config = createRuntimeConfig({ element, config });
+    this.#render();
+  }
+
   #init(element) {
     if (this.config.useExternalLayout) this.#useRoot(element);
     else this.#createLayout(element);
