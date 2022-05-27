@@ -32,7 +32,9 @@ export class Scroller {
     this.#init(element);
   }
 
-  scrollTo(position) {}
+  scrollTo(position) {
+    this.#scrollTo(this.#normalize(position));
+  }
 
   #init(element) {
     if (this.config.useExternalLayout) this.#useRoot(element);
@@ -159,17 +161,11 @@ export class Scroller {
   }
 
   #applyStartPosition() {
-    const { center: atCenter, end: atEnd } = contentAlignment;
-    const { start: initialPoint, startAnimation } = this.config;
-    const { center, end } = this.state;
-
+    const { start, startAnimation } = this.config;
     const focusedNode = this.root.querySelector(select.initiallyFocusedNode);
-    const translateTo = startAnimation ? this.#slideTo.bind(this) : this.#moveTo.bind(this);
+    const destination = focusedNode ? this.#positionOf(focusedNode) : this.#normalize(start);
 
-    if (focusedNode) return translateTo(this.#positionOf(focusedNode));
-    if (initialPoint === atCenter) return translateTo(center);
-    if (initialPoint === atEnd) return translateTo(end);
-    if (!Number.isNaN(+initialPoint)) return translateTo(this.#restrained(-initialPoint));
+    this.#scrollTo(destination, startAnimation);
   }
 
   #checkScrollbarVisibility() {
