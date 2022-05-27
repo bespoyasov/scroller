@@ -247,9 +247,29 @@
       <div class="item" data-anchor="Fifth">Fifth item</div>
     </div>
 
-    <h3>Use External Layout</h3>
     <h3>API: Scroll</h3>
     <h3>API: Update Config</h3>
     <h3>API: Item Click Callback</h3>
+
+    <h3>Use External Layout</h3>
+    <article class="external js-scroller-external-layout">
+      <div class="scroller-container">
+        <ul class="scroller-content">
+          <li class="item scroller-item" data-anchor="First">First item</li>
+          <li class="item scroller-item" data-anchor="Second"><a href="#2">Second item</a></li>
+          <li class="item scroller-item" data-anchor="Third"><a href="#3">Third item</a></li>
+          <li class="item scroller-item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+          <li class="item scroller-item" data-anchor="Fifth">Fifth item</li>
+        </ul>
+      </div>
+      <div class="scroller-scrollbar">
+        <div class="scroller-handle"></div>
+      </div>
+      <footer class="scroller-navigation">
+        <button class="scroller-button" data-id="First" type="button">First</button>
+        <button class="scroller-button" data-id="Fourth" type="button">Fourth</button>
+        <button class="scroller-button" data-id="Fifth" type="button">Fifth</button>
+      </footer>
+    </article>
   </body>
 </html>
