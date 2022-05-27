@@ -386,6 +386,24 @@ export class Scroller {
     return this.#restrained(-node.offsetLeft);
   }
 
+  #normalize(externalScrollValueOrAlignment) {
+    return !Number.isNaN(-externalScrollValueOrAlignment)
+      ? this.#restrained(-externalScrollValueOrAlignment)
+      : externalScrollValueOrAlignment;
+  }
+
+  #scrollTo(destination, animated = true) {
+    const { start: toStart, center: toCenter, end: toEnd } = contentAlignment;
+    const { start, center, end } = this.state;
+
+    const translateTo = animated ? this.#slideTo.bind(this) : this.#moveTo.bind(this);
+
+    if (typeof destination === "number") return translateTo(destination);
+    if (destination === toStart) return translateTo(start);
+    if (destination === toCenter) return translateTo(center);
+    if (destination === toEnd) return translateTo(end);
+  }
+
   #slideTo(destination, duration) {
     animateValue({
       to: destination,
