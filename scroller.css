@@ -63,6 +63,11 @@
   cursor: unset;
 }
 
+.is-not-scrollable .scroller-container::before,
+.is-not-scrollable .scroller-container::after {
+  display: none;
+}
+
 /* Content Container */
 
 .scroller-content,
