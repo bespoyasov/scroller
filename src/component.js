@@ -169,11 +169,13 @@ export class Scroller {
   }
 
   #applyStartPosition() {
-    const { start, startAnimation } = this.config;
+    const { startPosition, startDuration } = this.config;
     const focusedNode = this.root.querySelector(select.initiallyFocusedNode);
-    const destination = focusedNode ? this.#positionOf(focusedNode) : this.#normalize(start);
+    const destination = focusedNode
+      ? this.#positionOf(focusedNode)
+      : this.#normalize(startPosition);
 
-    this.#scrollTo(destination, startAnimation);
+    this.#scrollTo(destination, startDuration);
   }
 
   #checkScrollbarVisibility() {
