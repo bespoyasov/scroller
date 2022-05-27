@@ -36,6 +36,7 @@
   "devDependencies": {
     "@swc/cli": "^0.1.57",
     "@swc/core": "^1.2.187",
+    "esbuild": "^0.14.41",
     "eslint": "^8.15.0"
   }
 }
