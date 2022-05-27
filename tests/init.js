@@ -8,6 +8,10 @@ const configList = [
   { className: "js-scroller-align-start", align: "start" },
   { className: "js-scroller-align-center", align: "center" },
   { className: "js-scroller-align-end", align: "end" },
+  { className: "js-scroller-position-start", start: "start" },
+  { className: "js-scroller-position-center", start: "center" },
+  { className: "js-scroller-position-end", start: "end" },
+  { className: "js-scroller-position-number", start: 250 },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
