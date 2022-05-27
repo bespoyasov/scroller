@@ -1,3 +1,4 @@
+import { contentAlignment } from "./alignment.js";
 import { visibility } from "./visibility.js";
 
 export function createRuntimeConfig({ element, config }) {
@@ -5,7 +6,10 @@ export function createRuntimeConfig({ element, config }) {
 
   return {
     ...config,
+
     scrollbar: config.scrollbar || dataset.scrollbar || visibility.visible,
     navigation: config.navigation || dataset.navigation || visibility.visible,
+
+    align: config.align || dataset.align || contentAlignment.center,
   };
 }
