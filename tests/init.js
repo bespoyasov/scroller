@@ -16,6 +16,7 @@ const configList = [
   { className: "js-scroller-external-layout", useExternalLayout: true },
   { className: "js-scroller-click-callback", onItemClick: console.log },
   { className: "js-scroller-scroll-to" },
+  { className: "js-scroller-update-config" },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -35,6 +36,14 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     scrollerRegistry["js-scroller-scroll-to"].scrollTo("center");
   }, 2500);
+
+  setTimeout(() => {
+    scrollerRegistry["js-scroller-update-config"].update({
+      scrollbar: "visible",
+      navigation: "visible",
+      onItemClick: () => console.log("Updated handler fired."),
+    });
+  }, 1000);
 });
 
 window.scrollerRegistry = scrollerRegistry;
