@@ -70,8 +70,6 @@
       <li class="item" data-anchor="Fifth">Fifth item</li>
     </ul>
 
-    <h3>Specified <code>central</code> Node in HTML</h3>
-
     <h3>Lots of Content</h3>
     <ul class="scroller">
       <li class="item" data-anchor="First">First item</li>
@@ -115,7 +113,41 @@
     </ul>
 
     <h3>Start Position: Center</h3>
+    <ul class="scroller" data-start="center">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
     <h3>Start Position: End</h3>
+    <ul class="scroller" data-start="end">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Start Position: Number</h3>
+    <ul class="scroller" data-start="200">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Start Position: Specified <code>focused</code> Node (Overrides Other Settings)</h3>
+    <ul class="scroller" data-start="center">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second" data-focused><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
     <h3>Start Animation: <code>true</code></h3>
 
     <h2>JS Declaration</h2>
