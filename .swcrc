@@ -1,9 +1,0 @@
-{
-  "minify": true,
-  "module": {
-    "type": "umd"
-  },
-  "jsc": {
-    "target": "es2020"
-  }
-}
