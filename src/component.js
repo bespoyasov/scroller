@@ -222,6 +222,28 @@ export class Scroller {
     event.preventDefault();
   }
 
+  #onContentFocus(event) {
+    const targetNode = event.target?.closest(`.${classNames.item}`);
+    if (!targetNode) return;
+
+    const destination = this.#restrained(-targetNode.offsetLeft);
+    this.#slideTo(destination);
+    this.#resetFocusJump();
+  }
+
+  /**
+   * Prevents the `focus` event from scrolling the parent container
+   * if the focused node was not visible before focusing on it.
+   * @see https://grumpy.blog/en/js_sliders_and_the_tab_key/
+   */
+  #resetFocusJump() {
+    this.root.scrollLeft = 0;
+
+    setTimeout(() => {
+      this.root.scrollLeft = 0;
+    }, 0);
+  }
+
   #traceAcceleration(entry) {
     this.state.pointerMovement.push(entry);
   }
