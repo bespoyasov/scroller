@@ -79,8 +79,9 @@ export class Scroller {
     const scrollbar = createScrollBar();
     const navigation = createNavigation(items);
 
-    root.className = element.className;
     root.style = element.style;
+    root.className = element.className;
+    root.classList.add(classNames.namespace);
 
     element.className = classNames.content;
     element.style = null;
