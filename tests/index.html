@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Scroller Tests</title>
+
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../scroller.css">
+    <script type="module" src="../scroller.js"></script>
+  </head>
+
+  <body>
+    <h1>Scroller Tests</h1>
+    <p>Checking the Scroller workability under various UI conditions.</p>
+
+    <h2>HTML Declaration</h2>
+
+    <h3>Default</h3>
+    <ul class="scroller">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Hidden Scrollbar</h3>
+    <ul class="scroller" data-scrollbar="hidden">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Hidden Navigation</h3>
+    <ul class="scroller" data-navigation="hidden">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Missing All Navigation Labels</h3>
+    <ul class="scroller">
+      <li class="item">First item</li>
+      <li class="item"><a href="#2">Second item</a></li>
+      <li class="item"><a href="#3">Third item</a></li>
+      <li class="item"><a href="#4">Fourth item</a></li>
+      <li class="item">Fifth item</li>
+    </ul>
+
+    <h3>Missing Some Navigation Labels</h3>
+    <ul class="scroller">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item"><a href="#2">Second item</a></li>
+      <li class="item"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Narrow Scrollbar</h3>
+    <ul class="scroller narrow">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Lots of Content</h3>
+    <ul class="scroller">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+      <li class="item" data-anchor="Sixth">Sixth item</li>
+      <li class="item" data-anchor="Seventh"><a href="#7">Seventh item</a></li>
+      <li class="item" data-anchor="Eighth"><a href="#8">Eighth item</a></li>
+      <li class="item" data-anchor="Ninth"><a href="#9">Ninth item</a></li>
+      <li class="item" data-anchor="Tenth">Tenth item</li>
+    </ul>
+
+    <h3>Remote Content Layout Shift</h3>
+    <ul class="scroller">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item image" data-anchor="Image">
+        <img
+          src="https://bespoyasov.ru/images/content/prokrutchik/cover.png"
+          alt="Example of loading remote image.">
+      </li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Content Alignment: Center (Default)</h3>
+    <ul class="scroller">
+      <li class="item" data-anchor="First"><a href="#1">First item</a></li>
+    </ul>
+
+    <h3>Content Alignment: Start</h3>
+    <ul class="scroller" data-align="start">
+      <li class="item" data-anchor="First">First item</li>
+    </ul>
+
+    <h3>Content Alignment: End</h3>
+    <ul class="scroller" data-align="end">
+      <li class="item" data-anchor="First">First item</li>
+    </ul>
+
+    <h3>Start Position: Center</h3>
+    <ul class="scroller" data-start-position="center">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Start Position: End</h3>
+    <ul class="scroller" data-start-position="end">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Start Position: Number</h3>
+    <ul class="scroller" data-start-position="200">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Start Position: Specified <code>focused</code> Node (Overrides Other Settings)</h3>
+    <ul class="scroller" data-start-position="center">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second" data-focused><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h3>Start Animation: Turned Off</h3>
+    <ul class="scroller" data-start-position="center" data-start-duration="0">
+      <li class="item" data-anchor="First">First item</li>
+      <li class="item" data-anchor="Second"><a href="#2">Second item</a></li>
+      <li class="item" data-anchor="Third"><a href="#3">Third item</a></li>
+      <li class="item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+      <li class="item" data-anchor="Fifth">Fifth item</li>
+    </ul>
+
+    <h2>JS Declaration</h2>
+    <script type="module" src="./init.js"></script>
+
+    <h3>Default</h3>
+    <div class="foo js-scroller-default">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Hidden Scrollbar</h3>
+    <div class="foo js-scroller-hidden-scrollbar">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Hidden Navigation</h3>
+    <div class="foo js-scroller-hidden-navigation">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Alignment: Start</h3>
+    <div class="foo js-scroller-align-start">
+      <div class="item" data-anchor="First">First item</div>
+    </div>
+
+    <h3>Alignment: Center</h3>
+    <div class="foo js-scroller-align-center">
+      <div class="item" data-anchor="First">First item</div>
+    </div>
+
+    <h3>Alignment: End</h3>
+    <div class="foo js-scroller-align-end">
+      <div class="item" data-anchor="First">First item</div>
+    </div>
+
+    <h3>Start Position: Start</h3>
+    <div class="foo js-scroller-position-start">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Start Position: Center</h3>
+    <div class="foo js-scroller-position-center">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Start Position: End</h3>
+    <div class="foo js-scroller-position-end">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Start Position: Number</h3>
+    <div class="foo js-scroller-position-number">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Public API: Scroll to Position</h3>
+    <div class="foo js-scroller-scroll-to">
+      <div class="item">First item</div>
+      <div class="item">Second item</div>
+      <div class="item">Third item</div>
+      <div class="item">Fourth item</div>
+      <div class="item">Fifth item</div>
+    </div>
+
+    <h3>Public API: Update Config</h3>
+    <div class="foo js-scroller-update-config" data-navigation="hidden" data-scrollbar="hidden">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Public API: Item Click Callback</h3>
+    <div class="foo js-scroller-click-callback">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+
+    <h3>Use External Layout</h3>
+    <article class="external js-scroller-external-layout">
+      <div class="scroller-container">
+        <ul class="scroller-content">
+          <li class="item scroller-item" data-anchor="First">First item</li>
+          <li class="item scroller-item" data-anchor="Second"><a href="#2">Second item</a></li>
+          <li class="item scroller-item" data-anchor="Third"><a href="#3">Third item</a></li>
+          <li class="item scroller-item" data-anchor="Fourth"><a href="#4">Fourth item</a></li>
+          <li class="item scroller-item" data-anchor="Fifth">Fifth item</li>
+        </ul>
+      </div>
+      <div class="scroller-scrollbar">
+        <div class="scroller-handle"></div>
+      </div>
+      <footer class="scroller-navigation">
+        <button class="scroller-button" data-id="First" type="button">First</button>
+        <button class="scroller-button" data-id="Fourth" type="button">Fourth</button>
+        <button class="scroller-button" data-id="Fifth" type="button">Fifth</button>
+      </footer>
+    </article>
+
+    <h3>Initially Hidden</h3>
+    <div class="foo hidden js-scroller-initially-hidden">
+      <div class="item" data-anchor="First">First item</div>
+      <div class="item" data-anchor="Second">Second item</div>
+      <div class="item" data-anchor="Third">Third item</div>
+      <div class="item" data-anchor="Fourth">Fourth item</div>
+      <div class="item" data-anchor="Fifth">Fifth item</div>
+    </div>
+  </body>
+</html>

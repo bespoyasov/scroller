@@ -1,56 +1,40 @@
 {
   "name": "prokrutchik",
-  "version": "2.4.0",
-  "description": "Draggable scroller",
-  "main": "./build/scroller-min.js",
-  "types": "./build/scroller.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bespoyasov/scroller.git"
-  },
+  "version": "3.0.0",
+  "description": "Draggable content scroller.",
   "keywords": [
     "scroller",
     "scroll",
     "drag",
     "drag-n-drop"
   ],
-  "author": {
-    "name": "Alex Bespoyasov",
-    "email": "bespoyasov@me.com",
-    "url": "https://bespoyasov.ru"
+  "type": "module",
+  "types": "scroller.d.ts",
+  "exports": {
+    ".": "./scroller.js",
+    "./package.json": "./package.json",
+    "./scroller.browser.js": "./scroller.browser.js",
+    "./scroller.css": "./scroller.css"
   },
-  "scripts": {
-    "prepublishOnly": "gulp build"
+  "files": [
+    "scroller.js",
+    "scroller.browser.js",
+    "scroller.css",
+    "scroller.d.ts"
+  ],
+  "engines": {
+    "node": ">=14.16"
   },
+  "author": "Alex Bespoyasov <bespoyasov@me.com>",
+  "repository": "bespoyasov/scroller",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/bespoyasov/scroller/issues"
-  },
-  "homepage": "https://github.com/bespoyasov/scroller#readme",
-  "dependencies": {
-    "array-from": "^2.1.1",
-    "babel-polyfill": "^6.23.0"
+  "scripts": {
+    "lint": "npx eslint src/**",
+    "prebuild": "npm run lint",
+    "build": "npx esbuild scroller.js --bundle --minify --outfile=scroller.browser.js --target=es2020"
   },
   "devDependencies": {
-    "autoprefixer": "^6.3.6",
-    "babel": "^6.5.2",
-    "babel-plugin-for-of-array-only": "^1.0.1",
-    "babel-plugin-transform-class-properties": "^6.6.0",
-    "babel-preset-es2020": "^1.0.2",
-    "babelify": "^7.3.0",
-    "browserify": "^13.0.0",
-    "gulp": "^4.0.2",
-    "gulp-concat": "^2.6.1",
-    "gulp-csso": "^4.0.1",
-    "gulp-jshint": "^2.1.0",
-    "gulp-minify": "^3.1.0",
-    "gulp-notify": "^4.0.0",
-    "gulp-postcss": "^9.0.0",
-    "gulp-rename": "^2.0.0",
-    "jshint": "^2.9.2",
-    "vinyl-source-stream": "^2.0.0"
-  },
-  "peerDependencies": {
-    "typescript": "^4.0.0"
+    "esbuild": "^0.14.41",
+    "eslint": "^8.15.0"
   }
 }

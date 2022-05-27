@@ -1,0 +1,189 @@
+/* Scroller Scope */
+
+.scroller {
+  --scroll-height: 8px;
+  --vertical-margin: 10px;
+
+  --transition-duration: 0.1s;
+
+  --adornment-color: rgba(0, 0, 0, 0.5);
+  --control-color: rgba(0, 0, 0, 0.5);
+}
+
+.scroller,
+.scroller * {
+  box-sizing: border-box;
+
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.scroller {
+  position: relative;
+  overflow: hidden;
+  touch-action: manipulation;
+}
+
+/* Component Container */
+
+.scroller-container {
+  position: relative;
+  min-width: 100%;
+  cursor: move;
+  cursor: grab;
+}
+
+.scroller-container::before,
+.scroller-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--adornment-color);
+  width: 1px;
+  height: auto;
+  opacity: 0;
+  transition: opacity var(--transition-duration);
+}
+
+.scroller-container::before {
+  left: 0;
+}
+
+.scroller-container::after {
+  right: 0;
+}
+
+.has-left-border .scroller-container::before,
+.has-right-border .scroller-container::after {
+  opacity: 1;
+}
+
+.is-not-scrollable .scroller-container {
+  cursor: unset;
+}
+
+.is-not-scrollable .scroller-container::before,
+.is-not-scrollable .scroller-container::after {
+  display: none;
+}
+
+/* Content Container */
+
+.scroller-content,
+.scroller-content > li {
+  list-style: none;
+}
+
+.scroller-content {
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+
+  display: inline-flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  --position: 0px;
+  transform: translateX(var(--position));
+}
+
+.has-start-align .scroller-content {
+  justify-content: start;
+}
+
+.has-end-align .scroller-content {
+  justify-content: end;
+}
+
+/* Scrollbar */
+
+.scroller-scrollbar {
+  margin: var(--vertical-margin) 0;
+  height: var(--scroll-height);
+  position: relative;
+  cursor: pointer;
+}
+
+.scroller-handle {
+  height: 100%;
+  min-width: 20px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  background-color: var(--control-color);
+  border-radius: 5px;
+  cursor: move;
+
+  opacity: 0.5;
+  transition: opacity var(--transition-duration);
+
+  --position: 0px;
+  --shrink-factor: 1;
+  --shrink-origin: center;
+
+  transform: translateX(var(--position)) scaleX(var(--shrink-factor));
+  transform-origin: var(--shrink-origin);
+}
+
+.scroller-handle:hover,
+.scroller-handle:active {
+  opacity: 1;
+}
+
+.no-scrollbar .scroller-scrollbar {
+  display: none;
+}
+
+/* Navigation */
+
+.scroller-navigation {
+  margin: var(--vertical-margin) 0;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.scroller-button {
+  -webkit-appearance: none;
+  appearance: none;
+
+  padding: 0;
+  margin: 0;
+
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+
+  color: inherit;
+  font-size: 0.8em;
+  white-space: nowrap !important;
+
+  opacity: 0.5;
+  transition: opacity var(--transition-duration);
+}
+
+.scroller-button:focus,
+.scroller-button:hover {
+  opacity: 1;
+}
+
+.scroller-navigation:empty,
+.no-navigation .scroller-navigation {
+  display: none;
+}
+
+/* Dynamic State Modifiers */
+
+.is-dragging-content,
+.is-dragging-content * {
+  cursor: grabbing !important;
+}
+
+.is-dragging-handle,
+.is-dragging-handle * {
+  cursor: move !important;
+}
