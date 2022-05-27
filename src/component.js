@@ -108,6 +108,7 @@ export class Scroller {
   }
 
   #render() {
+    this.#clearLayoutModifiers();
     this.#updateDimensions();
 
     this.#checkScrollability();
@@ -118,6 +119,11 @@ export class Scroller {
 
     this.#adjustScrollHandleWidth();
     this.#adjustMovablePositions();
+  }
+
+  #clearLayoutModifiers() {
+    const { noScrollbar, noNavigation } = modifiers;
+    this.root.classList.remove(noScrollbar, noNavigation);
   }
 
   #updateDimensions() {
