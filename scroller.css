@@ -89,8 +89,12 @@
   transform: translateX(var(--position));
 }
 
-.has-left-align .scroller-content {
+.has-start-align .scroller-content {
   justify-content: start;
+}
+
+.has-end-align .scroller-content {
+  justify-content: end;
 }
 
 /* Scrollbar */
