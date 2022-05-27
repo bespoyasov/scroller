@@ -108,6 +108,7 @@ export class Scroller {
     this.#checkScrollbarVisibility();
     this.#checkNavigationVisibility();
     this.#checkBorderVisibility();
+    this.#checkAlignment();
 
     this.#adjustScrollHandleWidth();
     this.#adjustMovablePositions();
