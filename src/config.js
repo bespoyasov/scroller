@@ -2,7 +2,7 @@ import { contentAlignment } from "./alignment.js";
 import { visibility } from "./visibility.js";
 
 const skip = () => {};
-const booleanFromString = (str) => str && str !== "false";
+const numberFromString = (str) => str && Number(str);
 
 export function createRuntimeConfig({ element, config }) {
   const { dataset } = element;
@@ -15,7 +15,7 @@ export function createRuntimeConfig({ element, config }) {
 
     align: config.align ?? dataset.align ?? contentAlignment.center,
     startPosition: config.startPosition ?? dataset.startPosition ?? contentAlignment.start,
-    startAnimation: config.startAnimation ?? booleanFromString(dataset.startAnimation) ?? true,
+    startDuration: config.startDuration ?? numberFromString(dataset.startDuration) ?? 250,
 
     onItemClick: config.onItemClick ?? skip,
   };
