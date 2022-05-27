@@ -63,6 +63,10 @@ export class Scroller {
 
     window.addEventListener("load", this.#render.bind(this));
     window.addEventListener("resize", throttle(this.#render.bind(this)));
+
+    this.content
+      .querySelectorAll("*")
+      .forEach((element) => element.addEventListener("focus", this.#onContentFocus.bind(this)));
   }
 
   #createLayout(element) {
