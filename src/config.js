@@ -1,6 +1,8 @@
 import { contentAlignment } from "./alignment.js";
 import { visibility } from "./visibility.js";
 
+const booleanFromString = (str) => str && str !== "false";
+
 export function createRuntimeConfig({ element, config }) {
   const { dataset } = element;
 
@@ -12,6 +14,6 @@ export function createRuntimeConfig({ element, config }) {
 
     align: config.align || dataset.align || contentAlignment.center,
     start: config.start || dataset.start || contentAlignment.start,
-    startAnimation: config.startAnimation || dataset.startAnimation || true,
+    startAnimation: config.startAnimation ?? booleanFromString(dataset.startAnimation) ?? true,
   };
 }
