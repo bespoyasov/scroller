@@ -32,8 +32,8 @@ export class Scroller {
     this.#init(element);
   }
 
-  scrollTo(position) {
-    this.#scrollTo(this.#normalize(position));
+  scrollTo(position, duration) {
+    this.#scrollTo(this.#normalize(position), duration);
   }
 
   update(newSettings) {
