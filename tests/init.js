@@ -15,6 +15,7 @@ const configList = [
   { className: "js-scroller-initially-hidden", start: 250 },
   { className: "js-scroller-external-layout", useExternalLayout: true },
   { className: "js-scroller-click-callback", onItemClick: console.log },
+  { className: "js-scroller-scroll-to" },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -30,6 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
       el.classList.remove("hidden");
     }, 1000);
   });
+
+  setTimeout(() => {
+    scrollerRegistry["js-scroller-scroll-to"].scrollTo("center");
+  }, 2500);
 });
 
 window.scrollerRegistry = scrollerRegistry;
