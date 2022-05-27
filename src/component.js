@@ -83,7 +83,6 @@ export class Scroller {
 
     root.style = element.style;
     root.className = element.className;
-    root.classList.add(classNames.namespace);
 
     element.className = classNames.content;
     element.style = null;
@@ -99,7 +98,7 @@ export class Scroller {
 
   #useRoot(element) {
     this.root = element;
-    this.env = element.closest("body");
+    this.root.classList.add(classNames.namespace);
 
     this.container = element.querySelector(`.${classNames.container}`);
     this.content = element.querySelector(`.${classNames.content}`);
@@ -107,6 +106,8 @@ export class Scroller {
 
     this.scrollbar = element.querySelector(`.${classNames.scrollbar}`);
     this.handle = element.querySelector(`.${classNames.handle}`);
+
+    this.env = element.closest("body");
   }
 
   #render() {
