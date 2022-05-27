@@ -8,6 +8,7 @@ import { animateValue } from "./animate.js";
 import { throttle } from "./throttle.js";
 
 import { isHidden } from "./visibility.js";
+import { contentAlignment } from "./alignment.js";
 import { transformOrigin } from "./transform.js";
 import { createRuntimeConfig } from "./config.js";
 import { createInitialState } from "./state.js";
@@ -154,6 +155,14 @@ export class Scroller {
 
     classIf(this.root, leftVisible, borderLeft);
     classIf(this.root, rightVisible, borderRight);
+  }
+
+  #checkAlignment() {
+    const { align } = this.config;
+    const { start, end } = contentAlignment;
+
+    classIf(this.root, align === start, modifiers.hasAlignmentStart);
+    classIf(this.root, align === end, modifiers.hasAlignmentEnd);
   }
 
   #onContentTouch(event) {
