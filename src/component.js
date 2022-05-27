@@ -32,6 +32,8 @@ export class Scroller {
     this.#init(element);
   }
 
+  scrollTo(position) {}
+
   #init(element) {
     if (this.config.useExternalLayout) this.#useRoot(element);
     else this.#createLayout(element);
