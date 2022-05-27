@@ -37,6 +37,7 @@ export class Scroller {
     else this.#createLayout(element);
 
     this.#render();
+    this.#applyStartPosition();
     this.#attachEventHandlers();
   }
 
@@ -143,6 +144,20 @@ export class Scroller {
   #adjustMovablePositions() {
     const position = this.#restrained(this.state.position);
     this.#moveTo(position);
+  }
+
+  #applyStartPosition() {
+    const { center: atCenter, end: atEnd } = contentAlignment;
+    const { start: initialPoint, startAnimation } = this.config;
+    const { center, end } = this.state;
+
+    const focusedNode = this.root.querySelector(select.initiallyFocusedNode);
+    const translateTo = startAnimation ? this.#slideTo.bind(this) : this.#moveTo.bind(this);
+
+    if (focusedNode) return translateTo(this.#positionOf(focusedNode));
+    if (initialPoint === atCenter) return translateTo(center);
+    if (initialPoint === atEnd) return translateTo(end);
+    if (!Number.isNaN(+initialPoint)) return translateTo(this.#restrained(-initialPoint));
   }
 
   #checkScrollbarVisibility() {
