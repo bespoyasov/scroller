@@ -1,5 +1,5 @@
 import { classNames, modifiers, select } from "./selectors.js";
-import { classIf, setPosition, setShrink, setWidth } from "./dom.js";
+import { classIf, isVisible, setPosition, setShrink, setWidth } from "./dom.js";
 import { coordinatesOf, hasHorizontalDirection, isTouchEvent } from "./event.js";
 import { direction, detectDirection } from "./swipe.js";
 
@@ -38,6 +38,8 @@ export class Scroller {
 
     this.#render();
     this.#applyStartPosition();
+    this.#watchComponentAppearance();
+
     this.#attachEventHandlers();
   }
 
@@ -192,6 +194,23 @@ export class Scroller {
 
     classIf(this.root, align === start, modifiers.hasAlignmentStart);
     classIf(this.root, align === end, modifiers.hasAlignmentEnd);
+  }
+
+  #watchComponentAppearance() {
+    if (isVisible(this.root)) return;
+
+    const observer = new MutationObserver(() => {
+      if (!isVisible(this.root)) return;
+
+      this.#render();
+      this.#applyStartPosition();
+      observer.disconnect();
+    });
+
+    observer.observe(this.root, {
+      attributes: true,
+      attributeFilter: ["style", "class"],
+    });
   }
 
   #onContentTouch(event) {
