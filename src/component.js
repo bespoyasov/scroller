@@ -247,7 +247,7 @@ export class Scroller {
     const targetNode = event.target?.closest(`.${classNames.item}`);
     if (!targetNode) return;
 
-    const destination = this.#restrained(-targetNode.offsetLeft);
+    const destination = this.#positionOf(targetNode);
     this.#slideTo(destination);
     this.#resetFocusJump();
   }
@@ -300,7 +300,7 @@ export class Scroller {
     const targetNode = this.content.querySelector(select.byNavigationId(id));
     if (!id || !targetNode) return;
 
-    const destination = this.#restrained(-targetNode.offsetLeft);
+    const destination = this.#positionOf(targetNode);
     this.#slideTo(destination);
   }
 
@@ -337,6 +337,10 @@ export class Scroller {
   #stretched(position) {
     const { start: max, end: min } = this.state;
     return calculateStretch({ value: position, min, max });
+  }
+
+  #positionOf(node) {
+    return this.#restrained(-node.offsetLeft);
   }
 
   #slideTo(destination, duration) {
