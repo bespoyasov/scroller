@@ -18,3 +18,5 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollerRegistry[className] = scroller;
   });
 });
+
+window.scrollerRegistry = scrollerRegistry;
