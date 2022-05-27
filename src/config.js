@@ -14,7 +14,7 @@ export function createRuntimeConfig({ element, config }) {
     navigation: config.navigation || dataset.navigation || visibility.visible,
 
     align: config.align ?? dataset.align ?? contentAlignment.center,
-    start: config.start ?? dataset.start ?? contentAlignment.start,
+    startPosition: config.startPosition ?? dataset.startPosition ?? contentAlignment.start,
     startAnimation: config.startAnimation ?? booleanFromString(dataset.startAnimation) ?? true,
 
     onItemClick: config.onItemClick ?? skip,
