@@ -406,10 +406,10 @@ export class Scroller {
 
     const translateTo = !duration ? this.#moveTo.bind(this) : this.#slideTo.bind(this);
 
-    if (typeof destination === "number") return translateTo(destination);
-    if (destination === toStart) return translateTo(start);
-    if (destination === toCenter) return translateTo(center);
-    if (destination === toEnd) return translateTo(end);
+    if (typeof destination === "number") return translateTo(destination, duration);
+    if (destination === toStart) return translateTo(start, duration);
+    if (destination === toCenter) return translateTo(center, duration);
+    if (destination === toEnd) return translateTo(end, duration);
   }
 
   #slideTo(destination, duration) {
