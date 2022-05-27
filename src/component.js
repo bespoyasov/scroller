@@ -124,6 +124,8 @@ export class Scroller {
     const { offsetWidth: scrollbarWidth } = this.scrollbar;
 
     this.state.end = rootWidth - contentWidth;
+    this.state.center = this.state.end / 2;
+
     this.state.containerRatio = Math.min(rootWidth / contentWidth, 1);
     this.state.scrollbarRatio = Math.min(scrollbarWidth / rootWidth, 1);
   }
