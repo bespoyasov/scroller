@@ -14,6 +14,7 @@ const configList = [
   { className: "js-scroller-position-number", start: 250 },
   { className: "js-scroller-initially-hidden", start: 250 },
   { className: "js-scroller-external-layout", useExternalLayout: true },
+  { className: "js-scroller-click-callback", onItemClick: console.log },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
