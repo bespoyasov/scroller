@@ -215,6 +215,23 @@ export class Scroller {
     this.#slideTo(afterDeceleration, duration);
   }
 
+  #traceAcceleration(entry) {
+    this.state.pointerMovement.push(entry);
+  }
+
+  #detectSwipeDirection(event) {
+    if (!this.state.draggingContent || this.state.swipeDirection) return;
+    if (!isTouchEvent(event)) return;
+
+    const { dragStartPoint } = this.state;
+    const currentPoint = coordinatesOf(event);
+    const swipeDirection = detectDirection(currentPoint, dragStartPoint);
+    const preventScroll = swipeDirection === direction.horizontal;
+
+    this.state.swipeDirection = swipeDirection;
+    this.state.draggingContent = preventScroll;
+  }
+
   #onContentClick(event) {
     if (!this.state.scrollable) return;
     if (!event.target.closest("a")) return;
@@ -246,23 +263,6 @@ export class Scroller {
     setTimeout(() => {
       this.root.scrollLeft = 0;
     }, 0);
-  }
-
-  #traceAcceleration(entry) {
-    this.state.pointerMovement.push(entry);
-  }
-
-  #detectSwipeDirection(event) {
-    if (!this.state.draggingContent || this.state.swipeDirection) return;
-    if (!isTouchEvent(event)) return;
-
-    const { dragStartPoint } = this.state;
-    const currentPoint = coordinatesOf(event);
-    const swipeDirection = detectDirection(currentPoint, dragStartPoint);
-    const preventScroll = swipeDirection === direction.horizontal;
-
-    this.state.swipeDirection = swipeDirection;
-    this.state.draggingContent = preventScroll;
   }
 
   #onHandleTouch(event) {
