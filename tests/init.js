@@ -1,36 +1,20 @@
 import { Scroller } from "../scroller.js";
 
+const scrollerRegistry = {};
+const configList = [
+  { selector: ".js-scroller-default" },
+  { selector: ".js-scroller-hidden-scrollbar", scrollbar: "hidden" },
+  { selector: ".js-scroller-hidden-navigation", navigation: "hidden" },
+  { selector: ".js-scroller-align-start", align: "start" },
+  { selector: ".js-scroller-align-center", align: "center" },
+  { selector: ".js-scroller-align-end", align: "end" },
+];
+
 document.addEventListener("DOMContentLoaded", () => {
-  const scroller1 = new Scroller({
-    element: document.querySelector(".js-scroller-default"),
-  });
+  configList.forEach(({ selector, ...config }) => {
+    const element = document.querySelector(selector);
+    const scroller = new Scroller({ element, ...config });
 
-  const scroller2 = new Scroller({
-    element: document.querySelector(".js-scroller-hidden-scrollbar"),
-    scrollbar: "hidden",
+    scrollerRegistry[selector] = scroller;
   });
-
-  const scroller3 = new Scroller({
-    element: document.querySelector(".js-scroller-hidden-navigation"),
-    navigation: "hidden",
-  });
-
-  new Scroller({
-    element: document.querySelector(".js-scroller-align-start"),
-    align: "start",
-  });
-
-  new Scroller({
-    element: document.querySelector(".js-scroller-align-center"),
-    align: "center",
-  });
-
-  new Scroller({
-    element: document.querySelector(".js-scroller-align-end"),
-    align: "end",
-  });
-
-  console.log({ scroller1 });
-  console.log({ scroller2 });
-  console.log({ scroller3 });
 });
