@@ -12,8 +12,8 @@ export function createRuntimeConfig({ element, config }) {
     scrollbar: config.scrollbar || dataset.scrollbar || visibility.visible,
     navigation: config.navigation || dataset.navigation || visibility.visible,
 
-    align: config.align || dataset.align || contentAlignment.center,
-    start: config.start || dataset.start || contentAlignment.start,
+    align: config.align ?? dataset.align ?? contentAlignment.center,
+    start: config.start ?? dataset.start ?? contentAlignment.start,
     startAnimation: config.startAnimation ?? booleanFromString(dataset.startAnimation) ?? true,
   };
 }
