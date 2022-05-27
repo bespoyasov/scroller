@@ -157,6 +157,8 @@ export class Scroller {
   }
 
   #onContentTouch(event) {
+    if (!this.state.scrollable) return;
+
     this.state.scrolling = false;
     this.state.draggingContent = true;
     this.state.dragStartPoint = coordinatesOf(event);
