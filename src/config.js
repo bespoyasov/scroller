@@ -1,6 +1,7 @@
 import { contentAlignment } from "./alignment.js";
 import { visibility } from "./visibility.js";
 
+const skip = () => {};
 const booleanFromString = (str) => str && str !== "false";
 
 export function createRuntimeConfig({ element, config }) {
@@ -15,5 +16,7 @@ export function createRuntimeConfig({ element, config }) {
     align: config.align ?? dataset.align ?? contentAlignment.center,
     start: config.start ?? dataset.start ?? contentAlignment.start,
     startAnimation: config.startAnimation ?? booleanFromString(dataset.startAnimation) ?? true,
+
+    onItemClick: config.onItemClick ?? skip,
   };
 }
