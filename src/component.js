@@ -400,11 +400,11 @@ export class Scroller {
       : externalScrollValueOrAlignment;
   }
 
-  #scrollTo(destination, duration = 250) {
+  #scrollTo(destination, duration) {
     const { start: toStart, center: toCenter, end: toEnd } = contentAlignment;
     const { start, center, end } = this.state;
 
-    const translateTo = !duration ? this.#moveTo.bind(this) : this.#slideTo.bind(this);
+    const translateTo = duration <= 0 ? this.#moveTo.bind(this) : this.#slideTo.bind(this);
 
     if (typeof destination === "number") return translateTo(destination, duration);
     if (destination === toStart) return translateTo(start, duration);
