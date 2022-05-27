@@ -28,5 +28,6 @@ export const modifiers = {
 };
 
 export const select = {
+  initiallyFocusedNode: `[data-focused]`,
   byNavigationId: (id) => `[data-anchor="${id}"]`,
 };
