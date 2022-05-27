@@ -8,3 +8,5 @@ export const setShrink = (el, { factor, origin }) => {
 
 export const classIf = (element, condition, ...classNames) =>
   condition ? element.classList.add(...classNames) : element.classList.remove(...classNames);
+
+export const isVisible = (element) => element.offsetParent !== null;
