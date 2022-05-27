@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   setTimeout(() => {
-    scrollerRegistry["js-scroller-scroll-to"].scrollTo("center");
+    scrollerRegistry["js-scroller-scroll-to"].scrollTo("center", 1000);
   }, 2500);
 
   setTimeout(() => {
