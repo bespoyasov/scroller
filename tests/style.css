@@ -23,3 +23,13 @@ body {
   margin-left: auto;
   margin-right: auto;
 }
+
+.image {
+  width: auto;
+  padding: 0;
+  line-height: 0;
+}
+
+.image img {
+  max-height: 374px;
+}
