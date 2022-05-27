@@ -33,3 +33,7 @@ body {
 .image img {
   max-height: 374px;
 }
+
+.hidden {
+  display: none;
+}

@@ -12,6 +12,7 @@ const configList = [
   { className: "js-scroller-position-center", start: "center" },
   { className: "js-scroller-position-end", start: "end" },
   { className: "js-scroller-position-number", start: 250 },
+  { className: "js-scroller-initially-hidden", start: 250 },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -20,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const scroller = new Scroller({ element, ...config });
 
     scrollerRegistry[className] = scroller;
+  });
+
+  document.querySelectorAll(".hidden").forEach((el) => {
+    setTimeout(() => {
+      el.classList.remove("hidden");
+    }, 1000);
   });
 });
 
