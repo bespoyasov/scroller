@@ -278,13 +278,12 @@ export class Scroller {
 
   #onContentClick(event) {
     if (!this.state.scrollable) return;
-    if (!event.target.closest("a")) return;
 
+    const { onItemClick } = this.config;
     const { dragStartPoint } = this.state;
     const { x } = coordinatesOf(event);
-    if (dragStartPoint.x === x) return;
 
-    event.preventDefault();
+    return dragStartPoint.x === x ? onItemClick(event) : event.preventDefault();
   }
 
   #onContentFocus(event) {
