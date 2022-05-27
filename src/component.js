@@ -212,6 +212,7 @@ export class Scroller {
   }
 
   #onContentClick(event) {
+    if (!this.state.scrollable) return;
     if (!event.target.closest("a")) return;
 
     const { dragStartPoint } = this.state;
