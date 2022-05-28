@@ -114,6 +114,11 @@ scroller.scrollTo("end");
 
 // Scrolls to 100px from the start of the content:
 scroller.scrollTo(100);
+
+// Second optional parameter specifies
+// the animation duration in milliseconds.
+// Scrolls to center in 500 ms:
+scroller.scrollTo("center", 500);
 ```
 
 ## Item Click Callback
