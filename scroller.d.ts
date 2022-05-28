@@ -42,8 +42,8 @@ interface ScrollerConstructorConfig {
   useExternalLayout?: boolean;
 }
 
-interface ScrollerUpdateConfig
-  extends Omit<ScrollerConstructorConfig, "element" | "useExternalLayout"> {}
+type StartSettings = "element" | "useExternalLayout" | "startPosition" | "startDuration";
+interface ScrollerUpdateConfig extends Omit<ScrollerConstructorConfig, StartSettings> {}
 
 export interface ScrollerConstructor {
   new (config: ScrollerConstructorConfig): ScrollerInstance;
