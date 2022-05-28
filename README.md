@@ -123,7 +123,7 @@ scroller.scrollTo(100);
 scroller.scrollTo("center", 500);
 ```
 
-## Item Click Callback
+### Item Click Callback
 
 For handling clicks on items, specify the `onItemClick` handler in the config:
 
@@ -136,7 +136,7 @@ const scroller = new Scroller({
 });
 ```
 
-## Config Updates
+### Config Updates
 
 For configuration updates, use the `update` method:
 
