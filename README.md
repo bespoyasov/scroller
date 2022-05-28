@@ -123,8 +123,8 @@ For handling clicks on items, specify the `onItemClick` handler in the config:
 ```js
 const scroller = new Scroller({
   element: document.querySelector(".foo"),
-  onClick: (event) => {
-    /* event is TouchEvent or MouseEvent depending on the user device. */
+  onItemClick: (event) => {
+    /* The `event` argument here is `TouchEvent` or `MouseEvent` depending on the user device. */
   },
 });
 ```
@@ -138,7 +138,7 @@ scroller.update({
   scrollbar: "hidden",
   navigation: "hidden",
   align: "center",
-  onClick: someFunc,
+  onItemClick: someFunc,
 });
 ```
 
