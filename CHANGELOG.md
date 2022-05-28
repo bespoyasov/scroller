@@ -20,6 +20,7 @@ Weight, dependency, and performance improvements; pure ESM; more consistent publ
   - The `data-startAnimation` attribute is now `data-start-duration`. For turning the animation off, use `data-start-duration="0"`.
 - CSS class name prefix renamed from `.ab_scroller` to `.scroller`.
 - CSS is now unprefixed since most of the features are supported by most of the browsers.
+- CSS custom properties are now used for animations. Be careful if your bundler inlines custom property values into styles.
 
 ### New Features
 
