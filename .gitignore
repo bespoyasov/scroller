@@ -2,4 +2,5 @@
 .vscode
 node_modules
 
-scroller.browser.*
+scroller.browser.js
+scroller.js
