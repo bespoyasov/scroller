@@ -5,6 +5,7 @@ import { direction, detectDirection } from "./swipe.js";
 
 import { calculateDeceleration, calculateStretch } from "./physics.js";
 import { animateValue } from "./animate.js";
+import { debounce } from "./debounce.js";
 import { throttle } from "./throttle.js";
 
 import { isHidden } from "./visibility.js";
@@ -378,7 +379,12 @@ export class Scroller {
 
     this.state.scrolling = true;
     this.#moveTo(this.#restrained(position - dx));
+    this.#cleanupFlagWhenStopped();
   }
+
+  #cleanupFlagWhenStopped = debounce(() => {
+    this.state.scrolling = false;
+  });
 
   #restrained(position) {
     const { start, end } = this.state;
