@@ -69,6 +69,8 @@ Scroller items can be configured with:
 - `data-anchor`, label of the item in the navigation, `string`;
 - `data-focused`, if defined, Scroller will scroll to this item at the start.
 
+### Using JavaScript
+
 You can also configure Scroller using the config object:
 
 ```js
@@ -94,7 +96,11 @@ const scroller = new Scroller({
 
 # Public API
 
-Scroller provides programmatic position change:
+Scroller provides API for changing current position, handling item clicks, and dynamically updating the config.
+
+### Position Change
+
+For position change, use the `scrollTo` method:
 
 ```js
 // Scrolls to the beginning of the content
@@ -110,7 +116,9 @@ scroller.scrollTo("end");
 scroller.scrollTo(100);
 ```
 
-...Content item click callback:
+## Item Click Callback
+
+For handling clicks on items, specify the `onItemClick` handler in the config:
 
 ```js
 const scroller = new Scroller({
@@ -121,7 +129,9 @@ const scroller = new Scroller({
 });
 ```
 
-...And dynamic configuration updates:
+## Config Updates
+
+For configuration updates, use the `update` method:
 
 ```js
 scroller.update({
