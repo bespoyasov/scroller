@@ -96,7 +96,7 @@ const scroller = new Scroller({
 });
 ```
 
-# Public API
+## Public API
 
 Scroller provides API for changing current position, handling item clicks, and dynamically updating the config.
 
