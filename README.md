@@ -154,23 +154,13 @@ Scroller with disabled scrollbar, active navigation, and start alignment, config
 
 Scroller with the same settings configured via config object:
 
-```html
-<body>
-  <div class="foo">
-    <img src="example.png" data-anchor="anchor1" />
-    <div data-anchor="anchor2"></div>
-    <table data-anchor="anchor3"></table>
-    <!-- ... -->
-  </div>
+```js
+import { Scroller } from "prokrutchik";
+import "prokrutchik/scroller.css";
 
-  <script type="module">
-    import { Scroller } from "path/to/prokrutchik";
-
-    const myScroller = new Scroller({
-      el: document.querySelector(".foo"),
-      scrollbar: "hidden",
-      align: "start",
-    });
-  </script>
-</body>
+const myScroller = new Scroller({
+  el: document.querySelector(".foo"),
+  scrollbar: "hidden",
+  align: "start",
+});
 ```
