@@ -10,6 +10,7 @@
   ],
   "type": "module",
   "types": "scroller.d.ts",
+  "module": "scroller.js",
   "exports": {
     ".": "./scroller.js",
     "./package.json": "./package.json",
