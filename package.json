@@ -33,7 +33,7 @@
     "prebuild": "npm run lint",
     "build:module": "npx esbuild ./src --bundle --format=esm --minify --outfile=scroller.js",
     "build:browser": "npx esbuild ./src --bundle --format=iife --minify --outfile=scroller.browser.js",
-    "build": "npx esbuild scroller.js --bundle --minify --outfile=scroller.browser.js --target=es2020"
+    "build": "npm run build:module & npm run build:browser"
   },
   "devDependencies": {
     "esbuild": "^0.14.41",
