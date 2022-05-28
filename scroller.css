@@ -44,6 +44,7 @@
   height: auto;
   opacity: 0;
   transition: opacity var(--transition-duration);
+  z-index: 1;
 }
 
 .scroller-container::before {
