@@ -14,8 +14,8 @@
   "exports": {
     ".": "./scroller.js",
     "./package.json": "./package.json",
-    "./scroller.browser.js": "./scroller.browser.js",
-    "./scroller.css": "./scroller.css"
+    "./browser.js": "./scroller.browser.js",
+    "./styles.css": "./scroller.css"
   },
   "files": [
     "scroller.js",

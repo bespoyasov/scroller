@@ -14,14 +14,14 @@ Add the scripts and styles to your project:
 
 ```js
 import { Scroller } from "prokrutchik";
-import "prokrutchik/scroller.css";
+import "prokrutchik/styles.css";
 ```
 
 Or add them directly to the HTML file:
 
 ```html
-<script src="/path/to/prokrutchik/scroller.browser.js"></script>
-<link href="/path/to/prokrutchik/scroller.css" rel="stylesheet" />
+<script src="/path/to/prokrutchik/browser.js"></script>
+<link href="/path/to/prokrutchik/styles.css" rel="stylesheet" />
 ```
 
 ## Initialization
@@ -153,8 +153,8 @@ Scroller with disabled scrollbar, active navigation, and start alignment, config
 
 ```html
 <head>
-  <link href="/path/to/prokrutchik/scroller.css" rel="stylesheet" />
-  <script src="/path/to/prokrutchik/scroller.browser.js" defer></script>
+  <link href="/path/to/prokrutchik/styles.css" rel="stylesheet" />
+  <script src="/path/to/prokrutchik/browser.js" defer></script>
 </head>
 
 <body>
@@ -171,7 +171,7 @@ Scroller with the same settings configured via config object:
 
 ```js
 import { Scroller } from "prokrutchik";
-import "prokrutchik/scroller.css";
+import "prokrutchik/styles.css";
 
 const myScroller = new Scroller({
   el: document.querySelector(".foo"),
