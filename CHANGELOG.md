@@ -31,3 +31,4 @@ Weight, dependency, and performance improvements; pure ESM; more consistent publ
 ### Plans for Future
 
 - Make the scrollbar accessible via keyboard. (Make it possible to control its position via arrow keys.)
+- Consider non-LTR languages when specifying the alignment and destination.
