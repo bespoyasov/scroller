@@ -1,4 +1,4 @@
-import { Scroller } from "./src/component.js";
+import { Scroller } from "./component.js";
 
 document.addEventListener("DOMContentLoaded", function initializeAll() {
   document
