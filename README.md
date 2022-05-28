@@ -179,3 +179,7 @@ const myScroller = new Scroller({
   align: "start",
 });
 ```
+
+## React Wrapper
+
+For using Scroller with React, check out [React-Scroller](https://github.com/bespoyasov/react-scroller) package.
