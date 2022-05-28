@@ -1,4 +1,4 @@
-import { Scroller } from "../scroller.js";
+import { Scroller } from "../src/index.js";
 
 const scrollerRegistry = {};
 const configList = [
