@@ -2,6 +2,8 @@
 
 Fast, light-weight (4KB gzip), and dependency-free content scroller.
 
+https://user-images.githubusercontent.com/9102374/170833443-b9428466-a9fd-48e5-b18b-4c4089137dd5.mp4
+
 ## Installation
 
 Install Scroller with npm:
