@@ -46,7 +46,7 @@ export class Scroller {
   }
 
   #init(element) {
-    if (this.config.useExternalLayout) this.#useRoot(element);
+    if (this.config.useExternalLayout) this.#connect(element);
     else this.#createLayout(element);
 
     this.#render();
@@ -106,10 +106,10 @@ export class Scroller {
     root.append(scrollbar);
     root.append(navigation);
 
-    this.#useRoot(root);
+    this.#connect(root);
   }
 
-  #useRoot(element) {
+  #connect(element) {
     this.root = element;
     this.root.dataset.initialized = true;
     this.root.classList.add(classNames.namespace);
