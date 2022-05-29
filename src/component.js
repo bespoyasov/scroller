@@ -26,6 +26,9 @@ export class Scroller {
 
   constructor({ element, ...config }) {
     if (!element) throw new Error("The scroller element must be specified.");
+    if (element.dataset.initialized) {
+      throw new Error("Scroller has already been initialized on this element.");
+    }
 
     this.state = createInitialState();
     this.config = createRuntimeConfig({ config, element });
