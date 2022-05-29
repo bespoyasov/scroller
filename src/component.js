@@ -8,6 +8,7 @@ import { animateValue } from "./animate.js";
 import { debounce } from "./debounce.js";
 import { throttle } from "./throttle.js";
 
+import { errors } from "./errors.js";
 import { isHidden } from "./visibility.js";
 import { contentAlignment } from "./alignment.js";
 import { transformOrigin } from "./transform.js";
@@ -25,10 +26,8 @@ export class Scroller {
   static className = classNames.namespace;
 
   constructor({ element, ...config }) {
-    if (!element) throw new Error("The scroller element must be specified.");
-    if (element.dataset.initialized) {
-      throw new Error("Scroller has already been initialized on this element.");
-    }
+    if (!element) throw new Error(errors.missingElement);
+    if (element.dataset.initialized) throw new Error(errors.initializedEarlier);
 
     this.state = createInitialState();
     this.config = createRuntimeConfig({ config, element });
