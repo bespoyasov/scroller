@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.0.1
+
+Fix possible double initialization when the `DOMContentLoaded` event happens after the manual initialization with `useExternalLayout`. Prevent instantiation in constructor on initialized elements.
+
 ## v3.0.0
 
 Weight, dependency, and performance improvements; pure ESM; more consistent public API.
