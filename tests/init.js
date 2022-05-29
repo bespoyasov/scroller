@@ -17,6 +17,7 @@ const configList = [
   { className: "js-scroller-click-callback", onItemClick: console.log },
   { className: "js-scroller-scroll-to" },
   { className: "js-scroller-update-config" },
+  { className: "js-scroller-try-init-missing" },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
