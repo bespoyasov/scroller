@@ -21,10 +21,14 @@ const configList = [
 
 document.addEventListener("DOMContentLoaded", () => {
   configList.forEach(({ className, ...config }) => {
-    const element = document.querySelector(`.${className}`);
-    const scroller = new Scroller({ element, ...config });
+    try {
+      const element = document.querySelector(`.${className}`);
+      const scroller = new Scroller({ element, ...config });
 
-    scrollerRegistry[className] = scroller;
+      scrollerRegistry[className] = scroller;
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   document.querySelectorAll(".hidden").forEach((el) => {
