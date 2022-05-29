@@ -18,6 +18,7 @@ const configList = [
   { className: "js-scroller-scroll-to" },
   { className: "js-scroller-update-config" },
   { className: "js-scroller-try-init-missing" },
+  { className: "js-scroller-try-init-initialized" },
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
