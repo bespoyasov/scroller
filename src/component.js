@@ -111,6 +111,7 @@ export class Scroller {
 
   #useRoot(element) {
     this.root = element;
+    this.root.dataset.initialized = true;
     this.root.classList.add(classNames.namespace);
 
     this.container = element.querySelector(`.${classNames.container}`);
