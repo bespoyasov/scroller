@@ -184,6 +184,9 @@ const myScroller = new Scroller({
 });
 ```
 
-## React Component
+## Components
 
-For using Scroller with React, check out the [React Scroller](https://github.com/bespoyasov/react-scroller) package.
+If you want to use Scroller with React or Vue, check out these packages:
+
+- [React Scroller](https://github.com/bespoyasov/react-scroller)
+- [Vue Scroller](https://github.com/bespoyasov/vue-scroller)
