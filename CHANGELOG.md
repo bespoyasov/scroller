@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.0.2
+
+Add a license file. Specify the MIT license in the `package.json`. Don't bump the major version since ISC and MIT are basically the same.
+
 ## v3.0.1
 
 Fix possible double initialization when the `DOMContentLoaded` event happens after the manual initialization with `useExternalLayout`. Prevent instantiation in constructor on initialized elements.
