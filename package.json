@@ -38,7 +38,7 @@
     "build": "npm run build:module & npm run build:browser"
   },
   "devDependencies": {
-    "esbuild": "^0.18.11",
+    "esbuild": "^0.19.5",
     "eslint": "^8.15.0"
   }
 }
